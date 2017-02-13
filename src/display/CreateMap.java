@@ -41,7 +41,13 @@ import display.Main;
 import model.Cell;
 import model.Map;
 
-public class CreateMap  extends JPanel implements MouseListener{
+/**
+ * Create a panel for map creation.
+ *
+ * @author Jiayao Zhou
+ * @version 1.0.0
+ */
+public class CreateMap extends JPanel implements MouseListener{
 
     private JPanel map_panel, setting_panel, panel_character, panel_chest;
     private CellPanel [][] cells;
@@ -53,11 +59,17 @@ public class CreateMap  extends JPanel implements MouseListener{
     private JLabel label_enemy;
     private MapEditorController map_controller;
 
+    /**
+     * Initiate a panel for map creation.
+     *
+     * @param width Width of the map.
+     * @param height Height of the map.
+     */
     public CreateMap(int width, int height) {
         super(new GridLayout(1,0));
 
         map_controller = new MapEditorController();
-        map_controller.createMap(width, height);
+        map_controller.createMap(width, height, false);
 
         this.width = width;
         this.height = height;
@@ -125,20 +137,33 @@ public class CreateMap  extends JPanel implements MouseListener{
 
     }
 
+    /**
+     * Get items from the file.
+     *
+     * @return List of the items.
+     */
     private JComboBox<Integer> getItemList() {
         // TODO Auto-generated method stub
         JComboBox<Integer> items = new JComboBox<Integer>();
         return items;
     }
 
-
+    /**
+     * Get character from the file.
+     *
+     * @return List of the characters.
+     */
     private JComboBox<Integer> getCharacterList() {
         // TODO Auto-generated method stub
         JComboBox<Integer> characters = new JComboBox<Integer>();
         return characters;
     }
 
-
+    /**
+     * The action when the mouse is clicked.
+     *
+     * @param arg0 The mouse event.
+     */
     @Override
     public void mouseClicked(MouseEvent arg0){
         // TODO Auto-generated method stub
@@ -161,34 +186,53 @@ public class CreateMap  extends JPanel implements MouseListener{
         }
     }
 
-
+    /**
+     * The action when the mouse is pressed.
+     *
+     * @param e The mouse event.
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         // TODO Auto-generated method stub
 
     }
 
-
+    /**
+     * The action when the mouse is released.
+     *
+     * @param e The mouse event.
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
 
     }
 
-
+    /**
+     * The action when the mouse enters.
+     *
+     * @param e The mouse event.
+     */
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
 
     }
 
-
+    /**
+     * The action when the mouse exits.
+     *
+     * @param e The mouse event.
+     */
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
 
     }
 
+    /**
+     * Set the content of a cell.
+     */
     class setContent implements ActionListener
     {
         private String content = "";
@@ -214,9 +258,11 @@ public class CreateMap  extends JPanel implements MouseListener{
         }
     }
 
+    /**
+     * Remove the content of a cell.
+     */
     class removeContent implements ActionListener
     {
-
         @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent arg0) {
@@ -227,6 +273,9 @@ public class CreateMap  extends JPanel implements MouseListener{
         }
     }
 
+    /**
+     * Validate the map.
+     */
     class validateMap implements ActionListener
     {
         @SuppressWarnings("deprecation")
@@ -239,6 +288,9 @@ public class CreateMap  extends JPanel implements MouseListener{
         }
     }
 
+    /**
+     * Save the map to the file.
+     */
     class saveMap implements ActionListener
     {
         @SuppressWarnings("deprecation")

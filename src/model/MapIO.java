@@ -29,17 +29,7 @@ public class MapIO {
      */
     public void saveMap(Map map) {
         int id = 0;
-        String content = "";
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("d://map.txt"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content += line;
-            }
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String content = readMapFile();
         JSONObject json_content = new JSONObject(content);
         JSONArray json_maps = json_content.getJSONArray("maps");
         if (!map.isSaved) {
@@ -61,21 +51,13 @@ public class MapIO {
                     json_maps.remove(i);
                     break;
                 }
-
             }
-
             json_maps.put(json);
         }
 
-        try {
-            PrintWriter writer = new PrintWriter("d://map.txt", "UTF-8");
-            writer.println(json_content);
-            writer.close();
-            map.isSaved = true;
-            map.save_id = id;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writeMapFile(json_content);
+        map.isSaved = true;
+        map.save_id = id;
     }
 
     /**
@@ -113,17 +95,7 @@ public class MapIO {
      * @return The information of the map in JSON format.
      */
     public JSONObject readMap(int map_id) {
-        String content = "";
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("d://map.txt"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content += line;
-            }
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String content = readMapFile();
         JSONObject json_content = new JSONObject(content);
         JSONArray json_maps = json_content.getJSONArray("maps");
         JSONObject json_map = new JSONObject();
@@ -135,5 +107,58 @@ public class MapIO {
             }
         }
         return json_map;
+    }
+
+    /**
+     * Get map list from the file.
+     *
+     * @return List of maps.
+     */
+    public JSONArray getMapList() {
+        String content = readMapFile();
+        JSONObject json_content = new JSONObject(content);
+        JSONArray json_maps = json_content.getJSONArray("maps");
+
+        return json_maps;
+    }
+
+    /**
+     * Read the file.
+     *
+     * @return Content of the file.
+     */
+    private String readMapFile() {
+        String content = "";
+        try
+        {
+            BufferedReader reader = new BufferedReader(new FileReader("d://map.txt"));
+            String line;
+            while ((line = reader.readLine()) != null)
+            {
+                content += line;
+            }
+            reader.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return content;
+    }
+
+    /**
+     * Write a map to the file.
+     *
+     * @param json_content The information of the map.
+     */
+    public void writeMapFile(JSONObject json_content){
+        try {
+            PrintWriter writer = new PrintWriter("d://map.txt", "UTF-8");
+            writer.println(json_content);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

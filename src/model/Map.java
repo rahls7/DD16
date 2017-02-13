@@ -14,6 +14,12 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Record information of a map.Change properties of a map.
+ *
+ * @author Jiayao Zhou
+ * @version 1.0.0
+ */
 public class Map {
     public int map_width;
     public int map_height;
@@ -21,9 +27,17 @@ public class Map {
     public boolean isSaved = false;
     public int save_id = 0;
 
-    public Map(int width, int height){
+    /**
+     * Initiate an instance of Map.
+     *
+     * @param width The width of the map instance.
+     * @param height The height of the map instance.
+     * @param isSaved True if the map is saved in the file, otherwise false.
+     */
+    public Map(int width, int height, boolean isSaved){
         map_width = width;
         map_height = height;
+        this.isSaved = isSaved;
         cells = new Cell[map_width][map_height];
 
         for(int i = 0; i < map_width; i++) {
@@ -34,6 +48,22 @@ public class Map {
         }
     }
 
+    /**
+     * Set the Id of the map.
+     *
+     * @param map_id Id of the map.
+     */
+    public void setID(int map_id){
+        save_id = map_id;
+    }
+
+    /**
+     * Set content of a cell.
+     *
+     * @param x X Coordinate of the cell.
+     * @param y Y Coordinate of the cell.
+     * @param content Content of the cell.
+     */
     public void setContent(int x, int y, String content) {
         if(content.equals("ENTRY") || content.equals("EXIT")) {
             for(int i = 0; i < map_width; i++) {
@@ -49,10 +79,21 @@ public class Map {
 
     }
 
+    /**
+     * Remove content of a cell.
+     *
+     * @param x X Coordinate of the cell.
+     * @param y Y Coordinate of the cell.
+     */
     public void removeContent(int x, int y) {
         cells[x][y].removeContent();
     }
 
+    /**
+     * Validate the correctness of the map.
+     *
+     * @return True if the map is correct, otherwise false.
+     */
     public boolean validation() {
         int entry_x = -1;
         int entry_y = -1;
@@ -97,6 +138,15 @@ public class Map {
 
     }
 
+    /**
+     * Check cells that the character can move to in next step.
+     *
+     * @param subCells The cells the character can move.
+     * @param possibleCells All the cells the character can move to.
+     * @param exit_x X Coordinate of the exit.
+     * @param exit_y Y Coordinate of the exit.
+     * @return True if the character can move to the exit, false if there are not more subCells the character can move to which means the character can't move to the exit.
+     */
     private boolean checkSubCells(List<String> subCells, List<String> possibleCells, int exit_x, int exit_y) {
         if(subCells.size() == 0) {
             return false;
@@ -114,12 +164,21 @@ public class Map {
                 return true;
             }
 
-            checkAjacentCells(nextSubCells, possibleCells, x, y, count);
+            checkAdjacentCells(nextSubCells, possibleCells, x, y, count);
         }
         return checkSubCells(nextSubCells, possibleCells, exit_x, exit_y);
     }
 
-    private void checkAjacentCells(List<String> nextSubCells, List<String> possibleCells, int current_x, int current_y, int current_count) {
+    /**
+     * Check adjacent cells of a cell are possible for the character to move to.
+     *
+     * @param nextSubCells The cells the character can move to in next step.
+     * @param possibleCells All the cells the character can move to.
+     * @param current_x X Coordinate of the cell the character is on.
+     * @param current_y Y Coordinate of the cell the character is on.
+     * @param current_count The number of the steps the character need to take in order to move to the current cell.
+     */
+    private void checkAdjacentCells(List<String> nextSubCells, List<String> possibleCells, int current_x, int current_y, int current_count) {
         int up_x = current_x - 1;
         int up_y = current_y;
         int bot_x = current_x + 1;
@@ -145,6 +204,15 @@ public class Map {
         }
     }
 
+    /**
+     * Check if the current cell can be moved to in previous steps.
+     *
+     * @param nextSubCells The cells the character can move to in next step.
+     * @param possibleCells All the cells the character can move to.
+     * @param current_x X Coordinate of the cell the character is on.
+     * @param current_y Y Coordinate of the cell the character is on.
+     * @param current_count The number of the steps the character need to take in order to move to the current cell.
+     */
     private void isPossibleCells(List<String> nextSubCells, List<String> possibleCells, int current_x, int current_y, int current_count) {
         boolean inPossibleCells = false;
         for(int i = 0; i < possibleCells.size(); i++) {

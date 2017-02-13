@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Controller.MapEditorController;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,19 +37,27 @@ import display.CreateMap;
 import display.EditMap;
 import model.Cell;
 
-
+/**
+ * Create a panel for map editor.
+ *
+ * @author Jiayao Zhou
+ * @version 1.0.0
+ */
 public class Map extends JPanel{
     private JPanel create_panel, edit_panel;
-
+    private MapEditorController map_controller;
+    /**
+     * Initiate a map editor panel including two panels: map creation panel and map editing panel.
+     */
     public Map(){
         super(new GridLayout(1,0));
+        map_controller = new MapEditorController();
 
         JTextField textfield_width = new JTextField("8");
         JTextField textfield_height = new JTextField("8");
         textfield_width.setPreferredSize(new Dimension(30, 30));
         textfield_height.setPreferredSize(new Dimension(30, 30));
         JLabel label_times = new JLabel("X");
-
 
         JButton button_create = new JButton("Create Map");
         button_create.addActionListener(new ActionListener() {
@@ -100,25 +109,14 @@ public class Map extends JPanel{
         add(edit_panel);
     }
 
+    /**
+     * Get map list from the file.
+     *
+     * @return List of maps.
+     */
     private JComboBox<Integer> getMapList() {
 
-        String content = "";
-        try
-        {
-            BufferedReader reader = new BufferedReader(new FileReader("d://map.txt"));
-            String line;
-            while ((line = reader.readLine()) != null)
-            {
-                content += line;
-            }
-            reader.close();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        JSONObject json_content = new JSONObject(content);
-        JSONArray json_maps = json_content.getJSONArray("maps");
+        JSONArray json_maps = map_controller.getMapList();
         JComboBox<Integer> maps = new JComboBox<Integer>();
 
         for (int i = 0; i < json_maps.length(); i++) {

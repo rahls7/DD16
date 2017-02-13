@@ -36,6 +36,12 @@ import display.CreateMap;
 import display.Main;
 import model.Cell;
 
+/**
+ * Create a panel for map editing.
+ *
+ * @author Jiayao Zhou
+ * @version 1.0.0
+ */
 public class EditMap extends JPanel implements MouseListener{
 
     private JPanel map_panel, setting_panel, panel_character, panel_chest;
@@ -49,6 +55,11 @@ public class EditMap extends JPanel implements MouseListener{
     private MapEditorController map_controller;
     private JSONObject json_map;
 
+    /**
+     * Initiate a panel for map editing.
+     *
+     * @param map_id Id of the map.
+     */
     public EditMap(int map_id) {
         super(new GridLayout(1,0));
 
@@ -58,7 +69,8 @@ public class EditMap extends JPanel implements MouseListener{
 
         width = json_map.getInt("width");
         height = json_map.getInt("height");
-        map_controller.createMap(width, height);
+        map_controller.createMap(width, height, true);
+        map_controller.setId(map_id);
         JSONArray json_cells = json_map.getJSONArray("cells");
 
         map_panel = new JPanel(new GridLayout(width, height));
@@ -127,19 +139,36 @@ public class EditMap extends JPanel implements MouseListener{
         add(setting_panel);
     }
 
+    /**
+     * Get items from the file.
+     *
+     * @return List of the items.
+     */
     private JComboBox<Integer> getItemList() {
         // TODO Auto-generated method stub
         JComboBox<Integer> items = new JComboBox<Integer>();
         return items;
     }
 
-
+    /**
+     * Get character from the file.
+     *
+     * @return List of the characters.
+     */
     private JComboBox<Integer> getCharacterList() {
         // TODO Auto-generated method stub
         JComboBox<Integer> characters = new JComboBox<Integer>();
         return characters;
     }
 
+    /**
+     * Get content of a cell from the data formatted in JSON from the file.
+     *
+     * @param json_cells Cell information in JSON format.
+     * @param x X Coordinate of a cell.
+     * @param y Y Coordinate of a cell.
+     * @return Content of the cell.
+     */
     private String getJSONContent(JSONArray json_cells, int x, int y) {
         for(int i = 0; i < json_cells.length(); i++) {
             JSONObject json_cell = json_cells.getJSONObject(i);
@@ -151,6 +180,11 @@ public class EditMap extends JPanel implements MouseListener{
         return null;
     }
 
+    /**
+     * The action when the mouse is clicked.
+     *
+     * @param arg0 The mouse event.
+     */
     @Override
     public void mouseClicked(MouseEvent arg0){
         // TODO Auto-generated method stub
@@ -173,34 +207,53 @@ public class EditMap extends JPanel implements MouseListener{
         }
     }
 
-
+    /**
+     * The action when the mouse is pressed.
+     *
+     * @param e The mouse event.
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         // TODO Auto-generated method stub
 
     }
 
-
+    /**
+     * The action when the mouse is released.
+     *
+     * @param e The mouse event.
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
 
     }
 
-
+    /**
+     * The action when the mouse enters.
+     *
+     * @param e The mouse event.
+     */
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
 
     }
 
-
+    /**
+     * The action when the mouse exits.
+     *
+     * @param e The mouse event.
+     */
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
 
     }
 
+    /**
+     * Set the content of a cell.
+     */
     class setContent implements ActionListener
     {
         private String content = "";
@@ -226,6 +279,9 @@ public class EditMap extends JPanel implements MouseListener{
         }
     }
 
+    /**
+     * Remove the content of a cell.
+     */
     class removeContent implements ActionListener
     {
 
@@ -238,7 +294,9 @@ public class EditMap extends JPanel implements MouseListener{
             }
         }
     }
-
+    /**
+     * Validate the map.
+     */
     class validateMap implements ActionListener
     {
         @SuppressWarnings("deprecation")
@@ -250,7 +308,9 @@ public class EditMap extends JPanel implements MouseListener{
                 JOptionPane.showMessageDialog( Main.mainFrame, "Fail");
         }
     }
-
+    /**
+     * Save the map to the file.
+     */
     class saveMap implements ActionListener
     {
         @SuppressWarnings("deprecation")
