@@ -14,11 +14,19 @@ import org.json.JSONObject;
 
 import model.Map;
 
+/**
+ * Read maps from the file and write maps to the file. Maps are stored in JSON format.
+ *
+ * @author Jiayao Zhou
+ * @version 1.0.0
+ */
 public class MapIO {
-    public MapIO() {
 
-    }
-
+    /**
+     * Parse an instance of Map and write its information to the file.
+     *
+     * @param map An instance of Map.
+     */
     public void saveMap(Map map) {
         int id = 0;
         String content = "";
@@ -70,6 +78,13 @@ public class MapIO {
         }
     }
 
+    /**
+     * Transform information of a map into JSON format.
+     *
+     * @param id Id of the map.
+     * @param map The map instance.
+     * @return The transformed result.
+     */
     private JSONObject generateJSON(int id, Map map) {
         JSONObject json_map = new JSONObject();
         json_map.put("id", id);
@@ -91,6 +106,12 @@ public class MapIO {
         return json_map;
     }
 
+    /**
+     * Read a map from the file.
+     *
+     * @param map_id Id of the map.
+     * @return The information of the map in JSON format.
+     */
     public JSONObject readMap(int map_id) {
         String content = "";
         try {
