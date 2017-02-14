@@ -11,6 +11,9 @@ import javax.swing.border.Border;
 
 /**
  * Records and manipulate properties of the panel of a cell.
+ *
+ * @author Jiayao Zhou
+ * @version 1.0.1
  */
 public class CellPanel extends JPanel{
     public int x;
@@ -99,6 +102,5 @@ public class CellPanel extends JPanel{
     public void paintComponent (Graphics g) {
         super.paintComponent (g);
         g.drawImage (img, 0, 0, getWidth(), getHeight(), null);
-
     }
 }
