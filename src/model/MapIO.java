@@ -131,7 +131,7 @@ public class MapIO {
         String content = "";
         try
         {
-            BufferedReader reader = new BufferedReader(new FileReader("d://map.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("src/files/map.txt"));
             String line;
             while ((line = reader.readLine()) != null)
             {
@@ -154,7 +154,7 @@ public class MapIO {
      */
     public void writeMapFile(JSONObject json_content){
         try {
-            PrintWriter writer = new PrintWriter("d://map.txt", "UTF-8");
+            PrintWriter writer = new PrintWriter("src/files/map.txt", "UTF-8");
             writer.println(json_content);
             writer.close();
         } catch (IOException e) {

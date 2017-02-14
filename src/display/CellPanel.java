@@ -4,10 +4,9 @@ package display;
  * Created by Alleria on 2017/2/11.
  */
 
-import java.awt.Color;
+import java.awt.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.Border;
 
 /**
@@ -18,6 +17,7 @@ public class CellPanel extends JPanel{
     public int y;
     private boolean isSelected = false;
     public String content = "";
+    private Image img;
 
     /**
      * Initiate a cell panel.
@@ -28,16 +28,18 @@ public class CellPanel extends JPanel{
     public CellPanel(int x, int y) {
         this.x = x;
         this.y = y;
-        setBackground(Color.white);
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
+        ImageIcon pic = new ImageIcon("src/images/FLOOR.jpg");
+        img = pic.getImage();
+        repaint();
     }
 
     /**
      * Set the status of the cell panel to selected.
      */
     public void select() {
-        this.setBorder(BorderFactory.createLineBorder(Color.red,6));
+        this.setBorder(BorderFactory.createLineBorder(Color.red));
         this.isSelected = true;
     }
 
@@ -67,13 +69,19 @@ public class CellPanel extends JPanel{
     public void setContent(String content) {
         this.content = content;
         if(content.equals("WALL")) {
-            setBackground(Color.ORANGE);
+            ImageIcon pic = new ImageIcon("src/images/WALL.jpg");
+            img = pic.getImage();
+            repaint();
         }
         else if(content.equals("ENTRY")) {
-            setBackground(Color.GRAY);
+            ImageIcon pic = new ImageIcon("src/images/ENTRY.jpg");
+            img = pic.getImage();
+            repaint();
         }
         else if(content.equals("EXIT")) {
-            setBackground(Color.darkGray);
+            ImageIcon pic = new ImageIcon("src/images/EXIT.jpg");
+            img = pic.getImage();
+            repaint();
         }
     }
 
@@ -81,8 +89,16 @@ public class CellPanel extends JPanel{
      * Remove the content of the cell panel.
      */
     public void removeContent() {
-        this.content = "";
-        setBackground(Color.white);
+        content = "";
+        ImageIcon pic = new ImageIcon("src/images/FLOOR.jpg");
+        img = pic.getImage();
+        repaint();
     }
 
+    @Override
+    public void paintComponent (Graphics g) {
+        super.paintComponent (g);
+        g.drawImage (img, 0, 0, getWidth(), getHeight(), null);
+
+    }
 }
