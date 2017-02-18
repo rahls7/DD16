@@ -7,20 +7,9 @@ package display;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -31,11 +20,6 @@ import javax.swing.JTextField;
 
 import Controller.MapEditorController;
 import org.json.JSONArray;
-import org.json.JSONObject;
-
-import display.CreateMap;
-import display.EditMap;
-import model.Cell;
 
 /**
  * Create a panel for map editor.

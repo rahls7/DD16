@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 public class Main extends JFrame{
     private About about_panel;
     private Map map_panel;
+    private Item item_panel;
     public static Main mainFrame;
 
     public static void main(String[] args) {
@@ -86,6 +87,15 @@ public class Main extends JFrame{
             }
         });
 
+        JMenuItem item_item = new JMenuItem("Item Editor");
+        item_item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                item_panel = new Item();
+                menuAction(item_panel);
+            }
+        });
+
         JMenuItem item_about = new JMenuItem("About");
         item_about.addActionListener(new ActionListener() {
             @Override
@@ -107,6 +117,7 @@ public class Main extends JFrame{
         menu.add(item_map);
         menu.add(item_compaign);
         menu.add(item_character);
+        menu.add(item_item);
         menu.add(item_about);
         menu.add(item_close);
 

@@ -1,0 +1,1 @@
+{"items":[{"type":"Helmet","id":"1","attribute":"Wisdom","attribute_value":5}, {"type":"Weapon","id":"2","attribute":"Attack Bonus","attribute_value":3}]}
