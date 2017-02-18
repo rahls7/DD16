@@ -1,1 +1,1 @@
-{"items":[{"type":"Helmet","id":"1","attribute":"Wisdom","attribute_value":5}, {"type":"Weapon","id":"2","attribute":"Attack Bonus","attribute_value":3}]}
+{"items":[{"id":"1","attribute":"Wisdom","attribute_value":5,"type":"Helmet"},{"id":"2","attribute":"Attack Bonus","attribute_value":3,"type":"Weapon"},{"id":3,"attribute":"Armor Class","attribute_value":3,"type":"Armor"},{"id":4,"attribute":"Constitution","attribute_value":2,"type":"Ring"}]}

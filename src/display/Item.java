@@ -47,9 +47,8 @@ public class Item extends JPanel {
         button_edit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int item_id = (int)items.getSelectedItem();
-
                 Main.mainFrame.getContentPane().removeAll();
-                Main.mainFrame.getContentPane().add(new EditMap(item_id), BorderLayout.CENTER);
+                Main.mainFrame.getContentPane().add(new EditItem(item_id), BorderLayout.CENTER);
                 Main.mainFrame.getContentPane().doLayout();
                 repaint();
                 validate();
@@ -63,13 +62,13 @@ public class Item extends JPanel {
     }
     private JComboBox<Integer> getItemList() {
 
-        //JSONArray json_maps = item_controller.getItemList();
-        JComboBox<Integer> maps = new JComboBox<Integer>();
+        JSONArray json_items = item_controller.getItemList();
+        JComboBox<Integer> items = new JComboBox<Integer>();
 
-        //for (int i = 0; i < json_maps.length(); i++) {
-        //    int map_id = json_maps.getJSONObject(i).getInt("id");
-        //    maps.addItem(map_id);
-        //}
-        return maps;
+        for (int i = 0; i < json_items.length(); i++) {
+            int item_id = json_items.getJSONObject(i).getInt("id");
+            items.addItem(item_id);
+        }
+        return items;
     }
 }

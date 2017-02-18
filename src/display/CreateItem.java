@@ -113,7 +113,7 @@ public class CreateItem extends JPanel {
             String item = (String) items.getSelectedItem();
             String attribute = (String) attributes.getSelectedItem();
             int attribute_value = (Integer) attribute_values.getSelectedItem();
-            boolean result = item_controller.saveMap(item, attribute, attribute_value);
+            boolean result = item_controller.saveItem(item, attribute, attribute_value);
             if(result)
                 JOptionPane.showMessageDialog( Main.mainFrame, "Success");
             else

@@ -86,4 +86,31 @@ public class ItemIO {
             e.printStackTrace();
         }
     }
+
+    public JSONArray getItemList() {
+        String content = readItemFile();
+        JSONObject json_content = new JSONObject(content);
+        JSONArray json_items = json_content.getJSONArray("items");
+
+        return json_items;
+    }
+
+    public Item getItem(int item_id) {
+        Item item;
+        JSONArray json_items = getItemList();
+        for (int i = 0; i < json_items.length(); i++) {
+            JSONObject json_item = json_items.getJSONObject(i);
+            int id = json_item.getInt("id");
+            if(id == item_id){
+                String type = json_item.getString("type");
+                String attribute = json_item.getString("attribute");
+                int attribute_value = json_item.getInt("attribute_value");
+                item = new Item(type, attribute, attribute_value);
+                item.setIsSaved(true);
+                item.setSaveId(item_id);
+                return item;
+            }
+        }
+        return null;
+    }
 }
