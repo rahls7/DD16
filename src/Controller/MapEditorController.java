@@ -1,9 +1,5 @@
 package Controller;
 
-/**
- * Created by Alleria on 2017/2/11.
- */
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -99,8 +95,9 @@ public class MapEditorController {
     }
 
     /**
+     * Get map list from the file.
      *
-     * @return
+     * @return List of maps.
      */
     public JSONArray getMapList() {
         return mapio.getMapList();

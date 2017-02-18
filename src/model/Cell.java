@@ -1,9 +1,5 @@
 package model;
 
-/**
- * Created by Alleria on 2017/2/11.
- */
-
 import java.awt.Color;
 
 import javax.swing.BorderFactory;

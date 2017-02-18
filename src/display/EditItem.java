@@ -1,9 +1,5 @@
 package display;
 
-/**
- * Created by Alleria on 2017/2/17.
- */
-
 import Controller.ItemEditorController;
 
 import javax.swing.*;
@@ -14,6 +10,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import model.Item;
 
+/**
+ * Panel for item editing.
+ *
+ * @author Jiayao Zhou
+ * @version 1.0.0
+ */
 public class EditItem extends JPanel{
     JComboBox<String> items;
     JComboBox<String> attributes;
@@ -21,6 +23,11 @@ public class EditItem extends JPanel{
     JButton button_create;
     ItemEditorController item_controller;
 
+    /**
+     * Initiate an item editing panel.
+     *
+     * @param item_id Id of the item that will be edited.
+     */
     public EditItem(int item_id) {
         super();
         item_controller = new ItemEditorController();
@@ -110,6 +117,9 @@ public class EditItem extends JPanel{
         add(button_create);
     }
 
+    /**
+     * Action performed in order to save an item.
+     */
     class saveItem implements ActionListener
     {
         @SuppressWarnings("deprecation")

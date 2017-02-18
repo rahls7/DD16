@@ -1,9 +1,5 @@
 package display;
 
-/**
- * Created by Alleria on 2017/2/17.
- */
-
 import javax.swing.*;
 import Controller.ItemEditorController;
 import org.json.JSONArray;
@@ -13,11 +9,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.GridLayout;
 
+/**
+ * Panel for item editor.
+ *
+ * @author Jiayao Zhou
+ * @version 1.0.0
+ */
 public class Item extends JPanel {
 
     private JPanel create_panel, edit_panel;
     private ItemEditorController item_controller;
 
+    /**
+     * Initiate the panel for item editor. The panel includes two parts: item creation and item editing.
+     */
     public Item() {
         super(new GridLayout(1,0));
         item_controller = new ItemEditorController();
@@ -60,6 +65,12 @@ public class Item extends JPanel {
         add(create_panel);
         add(edit_panel);
     }
+
+    /**
+     * Get item list from item file.
+     *
+     * @return List of items.
+     */
     private JComboBox<Integer> getItemList() {
 
         JSONArray json_items = item_controller.getItemList();

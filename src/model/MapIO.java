@@ -1,9 +1,5 @@
 package model;
 
-/**
- * Created by Alleria on 2017/2/11.
- */
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

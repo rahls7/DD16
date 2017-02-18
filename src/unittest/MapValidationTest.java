@@ -1,9 +1,5 @@
 package unittest;
 
-/**
- * Created by Alleria on 2017/2/14.
- */
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,9 +1,5 @@
 package display;
 
-/**
- * Created by Alleria on 2017/2/11.
- */
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

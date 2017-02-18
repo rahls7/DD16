@@ -9,9 +9,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Created by Alleria on 2017/2/17.
+ * Read and write the item file.
+ * @author Jiayao Zhou
+ * @version 1.0.0
  */
 public class ItemIO {
+
+    /**
+     * Save item to the file.
+     *
+     * @param item Item to be saved.
+     * @return True if saving successfully, otherwise false.
+     */
     public boolean saveItem(Item item) {
         int id = 0;
         String content = readItemFile();
@@ -46,6 +55,13 @@ public class ItemIO {
         return true;
     }
 
+    /**
+     * Generate JSON for an item.
+     *
+     * @param id Id of the item.
+     * @param item Object of the item.
+     * @return JSON of the item.
+     */
     private JSONObject generateJSON(int id, Item item) {
         JSONObject json_item = new JSONObject();
         json_item.put("type", item.getType());
@@ -57,6 +73,11 @@ public class ItemIO {
         return json_item;
     }
 
+    /**
+     * Read the item file.
+     *
+     * @return Content in the file.
+     */
     private String readItemFile() {
         String content = "";
         try
@@ -77,6 +98,11 @@ public class ItemIO {
         return content;
     }
 
+    /**
+     * Write to the item file.
+     *
+     * @param json_content Content to be written.
+     */
     public void writeItemFile(JSONObject json_content){
         try {
             PrintWriter writer = new PrintWriter("src/files/item.txt", "UTF-8");
@@ -87,6 +113,11 @@ public class ItemIO {
         }
     }
 
+    /**
+     * Get item list from the file.
+     *
+     * @return List of items.
+     */
     public JSONArray getItemList() {
         String content = readItemFile();
         JSONObject json_content = new JSONObject(content);
@@ -95,6 +126,12 @@ public class ItemIO {
         return json_items;
     }
 
+    /**
+     * Get an item from the file.
+     *
+     * @param item_id Id of the item.
+     * @return Object of the item.
+     */
     public Item getItem(int item_id) {
         Item item;
         JSONArray json_items = getItemList();
