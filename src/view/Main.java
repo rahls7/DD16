@@ -19,7 +19,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Main extends JFrame{
+public class Main extends JFrame {
     private About about_panel;
     private Map map_panel;
     private Item item_panel;
@@ -139,13 +139,13 @@ class MainPanel extends JPanel {
     }
 
     public Dimension getPreferredSize() {
-        return new Dimension(960,600);
+        return new Dimension(960, 600);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         // Draw Text
-        g.drawString("Hello!",10,20);
+        g.drawString("Hello!", 10, 20);
     }
 }
 
