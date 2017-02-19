@@ -1,6 +1,6 @@
 package game;
 
-import display.Screen;
+import view.Screen;
 
 import javax.swing.JFrame;
 import java.awt.*;

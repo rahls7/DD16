@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,7 +8,7 @@ import model.Cell;
 import model.Map;
 
 /**
- * Controller class to mediate the communication between models and views.
+ * controller class to mediate the communication between models and views.
  *
  * @author Jiayao Zhou
  * @version 1.0.0
