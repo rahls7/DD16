@@ -1,4 +1,4 @@
-package display;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import Controller.MapEditorController;
+import controller.MapEditorController;
 import org.json.JSONArray;
 
 /**

@@ -1,7 +1,7 @@
-package display;
+package view;
 
 import javax.swing.*;
-import Controller.ItemEditorController;
+import controller.ItemEditorController;
 import org.json.JSONArray;
 
 import java.awt.*;

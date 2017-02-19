@@ -1,10 +1,8 @@
-package Controller;
+package controller;
 
 import model.Item;
 import model.ItemIO;
 import org.json.JSONArray;
-
-import javax.swing.*;
 
 /**
  * Mediate interaction between views and models of items.
