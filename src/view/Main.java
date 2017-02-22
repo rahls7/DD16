@@ -1,29 +1,30 @@
 package view;
 
 /**
- * Created by Alleria on 2017/2/11.
+ * Created by rahls7 on 2017/2/11.
  */
 
-import javax.swing.SwingUtilities;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Main extends JFrame {
     private About about_panel;
     private Map map_panel;
     private Item item_panel;
     public static Main mainFrame;
+    private JButton buttonPlay, buttonMap, buttonCharacter, buttonCampaign, buttonAbout, buttonExit;
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -36,10 +37,19 @@ public class Main extends JFrame {
     public Main() {
         super("Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        add(new MainPanel());
+        add(createJpanel());
+        //addButtons();
         setJMenuBar(createMenuBar("Main Menu"));
         pack();
         setVisible(true);
+    }
+
+    private JPanel createJpanel() {
+        JPanel pan =new MainPanel();
+        setLayout(new GridLayout(10,1));
+        addButtons();
+        return pan;
+
     }
 
 
@@ -122,31 +132,91 @@ public class Main extends JFrame {
         return menu;
     }
 
-    private void menuAction(JPanel panel) {
+    public void menuAction(JPanel panel) {
         getContentPane().removeAll();
         getContentPane().add(panel, BorderLayout.CENTER);
         getContentPane().doLayout();
         repaint();
         validate();
     }
+
+    public void addButtons() {
+        buttonPlay = new JButton("P L A Y");
+        add(buttonPlay);
+
+        buttonMap = new JButton("M A P E D I T O R");
+        add(buttonMap);
+
+
+        JButton buttonCharacter = new JButton("C H A R A C T E R E D I T O R");
+
+        add(buttonCharacter);
+
+        buttonCampaign = new JButton("C A M P A I G N E D I T O R");
+
+        add(buttonCampaign);
+
+        buttonAbout = new JButton("A B O U T");
+
+
+        add(buttonAbout);
+
+
+        buttonExit = new JButton("E X I T");
+        add(buttonExit);
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String cmd = e.getActionCommand();
+                if(cmd.equals("M A P E D I T O R")) {
+                    map_panel = new Map();
+                    menuAction(map_panel);
+                }
+            }
+        };
+
+        buttonMap.addActionListener(actionListener);
+    }
+
+
 }
 
 
 class MainPanel extends JPanel {
 
+    private Map mapPanel;
+
+
     public MainPanel() {
+
         setBorder(BorderFactory.createLineBorder(Color.black));
+        //setSize(getPreferredSize());
+        setLayout(new GridLayout(10,1));
     }
 
     public Dimension getPreferredSize() {
         return new Dimension(960, 600);
     }
 
+
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Draw Text
-        g.drawString("Hello!", 10, 20);
+        // Draw Image
+        try {
+            BufferedImage image = ImageIO.read(new File("src/images/MenuBackground.jpg"));
+            g.drawImage(image,0,0,getWidth(),getHeight(),this);
+
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
+
+
+
 }
+
 
 
