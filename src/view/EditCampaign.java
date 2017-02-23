@@ -60,18 +60,20 @@ public class EditCampaign extends JPanel implements MouseListener {
 
     class removeMap implements ActionListener{
         public void actionPerformed(ActionEvent argu0){
-            String remove_map_id=current_map_panel.getMapId();
-            int remove_index=current_map_panel.getIndex();
-            campaign_controller.removeMap(remove_map_id);
-            for(int i=0;i<map_panel.size();i++){
-                if(map_panel.get(i).getMapId().equals(remove_map_id)&&map_panel.get(i).getIndex()==current_map_panel.getIndex()){
-                    map_panel.remove(i);
-                    break;
+            if(current_map_panel!=null){
+                String remove_map_id=current_map_panel.getMapId();
+                int remove_index=current_map_panel.getIndex();
+                campaign_controller.removeMap(remove_map_id);
+                for(int i=0;i<map_panel.size();i++){
+                    if(map_panel.get(i).getMapId().equals(remove_map_id)&&map_panel.get(i).getIndex()==current_map_panel.getIndex()){
+                        map_panel.remove(i);
+                        break;
+                    }
                 }
+                updateMapList(map_panel);
+                campaign_panel.revalidate();
+                campaign_panel.repaint();
             }
-            updateMapList(map_panel);
-            campaign_panel.revalidate();
-            campaign_panel.repaint();
         }
     }
 
@@ -162,19 +164,21 @@ public class EditCampaign extends JPanel implements MouseListener {
 
     class replaceMap implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
-            String selected_map_id= Integer.toString((int)maps.getSelectedItem());
-            String remove_map_id=current_map_panel.getMapId();
-            campaign_controller.replaceMap(selected_map_id,current_map_panel.getIndex());
-            for(int i=0;i<map_panel.size();i++){
-                if(map_panel.get(i).getMapId().equals(remove_map_id)&&map_panel.get(i).getIndex()==current_map_panel.getIndex()){
-                    map_panel.get(i).setMapId(selected_map_id);
-                    break;
+            if(current_map_panel!=null){
+                String selected_map_id= Integer.toString((int)maps.getSelectedItem());
+                String remove_map_id=current_map_panel.getMapId();
+                campaign_controller.replaceMap(selected_map_id,current_map_panel.getIndex());
+                for(int i=0;i<map_panel.size();i++){
+                    if(map_panel.get(i).getMapId().equals(remove_map_id)&&map_panel.get(i).getIndex()==current_map_panel.getIndex()){
+                        map_panel.get(i).setMapId(selected_map_id);
+                        break;
+                    }
                 }
+                updateMapList(map_panel);
+                //campaign_panel.removeAll();
+                campaign_panel.revalidate();
+                campaign_panel.repaint();
             }
-            updateMapList(map_panel);
-            //campaign_panel.removeAll();
-            campaign_panel.revalidate();
-            campaign_panel.repaint();
         }
     }
     public void updateMapList(ArrayList<MapPanel> list){

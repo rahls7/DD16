@@ -135,19 +135,22 @@ public class CreateCampaign extends JPanel{
 
     class removeMap implements ActionListener{
         public void actionPerformed(ActionEvent arg0){
-            String remove_map_id=current_map_panel.getMapId();
-            int remove_index=current_map_panel.getIndex();
-            campaign_controller.removeMap(remove_map_id);
-            for(int i=0;i<map_panel.size();i++){
-                if(map_panel.get(i).getMapId().equals(remove_map_id)&&map_panel.get(i).getIndex()==current_map_panel.getIndex()){
-                    map_panel.remove(i);
-                    break;
+            if(current_map_panel!=null){
+                String remove_map_id=current_map_panel.getMapId();
+                int remove_index=current_map_panel.getIndex();
+                campaign_controller.removeMap(remove_map_id);
+                for(int i=0;i<map_panel.size();i++){
+                    if(map_panel.get(i).getMapId().equals(remove_map_id)&&map_panel.get(i).getIndex()==current_map_panel.getIndex()){
+                        map_panel.remove(i);
+                        break;
+                    }
                 }
+                updateMapPanelIndex();
+                drawMapList(map_panel);
+                campaign_panel.revalidate();
+                campaign_panel.repaint();
             }
-            updateMapPanelIndex();
-            drawMapList(map_panel);
-            campaign_panel.revalidate();
-            campaign_panel.repaint();
+
         }
     }
 
