@@ -1,4 +1,4 @@
-package display;
+package view;
 
 import java.awt.*;
 

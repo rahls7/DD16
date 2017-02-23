@@ -1,4 +1,4 @@
-package display;
+package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,12 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -24,21 +18,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import Controller.MapEditorController;
-import display.CreateMap;
-import display.Main;
-import model.Cell;
+import controller.MapEditorController;
 
 /**
- * Create a panel for map editing.
+ * Create a panel for map creation.
  *
  * @author Jiayao Zhou
  * @version 1.0.0
  */
-public class EditMap extends JPanel implements MouseListener{
+public class CreateMap extends JPanel implements MouseListener{
 
     private JPanel map_panel, setting_panel, panel_character, panel_chest;
     private CellPanel [][] cells;
@@ -49,26 +37,21 @@ public class EditMap extends JPanel implements MouseListener{
     private JCheckBox checkbox_hostile;
     private JLabel label_enemy;
     private MapEditorController map_controller;
-    private JSONObject json_map;
 
     /**
-     * Initiate a panel for map editing.
+     * Initiate a panel for map creation.
      *
-     * @param map_id Id of the map.
+     * @param width Width of the map.
+     * @param height Height of the map.
      */
-    public EditMap(int map_id) {
+    public CreateMap(int width, int height) {
         super(new GridLayout(1,0));
 
         map_controller = new MapEditorController();
-        json_map = new JSONObject();
-        json_map = map_controller.readMap(map_id);
+        map_controller.createMap(width, height, false);
 
-        width = json_map.getInt("width");
-        height = json_map.getInt("height");
-        map_controller.createMap(width, height, true);
-        map_controller.setId(map_id);
-        JSONArray json_cells = json_map.getJSONArray("cells");
-
+        this.width = width;
+        this.height = height;
         map_panel = new JPanel(new GridLayout(width, height));
         map_panel.setBorder(BorderFactory.createTitledBorder(null, "Map", TitledBorder.TOP,TitledBorder.CENTER, new Font("Lucida Calligraphy",Font.PLAIN,20), Color.BLACK));
 
@@ -77,9 +60,6 @@ public class EditMap extends JPanel implements MouseListener{
             for(int j = 0; j < height; j++) {
                 cells[i][j] = new CellPanel(i, j);
                 cells[i][j].addMouseListener(this);
-                String content = getJSONContent(json_cells, i, j);
-                cells[i][j].setContent(content);
-                map_controller.setContent(i, j, content);
                 map_panel.add(cells[i][j]);
             }
         }
@@ -133,6 +113,7 @@ public class EditMap extends JPanel implements MouseListener{
 
         add(map_panel);
         add(setting_panel);
+
     }
 
     /**
@@ -155,25 +136,6 @@ public class EditMap extends JPanel implements MouseListener{
         // TODO Auto-generated method stub
         JComboBox<Integer> characters = new JComboBox<Integer>();
         return characters;
-    }
-
-    /**
-     * Get content of a cell from the data formatted in JSON from the file.
-     *
-     * @param json_cells Cell information in JSON format.
-     * @param x X Coordinate of a cell.
-     * @param y Y Coordinate of a cell.
-     * @return Content of the cell.
-     */
-    private String getJSONContent(JSONArray json_cells, int x, int y) {
-        for(int i = 0; i < json_cells.length(); i++) {
-            JSONObject json_cell = json_cells.getJSONObject(i);
-            int cell_x = json_cell.getInt("cell_x");
-            int cell_y = json_cell.getInt("cell_y");
-            if(cell_x == x && cell_y == y)
-                return json_cell.getString("cell_content");
-        }
-        return null;
     }
 
     /**
@@ -280,7 +242,6 @@ public class EditMap extends JPanel implements MouseListener{
      */
     class removeContent implements ActionListener
     {
-
         @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent arg0) {
@@ -290,6 +251,7 @@ public class EditMap extends JPanel implements MouseListener{
             }
         }
     }
+
     /**
      * Validate the map.
      */
@@ -304,6 +266,7 @@ public class EditMap extends JPanel implements MouseListener{
                 JOptionPane.showMessageDialog( Main.mainFrame, "Fail");
         }
     }
+
     /**
      * Save the map to the file.
      */

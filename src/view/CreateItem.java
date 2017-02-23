@@ -1,6 +1,6 @@
-package display;
+package view;
 
-import Controller.ItemEditorController;
+import controller.ItemEditorController;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package display;
+package view;
 
 /**
  * Created by rahls7 on 05/02/17.
