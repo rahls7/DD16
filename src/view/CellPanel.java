@@ -29,7 +29,7 @@ public class CellPanel extends JPanel{
         this.y = y;
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
-        ImageIcon pic = new ImageIcon("src/images/floor.jpg");
+        ImageIcon pic = new ImageIcon("src/images/friend.png");
         img = pic.getImage();
         repaint();
     }
