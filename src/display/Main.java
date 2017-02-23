@@ -9,13 +9,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -25,6 +23,7 @@ public class Main extends JFrame{
     private About about_panel;
     private Map map_panel;
     private Item item_panel;
+    private Campaign campaign_panel;
     public static Main mainFrame;
 
     public static void main(String[] args) {
@@ -71,11 +70,12 @@ public class Main extends JFrame{
             }
         });
 
-        JMenuItem item_compaign = new JMenuItem("Compaign Editor");
+        JMenuItem item_compaign = new JMenuItem("Campaign Editor");
         item_compaign.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                campaign_panel = new Campaign();
+                menuAction(campaign_panel);
             }
         });
 
