@@ -29,7 +29,7 @@ public class CellPanel extends JPanel{
         this.y = y;
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
-        ImageIcon pic = new ImageIcon("src/images/FLOOR.jpg");
+        ImageIcon pic = new ImageIcon("src/images/floor.jpg");
         img = pic.getImage();
         repaint();
     }
@@ -68,17 +68,17 @@ public class CellPanel extends JPanel{
     public void setContent(String content) {
         this.content = content;
         if(content.equals("WALL")) {
-            ImageIcon pic = new ImageIcon("src/images/WALL.jpg");
+            ImageIcon pic = new ImageIcon("src/images/wall.png");
             img = pic.getImage();
             repaint();
         }
         else if(content.equals("ENTRY")) {
-            ImageIcon pic = new ImageIcon("src/images/ENTRY.jpg");
+            ImageIcon pic = new ImageIcon("src/images/entry.png");
             img = pic.getImage();
             repaint();
         }
         else if(content.equals("EXIT")) {
-            ImageIcon pic = new ImageIcon("src/images/EXIT.jpg");
+            ImageIcon pic = new ImageIcon("src/images/exit.png");
             img = pic.getImage();
             repaint();
         }
@@ -89,7 +89,7 @@ public class CellPanel extends JPanel{
      */
     public void removeContent() {
         content = "";
-        ImageIcon pic = new ImageIcon("src/images/FLOOR.jpg");
+        ImageIcon pic = new ImageIcon("src/images/floor.jpg");
         img = pic.getImage();
         repaint();
     }
