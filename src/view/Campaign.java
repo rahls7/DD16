@@ -1,8 +1,8 @@
-package display;
+package view;
 
-import Controller.MapEditorController;
-import org.json.JSONArray;
 import Controller.CampaignEditController;
+import org.json.JSONArray;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

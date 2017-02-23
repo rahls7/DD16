@@ -1,6 +1,7 @@
-package display;
+package view;
 
 import Controller.CampaignEditController;
+import view.MapPanel;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
