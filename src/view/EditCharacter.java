@@ -26,14 +26,21 @@ public class EditCharacter extends JPanel{
     String name;
     int[] attribute = new int[6];
     int[][] stats = new int[7][2];
+    ArrayList<String> items, backpack, equipment;
+    JComboBox equipmentComboBox, backpackJComboBox, itemJComboBox;
 
     public EditCharacter(String id){
 
+        //initiate
         super();
         setSize(1600,600);
         setLayout(null);
         this.id = id;
         characterController = new CharacterEditorController(id);
+        characterController.getCharacter(id);
+        items = new ArrayList<String>();
+        backpack = new ArrayList<String>();
+        equipment = new ArrayList<String >();
 
         // Create AttributeLabels
         add(new AttributeLabel("name:", 0));
@@ -53,17 +60,11 @@ public class EditCharacter extends JPanel{
         add(new StatsLabel("Wisdom:", 5));
         add(new StatsLabel("Charisma:", 6));
 
-        //read data
-        name = characterController.getName();
-        attribute = characterController.getAttributes();
-        stats = characterController.getStats();
-
         //Create Modifier Labels and the TextFiels of Stats
         for (int i=0; i<7; i++) {
             add(new StatsLabel("modifier:", i));
             for (int j = 0; j < 2; j++) {
                 statsTextField[i][j] = new StatsTextField(i, j);
-                statsTextField[i][j].setText(Integer.toString(stats[i][j]));
                 add(statsTextField[i][j]);
             }
         }
@@ -73,13 +74,12 @@ public class EditCharacter extends JPanel{
         add(nameTextField);
         for (int i=0; i<6; i++){
             attributeTextField[i] = new AttributeTextField(i+2);
-            attributeTextField[i].setText(Integer.toString(attribute[i]));
             add(attributeTextField[i]);
         }
 
         //Create buttons
         Handler handler = new Handler();
-        createButton = new JButton("Edit");
+        createButton = new JButton("Create");
         createButton.setBounds(630, 370, 100, 50);
         add(createButton);
         createButton.addActionListener(handler);
@@ -98,24 +98,29 @@ public class EditCharacter extends JPanel{
         deleteButton = createItemJButton("Delete", 1100, 370);
         pickButton = createItemJButton("Pick", 1350, 300);
         add(takeoffButton );
+        takeoffButton.addActionListener(handler);
         add(putonButton);
+        putonButton.addActionListener(handler);
         add(deleteButton);
+        deleteButton.addActionListener(handler);
         add(pickButton);
-        String[] equipment = {}; //{"Helmet", "Armor", "Shield", "Ring", "Belt", "Boots", "Weapon"};
-        JComboBox equipmentComboBox = new JComboBox(equipment);
+        pickButton.addActionListener(handler);
+
+        equipmentComboBox = new JComboBox(equipment.toArray());
         equipmentComboBox.setBounds(800, 100, 150, 50);
         equipmentComboBox.setMaximumRowCount(7);
-        add(equipmentComboBox);
-        String[] backpack = {}; //{"Helmet:gold","Armor:silver","Shield:bronze","Ring:king","Belt:jade","Boots:tiger","Weapon:sword","Weapon:blade"};
-        JComboBox backpackJComboBox = new JComboBox(backpack);
+        add(equipmentComboBox); //{"Helmet:gold","Armor:silver","Shield:bronze","Ring:king","Belt:jade","Boots:tiger","Weapon:sword","Weapon:blade"};
+        backpackJComboBox = new JComboBox(backpack.toArray());
         backpackJComboBox.setBounds(1050, 100, 150, 50);
         backpackJComboBox.setMaximumRowCount(7);
-        add(backpackJComboBox);
-        String[] item = {}; //{"Helmet:shit","Armor:bullshit","shield:wood"};
-        JComboBox itemJComboBox = new JComboBox(item);
+        add(backpackJComboBox);//{"Helmet:shit","Armor:bullshit","shield:wood"};
+        items = characterController.getItem();
+        itemJComboBox = new JComboBox(items.toArray());
         itemJComboBox.setBounds(1300, 100, 150, 50);
         itemJComboBox.setMaximumRowCount(7);
         add(itemJComboBox);
+
+        display();
     }
 
     JLabel createItemJLabel(String name, int x, int y){
@@ -131,72 +136,76 @@ public class EditCharacter extends JPanel{
         return button;
     }
 
+    public void display(){
+        nameTextField.setText(characterController.getName());
+
+        stats = characterController.getStats();
+        for (int i=0; i<7; i++)
+            for (int j=0; j<2; j++)
+                statsTextField[i][j].setText(Integer.toString(stats[i][j]));
+        attribute = characterController.getAttributes();
+        for (int i=0; i<6; i++)
+            attributeTextField[i].setText(Integer.toString(attribute[i]));
+
+        if (attribute[5]==1)
+            attributeTextField[5].setText("true");
+        else
+            attributeTextField[5].setText("False");
+
+
+        equipmentComboBox.setModel(new DefaultComboBoxModel(characterController.getEquipment().toArray()));
+        backpackJComboBox.setModel(new DefaultComboBoxModel(characterController.getBackpack().toArray()));
+    }
+
     class Handler implements ActionListener{
 
         public void actionPerformed(ActionEvent event){
             if (event.getSource()==createButton){
                 String name = nameTextField.getText();
+                characterController.setName(name);
+                characterController.initiateStats();
+                remove(createButton);
                 System.out.println(characterController.getName());
-
+                display();
                 validate();
                 repaint();
             }
             else if (event.getSource()==confirmButton){
-
+                characterController.saveCharacter();
             }else if (event.getSource()==takeoffButton){
-
+                int i = equipmentComboBox.getSelectedIndex();
+                characterController.setEquipmentBackpack(i);
+                characterController.deleteEquipment(i);
+                display();
+                validate();
+                repaint();
             }else if (event.getSource()==putonButton){
-
+                int i = backpackJComboBox.getSelectedIndex();
+                characterController.setEquipment(i);
+                characterController.removeBackpack(i);
+                display();
+                validate();
+                repaint();
             }else if (event.getSource()==deleteButton){
-
+                int i = backpackJComboBox.getSelectedIndex();
+                characterController.removeBackpack(i);
+                display();
+                validate();
+                repaint();
             }else if (event.getSource()==pickButton){
-
+                int i = itemJComboBox.getSelectedIndex();
+                characterController.setBackpack(i);
+                display();
+                validate();
+                repaint();
             }
 //
+//                }
         }
     }
 
 }
 
-
-class StatsLabel extends JLabel{
-    StatsLabel(String name, int number){
-        setText(name);
-        if (name.equals("modifier:"))
-            setBounds(560, number*50+20, 120, 40);
-        else
-            setBounds(330, number*50+20, 120, 40);
-        setFont(new Font("dialog", 0, 15));
-    }
-}
-
-class StatsTextField extends JTextField{
-    StatsTextField(int i, int j){
-        setVisible(true);
-        setFont(new Font("dialog", 0, 15));
-        setLocation(430+j*200,i*50+20);
-        setSize(100,40);
-        setHorizontalAlignment(JTextField.CENTER);
-    }
-}
-
-class AttributeLabel extends JLabel{
-    AttributeLabel(String name, int number){
-        setText(name);
-        setBounds(20, number*50+20, 120, 40);
-        setFont(new Font("dialog", 0, 15));
-    }
-}
-
-class  AttributeTextField extends JTextField{
-    AttributeTextField(int i){
-        setVisible(true);
-        setFont(new Font("dialog", 0, 15));
-        setLocation(140,i*50+20);
-        setSize(100,40);
-        setHorizontalAlignment(JTextField.CENTER);
-    }
-}
 
 
 

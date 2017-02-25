@@ -43,6 +43,11 @@ public class CharacterEditorController{
         }
     }
 
+    //getCharacter
+    public void getCharacter(String id){
+        characterModel = characterIO.getCharacter(id);
+    }
+
     //saveCharacter
     public void saveCharacter(){
         characterIO.saveCharacter(characterModel);

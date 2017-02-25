@@ -147,6 +147,9 @@ public class CreateCharacter extends JPanel{
         else
             attributeTextField[5].setText("False");
 
+
+        equipmentComboBox.setModel(new DefaultComboBoxModel(characterController.getEquipment().toArray()));
+        backpackJComboBox.setModel(new DefaultComboBoxModel(characterController.getBackpack().toArray()));
     }
 
     class Handler implements ActionListener{
@@ -167,37 +170,73 @@ public class CreateCharacter extends JPanel{
             }else if (event.getSource()==takeoffButton){
                 int i = equipmentComboBox.getSelectedIndex();
                 characterController.setEquipmentBackpack(i);
-                backpackJComboBox.setModel(new DefaultComboBoxModel(characterController.getBackpack().toArray()));
                 characterController.deleteEquipment(i);
-                equipmentComboBox.setModel(new DefaultComboBoxModel(characterController.getEquipment().toArray()));
                 display();
                 validate();
                 repaint();
             }else if (event.getSource()==putonButton){
                 int i = backpackJComboBox.getSelectedIndex();
                 characterController.setEquipment(i);
-                equipmentComboBox.setModel(new DefaultComboBoxModel(characterController.getEquipment().toArray()));
                 characterController.removeBackpack(i);
-                backpackJComboBox.setModel(new DefaultComboBoxModel(characterController.getBackpack().toArray()));
                 display();
                 validate();
                 repaint();
             }else if (event.getSource()==deleteButton){
                 int i = backpackJComboBox.getSelectedIndex();
                 characterController.removeBackpack(i);
-                backpackJComboBox.setModel(new DefaultComboBoxModel(characterController.getBackpack().toArray()));
+                display();
                 validate();
                 repaint();
             }else if (event.getSource()==pickButton){
                 int i = itemJComboBox.getSelectedIndex();
                 characterController.setBackpack(i);
-                backpackJComboBox.setModel(new DefaultComboBoxModel(characterController.getBackpack().toArray()));
+                display();
                 validate();
                 repaint();
             }
 //
 //                }
         }
+    }
+
+}
+
+class StatsLabel extends JLabel{
+    StatsLabel(String name, int number){
+        setText(name);
+        if (name.equals("modifier:"))
+            setBounds(560, number*50+20, 120, 40);
+        else
+            setBounds(330, number*50+20, 120, 40);
+        setFont(new Font("dialog", 0, 15));
+    }
+}
+
+class StatsTextField extends JTextField{
+    StatsTextField(int i, int j){
+        setVisible(true);
+        setFont(new Font("dialog", 0, 15));
+        setLocation(430+j*200,i*50+20);
+        setSize(100,40);
+        setHorizontalAlignment(JTextField.CENTER);
+    }
+}
+
+class AttributeLabel extends JLabel{
+    AttributeLabel(String name, int number){
+        setText(name);
+        setBounds(20, number*50+20, 120, 40);
+        setFont(new Font("dialog", 0, 15));
+    }
+}
+
+class  AttributeTextField extends JTextField{
+    AttributeTextField(int i){
+        setVisible(true);
+        setFont(new Font("dialog", 0, 15));
+        setLocation(140,i*50+20);
+        setSize(100,40);
+        setHorizontalAlignment(JTextField.CENTER);
     }
 }
 

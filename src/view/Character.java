@@ -53,7 +53,7 @@ public class Character extends JPanel{
             editButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     Main.mainFrame.getContentPane().removeAll();
-                    Main.mainFrame.getContentPane().add(new EditCharacter(idTextField.getText()), BorderLayout.CENTER);
+                    Main.mainFrame.getContentPane().add(new EditCharacter(idTextField1.getText()), BorderLayout.CENTER);
                     Main.mainFrame.getContentPane().doLayout();
                     repaint();
                     validate();

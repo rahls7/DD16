@@ -19,6 +19,7 @@ public class Character {
 
     public Character(String id) {
         this.id = id;
+        name= new String("");
         isSaved = false;
         equipment = new ArrayList<Item>();
         backpack = new ArrayList<Item>();
@@ -166,17 +167,31 @@ public class Character {
 
 
     //Stats
-    public void setStats() {
+    public void setStats(int[][] stats) {
+        for (int i=0; i<7; i++)
+            for (int j=0; j<2; j++)
+                this.stats[i][j] = stats[i][j];
+    }
 
+    public void setBasicStats(int[][] basicStats) {
+        for (int i=0; i<7; i++)
+            for (int j=0; j<2; j++)
+                this.basicStats[i][j] = basicStats[i][j];
     }
 
     public int[][] getStats() {
         return stats;
     }
 
-    //Atributes
-    public void setAttributes() {
+    //Attributes
+    public void setAttributes(int[] attributes) {
+        for (int i=0; i<6; i++)
+            this.attributes[i] = attributes[i];
+    }
 
+    public void setBasicAttributes(int[] basicAttributes) {
+        for (int i=0; i<6; i++)
+            this.basicAttributes[i] = basicAttributes[i];
     }
 
     public int[] getAttributes() {
