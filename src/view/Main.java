@@ -1,24 +1,19 @@
 package view;
 
-/**
- * Created by rahls7 on 2017/2/11.
- */
-
 import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 
-import javax.imageio.ImageIO;
+
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+
+/**
+ * Created by rahls7 on 2017/2/11.
+ * This class extens JFrame and displays the UI for creating Maps, Characters, Items and Campaign. It uses Swing
+ * Library of Java and creates a JMenu.
+ */
 
 public class Main extends JFrame {
     private About about_panel;
@@ -35,22 +30,25 @@ public class Main extends JFrame {
         });
     }
 
+    /**
+     * Constructor for Main class. Creates an instance of Main, should be called whenever there is a need to display the
+     * view.
+     */
+
     public Main() {
-        super("Game");
+        super("Dragon and Dungeons");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        add(new MainPanel());
+        add(new Menu());
         setJMenuBar(createMenuBar("Main Menu"));
         pack();
         setVisible(true);
     }
 
-    /*private JPanel createJpanel() {
-        JPanel pan =new MainPanel();
-        //setLayout(new GridLayout(10,2));
-        addButtons();
-        return pan;
-
-    }*/
+    /**
+     * Creates a JmenuBar for the frame.
+     * @param name Name for the Menu Bar.
+     * @return bar JMenuBar
+     */
 
 
     private JMenuBar createMenuBar(String name) {
@@ -58,6 +56,12 @@ public class Main extends JFrame {
         bar.add(createMenu(name));
         return bar;
     }
+
+    /**
+     * Creates the menu for the JMenuBar. Over rides the Action Listener methods of JButton.
+     * @param name
+     * @return menu Menu with options to create Map, Character, Campaign.
+     */
 
     private JMenu createMenu(String name) {
         JMenu menu = new JMenu(name);
@@ -98,14 +102,14 @@ public class Main extends JFrame {
                 if(cmd.equals("Map Editor")) {
                     map_panel = new Map();
                     menuAction(map_panel);
-                }else if(cmd.equals("Close")) {
-                    System.exit(0);
                 }else if(cmd.equals("Item Editor")) {
                     item_panel = new Item();
                     menuAction(item_panel);
                 }else if(cmd.equals("About")) {
                     about_panel = new About();
                     menuAction(about_panel);
+                }else if(cmd.equals("Close")) {
+                    System.exit(0);
                 }
             }
         };
@@ -118,6 +122,15 @@ public class Main extends JFrame {
         return menu;
     }
 
+    /**
+     * Resets all the content of the JFrame to switch between different JPanel
+     * @param panel Panel that needs to be displayed. For eg: Map Panel can be created as:
+     *              <code>
+     *              map_panel = new Map();
+     *              menuAction(map_panel);
+     *              </code>
+     */
+
     public void menuAction(JPanel panel) {
         getContentPane().removeAll();
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -129,109 +142,6 @@ public class Main extends JFrame {
 
 }
 
-
-class MainPanel extends JPanel {
-
-    private Map mapPanel;
-    private JButton buttonPlay, buttonMap, buttonCharacter, buttonCampaign, buttonAbout, buttonExit;
-
-
-
-    public MainPanel() {
-
-        setBorder(BorderFactory.createLineBorder(Color.black));
-        //setSize(getPreferredSize());
-        setLayout(new GridLayout(10,1));
-    }
-
-    public Dimension getPreferredSize() {
-        return new Dimension(960, 600);
-    }
-
-
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // Draw Image
-        try {
-            BufferedImage image = ImageIO.read(new File("src/images/MenuBackground.jpg"));
-            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        addButtons();
-
-    }
-
-
-
-
-    public void addButtons() {
-            buttonPlay = new JButton("P L A Y");
-            add(buttonPlay);
-
-            buttonMap = new JButton("M A P E D I T O R");
-            buttonMap.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    mapPanel = new Map();
-                    menuAction(mapPanel);
-                }
-            });
-            buttonMap.setForeground(Color.BLUE);
-            buttonMap.setOpaque(false);
-            buttonMap.setContentAreaFilled(false);
-            buttonMap.setBorderPainted(false);
-            add(buttonMap);
-
-
-            JButton buttonCharacter = new JButton("C H A R A C T E R E D I T O R");
-
-            add(buttonCharacter);
-
-            buttonCampaign = new JButton("C A M P A I G N E D I T O R");
-
-            add(buttonCampaign);
-
-            buttonAbout = new JButton("A B O U T");
-            add(buttonAbout);
-
-
-            buttonExit = new JButton("E X I T");
-            add(buttonExit);
-            /*ActionListener actionListener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String cmd = e.getActionCommand();
-                    if(cmd.equals("M A P E D I T O R")) {
-                        mapPanel = new Map();
-                        menuAction(mapPanel);
-                        setLayout(new GridLayout(1,0));
-                    }else if(cmd.equals("E X I T")) {
-                        System.exit(0);
-                    }
-                }
-            };
-
-            buttonMap.addActionListener(actionListener); */
-        }
-
-
-    public void menuAction(JPanel panel) {
-        Main.mainFrame.getContentPane().removeAll();
-        Main.mainFrame.getContentPane().add(panel, BorderLayout.CENTER);
-        Main.mainFrame.getContentPane().doLayout();
-        repaint();
-        validate();
-    }
-
-
-
-
-
-
-}
 
 
 
