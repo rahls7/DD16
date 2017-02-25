@@ -43,6 +43,11 @@ public class CharacterEditorController{
         }
     }
 
+    //recalculate
+    public void recalculate(){
+        characterModel.recalculateStats();
+    }
+
     //getCharacter
     public void getCharacter(String id){
         characterModel = characterIO.getCharacter(id);
@@ -100,8 +105,8 @@ public class CharacterEditorController{
     }
 
     //Stats
-    public void setStats() {
-
+    public void setStats(int[][] stats) {
+        characterModel.setStats(stats);
     }
 
     public int[][] getStats() {
@@ -109,8 +114,8 @@ public class CharacterEditorController{
     }
 
     //Atributes
-    public void setAttributes() {
-
+    public void setAttributes(int[] attributes) {
+        characterModel.setAttributes(attributes);
     }
 
     public int[] getAttributes() {

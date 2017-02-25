@@ -160,7 +160,6 @@ public class CreateCharacter extends JPanel{
                 characterController.setName(name);
                 characterController.initiateStats();
                 remove(createButton);
-                System.out.println(characterController.getName());
                 display();
                 validate();
                 repaint();

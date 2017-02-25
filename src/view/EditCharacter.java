@@ -18,7 +18,7 @@ import java.util.Random;
 public class EditCharacter extends JPanel{
 
     private CharacterEditorController characterController;
-    public JButton createButton, confirmButton,  takeoffButton, putonButton, deleteButton, pickButton;
+    public JButton EditButton, confirmButton,  takeoffButton, putonButton, deleteButton, pickButton;
     public JTextField nameTextField;
     public JTextField[] attributeTextField = new JTextField[6];
     public JTextField[][] statsTextField = new JTextField[7][2];
@@ -79,10 +79,10 @@ public class EditCharacter extends JPanel{
 
         //Create buttons
         Handler handler = new Handler();
-        createButton = new JButton("Create");
-        createButton.setBounds(630, 370, 100, 50);
-        add(createButton);
-        createButton.addActionListener(handler);
+        EditButton = new JButton("Edit");
+        EditButton.setBounds(630, 370, 100, 50);
+        add(EditButton);
+        EditButton.addActionListener(handler);
 
         confirmButton = new JButton("Confirm");
         confirmButton.setBounds(630,450,100,50);
@@ -160,12 +160,14 @@ public class EditCharacter extends JPanel{
     class Handler implements ActionListener{
 
         public void actionPerformed(ActionEvent event){
-            if (event.getSource()==createButton){
-                String name = nameTextField.getText();
-                characterController.setName(name);
-                characterController.initiateStats();
-                remove(createButton);
-                System.out.println(characterController.getName());
+            if (event.getSource()==EditButton){
+                characterController.setName(nameTextField.getText());
+                for (int i=0; i<7; i++)
+                    stats[i][0] = Integer.parseInt(statsTextField[i][0].getText());
+                for (int i=0; i<5; i++)
+                    attribute[i] = Integer.parseInt(attributeTextField[i].getText());
+                characterController.setStats(stats);
+                characterController.setAttributes(attribute);
                 display();
                 validate();
                 repaint();
