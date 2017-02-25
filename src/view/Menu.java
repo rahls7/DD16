@@ -1,5 +1,6 @@
 package view;
 
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -9,321 +10,124 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-
 /**
- * Created by rahls7 on 18/02/17.
- *
- *
- *
- * Not for Build 1, please ignore.
+ * Created by rahls7 on 2017/02/14
+ * Creates a JPanel with Buttons and Background to provide UI for User.
+ * Its instance is used in Main view to display the Interactive Menu
  */
 
+public class Menu extends JPanel {
 
-public class Menu extends JFrame{
-
-    private About about_panel;
-    private Map map_panel;
-    private Item item_panel;
+    private Map mapPanel;
+    private JButton buttonPlay, buttonMap, buttonCharacter, buttonCampaign, buttonAbout, buttonExit;
 
 
-
+    /**
+     * Constructor. Needs to be called where JPanel needs to be added.
+     */
     public Menu() {
-        add(new Panel());
-        setJMenuBar(createMenuBar("Main Menu"));
-        pack();
-        setVisible(true);
 
-    }
-
-    public JMenuBar createMenuBar(String name) {
-        JMenuBar bar = new JMenuBar();
-        bar.add(createMenu(name));
-        return bar;
-    }
-
-    private JMenu createMenu(String name) {
-        JMenu menu = new JMenu(name);
-
-        JMenuItem item_play = new JMenuItem("Play");
-        item_play.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        JMenuItem item_map = new JMenuItem("Map Editor");
-        item_map.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                map_panel = new Map();
-                menuAction(map_panel);
-            }
-        });
-
-        JMenuItem item_compaign = new JMenuItem("Compaign Editor");
-        item_compaign.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        JMenuItem item_character = new JMenuItem("Character Editor");
-        item_character.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        JMenuItem item_item = new JMenuItem("Item Editor");
-        item_item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                item_panel = new Item();
-                menuAction(item_panel);
-            }
-        });
-
-        JMenuItem item_about = new JMenuItem("About");
-        item_about.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                about_panel = new About();
-                menuAction(about_panel);
-            }
-        });
-
-        JMenuItem item_close = new JMenuItem("Close");
-        item_close.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //getContentPane().removeAll();
-                System.exit(0);
-            }
-        });
-
-        menu.add(item_play);
-        menu.add(item_map);
-        menu.add(item_compaign);
-        menu.add(item_character);
-        menu.add(item_item);
-        menu.add(item_about);
-        menu.add(item_close);
-
-        return menu;
-    }
-
-
-
-    private void menuAction(JPanel panel) {
-        getContentPane().removeAll();
-        getContentPane().add(panel, BorderLayout.CENTER);
-        getContentPane().doLayout();
-        repaint();
-        validate();
-    }
-}
-
-
-class Panel extends JPanel {
-
-
-    public Panel() {
         setBorder(BorderFactory.createLineBorder(Color.black));
+        //setSize(getPreferredSize());
+        setLayout(new GridLayout(10,1));
+        //addButtons();
     }
+
+    /**
+     * Getter function. Specifies the dimensions of the JPanel window.
+     * @return Dimension.
+     */
 
     public Dimension getPreferredSize() {
         return new Dimension(960, 600);
     }
 
-
+    /**
+     * Adds the Background image on the JPanel.
+     * @param g Graphics Object
+     */
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         // Draw Image
         try {
             BufferedImage image = ImageIO.read(new File("src/images/MenuBackground.jpg"));
-            g.drawImage(image,0,0,getWidth(),getHeight(),this);
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        addJLabels();
-
-
     }
 
-    private void addJLabels() {
 
-    }
-}
+    /**
+     * Adds Buttons which creates new instance of other JPanels. Overrides ActionListener method to switch between JPanel.
+     */
+    public void addButtons() {
+        buttonPlay = new JButton("P L A Y");
+        add(buttonPlay);
+
+        buttonMap = new JButton("M A P E D I T O R");
+        buttonMap.setForeground(Color.BLUE);
+        buttonMap.setOpaque(false);
+        buttonMap.setContentAreaFilled(false);
+        buttonMap.setBorderPainted(false);
+        add(buttonMap);
 
 
+        JButton buttonCharacter = new JButton("C H A R A C T E R E D I T O R");
+
+        add(buttonCharacter);
+
+        buttonCampaign = new JButton("C A M P A I G N E D I T O R");
+
+        add(buttonCampaign);
+
+        buttonAbout = new JButton("A B O U T");
+        add(buttonAbout);
 
 
+        buttonExit = new JButton("E X I T");
+        add(buttonExit);
 
-/*import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String cmd = e.getActionCommand();
+                if(cmd.equals("M A P E D I T O R")) {
+                    mapPanel = new Map();
+                    Main.mainFrame.getContentPane().add(mapPanel);
+                    //setLayout(new GridLayout(1,0));
+                }else if(cmd.equals("E X I T")) {
+                    System.exit(0);
+                }
+            }
+        };
 
-import javafx.application.Application;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.*;
-import javafx.scene.image.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.*;
-import javafx.scene.shape.*;
-import javafx.scene.text.*;
-
-import javax.swing.*;
-
-public class Menu extends Application {
-
-    private Map map_panel;
-
-    private Parent createContent() {
-        Pane root = new Pane();
-        root.setPrefSize(860, 600);
-
-        try (InputStream is = Files.newInputStream(Paths.get("src/images/MenuBackground.jpg"))) {
-            ImageView img = new ImageView(new Image(is));
-            img.setFitWidth(860);
-            img.setFitHeight(600);
-            root.getChildren().add(img);
-        }
-        catch (IOException e) {
-            System.out.println("Couldn't load image");
-        }
-
-        Title title = new Title("D R A G O N & D U N G E O N S");
-        title.setTranslateX(75);
-        title.setTranslateY(200);
-
-        MenuItem itemExit = new MenuItem("EXIT");
-        itemExit.setOnMouseClicked(event -> System.exit(0));
-
-        MenuItem mapItem = new MenuItem("MAP EDITOR");
-        mapItem.setOnMouseClicked(event -> {
-            map_panel = new Map();
-
-        });
-
-        MenuBox menu = new MenuBox(
-                new MenuItem("PLAY"),
-                //new MenuItem("MAP EDITOR"),
-                mapItem,
-                new MenuItem("CAMPAIGN EDITOR"),
-                new MenuItem("ITEM EDITOR"),
-                itemExit);
-        menu.setTranslateX(100);
-        menu.setTranslateY(300);
-
-        root.getChildren().addAll(title, menu);
-        return root;
+        buttonMap.addActionListener(actionListener);
+        buttonExit.addActionListener(actionListener);
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Scene scene = new Scene(createContent());
-        primaryStage.setTitle("Dragon and Dungeons V16");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
 
-    private void menuAction(JPanel panel) {
-        getContentPane().removeAll();
-        getContentPane().add(panel, BorderLayout.CENTER);
-        getContentPane().doLayout();
+    /**
+     * Resets all the content of the JFrame to switch between different JPanel
+     * @param panel Panel that needs to be displayed. For eg: Map Panel can be created as:
+     *              <code>
+     *              map_panel = new Map();
+     *              menuAction(map_panel);
+     *              </code>
+     */
+    public void menuAction(JPanel panel) {
+        Main.mainFrame.getContentPane().removeAll();
+        System.out.println("Menu MenuAction Caled");
+        Main.mainFrame.getContentPane().add(panel);
+        Main.mainFrame.getContentPane().doLayout();
         repaint();
         validate();
     }
 
-    /* private static class Title extends StackPane {
-        public Title(String name) {
-            Rectangle bg = new Rectangle(750, 60);
-            bg.setStroke(Color.WHITE);
-            bg.setStrokeWidth(2);
-            bg.setFill(null);
 
-            Text text = new Text(name);
-            text.setFill(Color.DARKBLUE);
-            text.setFont(Font.font("Tw Cen MT Condensed", FontWeight.SEMI_BOLD, 50));
-
-            setAlignment(Pos.CENTER);
-            getChildren().addAll(bg, text);
-        }
-    } */
-
-   /* private static class MenuBox extends VBox {
-        public MenuBox(MenuItem... items) {
-            getChildren().add(createSeparator());
-
-            for (MenuItem item : items) {
-                getChildren().addAll(item, createSeparator());
-            }
-        }
-
-        private Line createSeparator() {
-            Line sep = new Line();
-            sep.setEndX(200);
-            sep.setStroke(Color.DARKGREY);
-            return sep;
-        }
-    }
-
-    private static class MenuItem extends StackPane {
-        public MenuItem(String name) {
-            LinearGradient gradient = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, new Stop[] {
-                    new Stop(0, Color.DARKVIOLET),
-                    new Stop(0.1, Color.BLACK),
-                    new Stop(0.9, Color.BLACK),
-                    new Stop(1, Color.DARKVIOLET)
-            });
-
-            Rectangle bg = new Rectangle(200, 30);
-            bg.setOpacity(0.4);
-
-            Text text = new Text(name);
-            text.setFill(Color.DARKGREY);
-            text.setFont(Font.font("Tw Cen MT Condensed", FontWeight.SEMI_BOLD, 22));
-
-            setAlignment(Pos.CENTER);
-            getChildren().addAll(bg, text);
-
-            setOnMouseEntered(event -> {
-                bg.setFill(gradient);
-                text.setFill(Color.WHITE);
-            });
+}
 
 
-            setOnMouseExited(event -> {
-                bg.setFill(Color.BLACK);
-                text.setFill(Color.DARKGREY);
-            });
-
-            setOnMousePressed(event -> {
-                bg.setFill(Color.DARKVIOLET);
-            });
-
-            setOnMouseReleased(event -> {
-                bg.setFill(gradient);
-            });
-        }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-}*/
