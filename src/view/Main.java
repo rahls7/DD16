@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 public class Main extends JFrame{
     private About about_panel;
     private Map map_panel;
+    private Character char_panel;
     private Item item_panel;
     public static Main mainFrame;
 
@@ -82,6 +83,9 @@ public class Main extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                char_panel = new Character();
+                menuAction(char_panel);
+
             }
         });
 
@@ -139,7 +143,7 @@ class MainPanel extends JPanel {
     }
 
     public Dimension getPreferredSize() {
-        return new Dimension(960,600);
+        return new Dimension(1280,960);
     }
 
     public void paintComponent(Graphics g) {
