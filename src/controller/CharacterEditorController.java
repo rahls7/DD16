@@ -13,6 +13,8 @@ import org.json.JSONObject;
 
 /**
  * Created by Silas on 2017/2/10.
+ * This class is a controller that controls actions about Character.
+ * It contains an object of Character model and uses awt library.
  */
 public class CharacterEditorController{
 
@@ -21,6 +23,10 @@ public class CharacterEditorController{
     private CharacterIO characterIO;
     private ArrayList<Item> items;
 
+    /**
+     *Constructor of character controller, create a controller, called by the character view
+     * @param id
+     */
     public CharacterEditorController(String id){
         characterModel = new Character(id);
         items = new ArrayList<Item>();
@@ -43,12 +49,17 @@ public class CharacterEditorController{
         }
     }
 
-    //recalculate
+    /**
+     * recalculate the attributes and stats of Character when euipments or levels are changed
+     */
     public void recalculate(){
         characterModel.recalculateStats();
     }
 
-    //getCharacter
+    /**
+     * get a Character from file by its id
+     * @param id
+     */
     public void getCharacter(String id){
         characterModel = characterIO.getCharacter(id);
     }
