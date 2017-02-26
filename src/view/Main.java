@@ -1,30 +1,25 @@
 package view;
+//import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 
-/**
- * Created by Alleria on 2017/2/11.
- */
 
-import javax.swing.SwingUtilities;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
+import javax.swing.*;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Main extends JFrame{
+/**
+ * Created by rahls7 on 2017/2/11.
+ * This class extens JFrame and displays the UI for creating Maps, Characters, Items and Campaign. It uses Swing
+ * Library of Java and creates a JMenu.
+ */
+
+public class Main extends JFrame {
     private About about_panel;
     private Map map_panel;
     private Item item_panel;
-    private Campaign campaign_panel;
     public static Main mainFrame;
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -34,14 +29,25 @@ public class Main extends JFrame{
         });
     }
 
+    /**
+     * Constructor for Main class. Creates an instance of Main, should be called whenever there is a need to display the
+     * view.
+     */
+
     public Main() {
-        super("Game");
+        super("Dragon and Dungeons");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        add(new MainPanel());
+        add(new Menu());
         setJMenuBar(createMenuBar("Main Menu"));
         pack();
         setVisible(true);
     }
+
+    /**
+     * Creates a JmenuBar for the frame.
+     * @param name Name for the Menu Bar.
+     * @return bar JMenuBar
+     */
 
 
     private JMenuBar createMenuBar(String name) {
@@ -50,69 +56,35 @@ public class Main extends JFrame{
         return bar;
     }
 
+    /**
+     * Creates the menu for the JMenuBar. Over rides the Action Listener methods of JButton.
+     * @param name
+     * @return menu Menu with options to create Map, Character, Campaign.
+     */
+
     private JMenu createMenu(String name) {
         JMenu menu = new JMenu(name);
 
         JMenuItem item_play = new JMenuItem("Play");
-        item_play.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-            }
-        });
 
         JMenuItem item_map = new JMenuItem("Map Editor");
-        item_map.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                map_panel = new Map();
-                menuAction(map_panel);
-            }
-        });
+
 
         JMenuItem item_compaign = new JMenuItem("Campaign Editor");
-        item_compaign.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                campaign_panel = new Campaign();
-                menuAction(campaign_panel);
-            }
-        });
+
 
         JMenuItem item_character = new JMenuItem("Character Editor");
-        item_character.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-
-            }
-        });
 
         JMenuItem item_item = new JMenuItem("Item Editor");
-        item_item.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                item_panel = new Item();
-                menuAction(item_panel);
-            }
-        });
+
 
         JMenuItem item_about = new JMenuItem("About");
-        item_about.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                about_panel = new About();
-                menuAction(about_panel);
-            }
-        });
+
 
         JMenuItem item_close = new JMenuItem("Close");
-        item_close.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getContentPane().removeAll();
-            }
-        });
+
 
         menu.add(item_play);
         menu.add(item_map);
@@ -122,34 +94,57 @@ public class Main extends JFrame{
         menu.add(item_about);
         menu.add(item_close);
 
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String cmd = e.getActionCommand();
+                if(cmd.equals("Map Editor")) {
+                    map_panel = new Map();
+                    menuAction(map_panel);
+                }else if(cmd.equals("Item Editor")) {
+                    item_panel = new Item();
+                    menuAction(item_panel);
+                }else if(cmd.equals("About")) {
+                    about_panel = new About();
+                    menuAction(about_panel);
+                }else if(cmd.equals("Close")) {
+                    System.exit(0);
+                }
+            }
+        };
+        item_map.addActionListener(actionListener);
+        item_item.addActionListener(actionListener);
+        item_about.addActionListener(actionListener);
+
+
+
         return menu;
     }
 
-    private void menuAction(JPanel panel) {
+    /**
+     * Resets all the content of the JFrame to switch between different JPanel
+     * @param panel Panel that needs to be displayed. For eg: Map Panel can be created as:
+     *              <code>
+     *              map_panel = new Map();
+     *              menuAction(map_panel);
+     *              </code>
+     */
+
+    public void menuAction(JPanel panel) {
         getContentPane().removeAll();
         getContentPane().add(panel, BorderLayout.CENTER);
         getContentPane().doLayout();
         repaint();
         validate();
     }
+
+
 }
 
 
-class MainPanel extends JPanel {
 
-    public MainPanel() {
-        setBorder(BorderFactory.createLineBorder(Color.black));
-    }
 
-    public Dimension getPreferredSize() {
-        return new Dimension(960,600);
-    }
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // Draw Text
-        g.drawString("Hello!",10,20);
-    }
-}
+
 
 
