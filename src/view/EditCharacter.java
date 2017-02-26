@@ -33,7 +33,7 @@ public class EditCharacter extends JPanel{
 
         //initiate
         super();
-        setSize(1600,600);
+        setSize(2500,600);
         setLayout(null);
         this.id = id;
         characterController = new CharacterEditorController(id);
@@ -107,16 +107,16 @@ public class EditCharacter extends JPanel{
         pickButton.addActionListener(handler);
 
         equipmentComboBox = new JComboBox(equipment.toArray());
-        equipmentComboBox.setBounds(800, 100, 150, 50);
+        equipmentComboBox.setBounds(800, 100, 250, 50);
         equipmentComboBox.setMaximumRowCount(7);
         add(equipmentComboBox); //{"Helmet:gold","Armor:silver","Shield:bronze","Ring:king","Belt:jade","Boots:tiger","Weapon:sword","Weapon:blade"};
         backpackJComboBox = new JComboBox(backpack.toArray());
-        backpackJComboBox.setBounds(1050, 100, 150, 50);
+        backpackJComboBox.setBounds(1050, 100, 250, 50);
         backpackJComboBox.setMaximumRowCount(7);
         add(backpackJComboBox);//{"Helmet:shit","Armor:bullshit","shield:wood"};
         items = characterController.getItem();
         itemJComboBox = new JComboBox(items.toArray());
-        itemJComboBox.setBounds(1300, 100, 150, 50);
+        itemJComboBox.setBounds(1300, 100, 250, 50);
         itemJComboBox.setMaximumRowCount(7);
         add(itemJComboBox);
 
@@ -125,7 +125,7 @@ public class EditCharacter extends JPanel{
 
     JLabel createItemJLabel(String name, int x, int y){
         JLabel label = new JLabel(name);
-        label.setBounds(x, y, 100, 50);
+        label.setBounds(x, y, 150, 50);
         label.setFont(new Font("dialog", 0, 20));
         return label;
     }
@@ -168,12 +168,14 @@ public class EditCharacter extends JPanel{
                     attribute[i] = Integer.parseInt(attributeTextField[i].getText());
                 characterController.setStats(stats);
                 characterController.setAttributes(attribute);
+                characterController.recalculate();
                 display();
                 validate();
                 repaint();
             }
             else if (event.getSource()==confirmButton){
                 characterController.saveCharacter();
+                JOptionPane.showMessageDialog(confirmButton,"Success");
             }else if (event.getSource()==takeoffButton){
                 int i = equipmentComboBox.getSelectedIndex();
                 characterController.setEquipmentBackpack(i);

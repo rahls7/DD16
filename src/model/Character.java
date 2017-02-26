@@ -77,7 +77,7 @@ public class Character {
         for (int i=0; i<7; i++)
             for (int j=0; j<1; j++)
                 stats[i][j] = basicStats[i][j];
-        for (int i=0; i<5; i++)
+        for (int i=1; i<5; i++)
             attributes[i] = basicAttributes[i];
         for (Item item: equipment){
             switch (item.getAttribute()){

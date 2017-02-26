@@ -15,7 +15,7 @@ public class Character extends JPanel{
          */
         public Character(){
             super();
-            setSize(1600,900);
+            setSize(2500,900);
             setLayout(null);
 
             JTextField  idTextField= new JTextField();
