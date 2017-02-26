@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Created by rahls7 on 2017/2/11.
- * This class extens JFrame and displays the UI for creating Maps, Characters, Items and Campaign. It uses Swing
+ * This class extends JFrame and displays the UI for creating Maps, Characters, Items and Campaign. It uses Swing
  * Library of Java and creates a JMenu.
  */
 
@@ -140,11 +140,4 @@ public class Main extends JFrame {
 
 
 }
-
-
-
-
-
-
-
 
