@@ -35,7 +35,8 @@ public class EditMap extends JPanel implements MouseListener{
     private CellPanel [][] cells;
     private CellPanel current_cell, previous_cell;
     private int width, height;
-    private JComboBox<Integer> characters, items;
+    private JComboBox<Integer> items;
+    private JComboBox<String> characters;
     private JButton button_wall, button_entry, button_exit, button_remove, button_validate, button_save, button_character, button_chest;
     private JCheckBox checkbox_hostile;
     private JLabel label_enemy;
@@ -93,12 +94,12 @@ public class EditMap extends JPanel implements MouseListener{
 
         panel_character = new JPanel();
         characters = getCharacterList();
-        characters.setSelectedIndex(-1);
+        characters.setSelectedIndex(0);
         characters.setPreferredSize(new Dimension(100, 30));
         button_character = new JButton("Add Character");
         checkbox_hostile = new JCheckBox();
         label_enemy = new JLabel("Is Hostile");
-        button_character.addActionListener(new setContent("Character"));
+        button_character.addActionListener(new setContent("CHARACTER"));
         panel_character.add(characters);
         panel_character.add(label_enemy);
         panel_character.add(checkbox_hostile);
@@ -106,7 +107,7 @@ public class EditMap extends JPanel implements MouseListener{
 
         panel_chest = new JPanel();
         items = getItemList();
-        items.setSelectedIndex(-1);
+        items.setSelectedIndex(0);
         items.setPreferredSize(new Dimension(100, 30));
         button_chest = new JButton("Add Chest");
         button_chest.addActionListener(new setContent("CHEST"));
@@ -147,9 +148,15 @@ public class EditMap extends JPanel implements MouseListener{
      *
      * @return List of the characters.
      */
-    private JComboBox<Integer> getCharacterList() {
+    private JComboBox<String> getCharacterList() {
         // TODO Auto-generated method stub
-        JComboBox<Integer> characters = new JComboBox<Integer>();
+        JComboBox<String> characters = new JComboBox<String>();
+        JSONArray json_items = map_controller.getCharacterList();
+
+        for (int i = 0; i < json_items.length(); i++) {
+            String character_id = json_items.getJSONObject(i).getString("id");
+            characters.addItem(character_id);
+        }
         return characters;
     }
 
@@ -267,8 +274,14 @@ public class EditMap extends JPanel implements MouseListener{
                     co = content;
             }
             else if(content == "CHARACTER") {
-                int character_id = (int)characters.getSelectedItem();
-                co = content + " " + characters.getSelectedItem();
+                String character_id;
+                int isHostile = 0;
+                if(checkbox_hostile.isSelected())
+                    isHostile = 1;
+                if(characters.getSelectedItem() != null){
+                    character_id = (String)characters.getSelectedItem();
+                    co = content + " " + characters.getSelectedItem() + " " + isHostile;
+                }
             }
             else
                 co = content;
@@ -324,7 +337,12 @@ public class EditMap extends JPanel implements MouseListener{
         @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            map_controller.saveMap();
+            if(map_controller.validateMap()){
+                map_controller.saveMap();
+                JOptionPane.showMessageDialog( Main.mainFrame, "Success");
+            }
+            else
+                JOptionPane.showMessageDialog( Main.mainFrame, "The map is not valid.");
         }
     }
 }
