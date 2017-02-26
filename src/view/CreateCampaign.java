@@ -1,7 +1,6 @@
 package view;
 
-import Controller.CampaignEditController;
-import view.MapPanel;
+import controller.CampaignEditController;
 import org.json.JSONArray;
 
 import javax.swing.*;
@@ -13,7 +12,8 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
- * Created by Ruijia on 2017/2/18.
+ * Create a panel for the creating campaign
+ * @author Ruijia Yang
  */
 public class CreateCampaign extends JPanel{
     private CampaignEditController campaign_controller;
@@ -24,7 +24,7 @@ public class CreateCampaign extends JPanel{
     private MapPanel current_map_panel, previous_map_panel;
 
     /**
-     *
+     *Initiate a panel for campaign creation.
      */
     public CreateCampaign(){
         super(new GridLayout(1,0));
@@ -54,7 +54,7 @@ public class CreateCampaign extends JPanel{
     }
 
     /**
-     *
+     *Get items from the file.
      * @return
      */
     private JComboBox<Integer> getMapList() {
@@ -70,8 +70,8 @@ public class CreateCampaign extends JPanel{
     }
 
     /**
-     * 
-     * @param list
+     *Add all the map panels to the main panel
+     * @param list map panel list
      */
     public void drawMapList(ArrayList<MapPanel> list){
         campaign_panel.removeAll();
@@ -87,7 +87,14 @@ public class CreateCampaign extends JPanel{
         }
     }
 
+    /**
+     * Add a map to a campaign
+     */
     class addMap implements ActionListener, MouseListener {
+        /**
+         *
+         * @param arg0
+         */
         public void actionPerformed(ActionEvent arg0){
             String selected_map_id= Integer.toString((int)maps.getSelectedItem());
             campaign_controller.addMap(selected_map_id);
@@ -100,6 +107,9 @@ public class CreateCampaign extends JPanel{
             campaign_panel.repaint();
         }
         @Override
+        /**
+         * Actions after clicking mouse
+         */
         public void mouseClicked(MouseEvent e) {
             previous_map_panel=current_map_panel;
             current_map_panel=(MapPanel)e.getSource();
@@ -133,6 +143,9 @@ public class CreateCampaign extends JPanel{
         }
     }
 
+    /**
+     * Remove a map from a campaign
+     */
     class removeMap implements ActionListener{
         public void actionPerformed(ActionEvent arg0){
             if(current_map_panel!=null){
@@ -154,11 +167,18 @@ public class CreateCampaign extends JPanel{
         }
     }
 
+    /**
+     * Update the map panel list after modifying it
+     */
     public void updateMapPanelIndex(){
         for(int i=0;i<map_panel.size();i++){
             map_panel.get(i).setIndex(i);
         }
     }
+
+    /**
+     * Save the campaign to the file
+     */
     class saveCampaign implements ActionListener{
         public void actionPerformed(ActionEvent arg0){
             campaign_controller.saveCompaign();

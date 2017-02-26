@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import model.CampaignIO;
 import model.Campaign;
@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Controller class to mediate the communication between models and views.
+ * controller class to mediate the communication between models and views.
  * @author Ruijia Yang
  */
 public class CampaignEditController {
@@ -43,13 +43,13 @@ public class CampaignEditController {
     }
 
     /**
-     *
+     *Get the list of the existed campaigns
      * @return
      */
     public JSONArray getCompaignList(){return campaignio.getCampaignList();}
 
     /**
-     *
+     *Add a map to the list when creating a campaign
      * @param map_id
      */
     public void addMap(String map_id){
@@ -57,13 +57,13 @@ public class CampaignEditController {
     }
 
     /**
-     *
+     *Set an ID to make the campaign unique
      * @param campaign_id
      */
     public void setID(int campaign_id){campaign.setID(campaign_id);}
 
     /**
-     *
+     *Remove the map from the list when creating or editing a campaign
      * @param map_id
      */
     public void removeMap(String map_id){
@@ -71,28 +71,28 @@ public class CampaignEditController {
     }
 
     /**
-     *
+     *Get the list of all the existing maps
      * @return
      */
     public JSONArray getMapList() {
         return mapio.getMapList();
     }
     /**
-     *
+     *Save the campaign to the file
      */
     public void saveCompaign(){
         campaignio.saveCompaign(campaign);
     }
 
     /**
-     *
+     *Get a campaign from the all the campaigns
      * @param campaign_id
      * @return
      */
     public JSONObject readCampaign (int campaign_id){return campaignio.readCampaign(campaign_id);}
 
     /**
-     *
+     *Replace a map with a selected one when editing a campaign
      * @param selected_map_id
      * @param index
      */

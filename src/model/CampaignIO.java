@@ -6,12 +6,13 @@ import org.json.JSONObject;
 import java.io.*;
 
 /**
- * Created by Ruijia on 2017/2/22.
+ * Read campaigns from the file and write campaigns to the file. Campaigns are stored in JSON format.
+ * @author Ruijia Yang
  */
 public class CampaignIO {
 
     /**
-     *
+     *Save a campaign to the file
      * @param campaign
      */
     public void saveCompaign(Campaign campaign){
@@ -47,6 +48,10 @@ public class CampaignIO {
         campaign.save_id = id;
     }
 
+    /**
+     * Write the generated json to a file
+     * @param content
+     */
     public void writeCampaignFile(JSONObject content){
         try {
             PrintWriter writer = new PrintWriter("src/files/campaign.txt", "UTF-8");
@@ -57,6 +62,12 @@ public class CampaignIO {
         }
     }
 
+    /**
+     * Generate a json object for a campaign
+     * @param id
+     * @param campaign
+     * @return
+     */
     public JSONObject generateJSON(int id, Campaign campaign){
         JSONObject json_campaign=new JSONObject();
         json_campaign.put("id",id);
@@ -73,6 +84,10 @@ public class CampaignIO {
         return json_campaign;
     }
 
+    /**
+     * Read campaigns from the file
+     * @return json
+     */
     public String readCampaignFile(){
         String content="";
         try {
@@ -90,6 +105,11 @@ public class CampaignIO {
         }
         return content;
     }
+
+    /**
+     * Get all the existing campaigns
+     * @return
+     */
     public JSONArray getCampaignList() {
         String content = readCampaignFile();
         JSONObject json_content = new JSONObject(content);
@@ -97,6 +117,12 @@ public class CampaignIO {
 
         return json_compaigns;
     }
+
+    /**
+     * Read a campaign by id
+     * @param campaign_id
+     * @return
+     */
     public JSONObject readCampaign(int campaign_id){
         String content = readCampaignFile();
         JSONObject json_content = new JSONObject(content);

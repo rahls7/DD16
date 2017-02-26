@@ -1,7 +1,6 @@
 package view;
 
-import Controller.CampaignEditController;
-import view.MapPanel;
+import controller.CampaignEditController;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,7 +13,8 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 /**
- * Created by Ruijia on 2017/2/22.
+ * Create a campaign edit panel
+ * @author Ruijia Yang
  */
 public class EditCampaign extends JPanel implements MouseListener {
     private CampaignEditController campaign_controller;
@@ -24,6 +24,10 @@ public class EditCampaign extends JPanel implements MouseListener {
     private JComboBox<Integer> maps;
     private MapPanel current_map_panel, previous_map_panel;
 
+    /**
+     * Initialize a edit campaign panel
+     * @param campaign_id
+     */
     public EditCampaign(int campaign_id){
         super(new GridLayout(1,0));
         campaign_controller=new CampaignEditController();
@@ -58,6 +62,9 @@ public class EditCampaign extends JPanel implements MouseListener {
         add(setting_panel);
     }
 
+    /**
+     * Remove a map from a campaign
+     */
     class removeMap implements ActionListener{
         public void actionPerformed(ActionEvent argu0){
             if(current_map_panel!=null){
@@ -77,6 +84,9 @@ public class EditCampaign extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     * save the campaign to the file
+     */
     class saveCampaign implements ActionListener{
         public void actionPerformed(ActionEvent arg0){
             campaign_controller.saveCompaign();
@@ -116,6 +126,9 @@ public class EditCampaign extends JPanel implements MouseListener {
 
     }
 
+    /**
+     * Add a map to a campaign
+     */
     class addMap implements ActionListener , MouseListener {
         public void actionPerformed(ActionEvent arg0){
             String selected_map_id= Integer.toString((int)maps.getSelectedItem());
@@ -162,6 +175,9 @@ public class EditCampaign extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     * Replace to map with a selected one
+     */
     class replaceMap implements ActionListener{
         public void actionPerformed(ActionEvent arg0) {
             if(current_map_panel!=null){
@@ -181,6 +197,11 @@ public class EditCampaign extends JPanel implements MouseListener {
             }
         }
     }
+
+    /**
+     * Update the map panel list
+     * @param list
+     */
     public void updateMapList(ArrayList<MapPanel> list){
         campaign_panel.removeAll();
         for(int i=0;i<list.size();i++){
@@ -194,6 +215,11 @@ public class EditCampaign extends JPanel implements MouseListener {
             }
         }
     }
+
+    /**
+     * Get all the existing maps
+     * @return
+     */
     private JComboBox<Integer> getMapList() {
 
         JSONArray json_maps = campaign_controller.getMapList();
@@ -205,6 +231,11 @@ public class EditCampaign extends JPanel implements MouseListener {
         }
         return maps;
     }
+
+    /**
+     * Draw the maps of a campaign when loading
+     * @param json_campaign
+     */
     public void drawMapList(JSONObject json_campaign){
         map_panel=new ArrayList<MapPanel>();
         JSONArray maps=json_campaign.getJSONArray("maps");

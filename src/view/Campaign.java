@@ -1,6 +1,6 @@
 package view;
 
-import Controller.CampaignEditController;
+import controller.CampaignEditController;
 import org.json.JSONArray;
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ public class Campaign extends JPanel {
     private CampaignEditController campaign_controller;
 
     /**
-     *
+     *Create a campaign panel
      */
     public Campaign(){
         super(new GridLayout(1,0));
@@ -59,7 +59,7 @@ public class Campaign extends JPanel {
     }
 
     /**
-     *
+     *Get the existing campaign list
      * @return
      */
     public JComboBox<Integer> getCampaignList(){
