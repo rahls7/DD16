@@ -82,6 +82,21 @@ public class CellPanel extends JPanel{
             img = pic.getImage();
             repaint();
         }
+        else if(content.equals("CHEST") || (content.length() > 5 && content.substring(0, 5).equals("CHEST"))) {
+            ImageIcon pic = new ImageIcon("src/images/WALL.jpg");
+            img = pic.getImage();
+            repaint();
+        }
+        else if (content.length() > 9 && content.substring(0,9).equals("CHARACTER")) {
+            ImageIcon pic;
+            String[] parts = content.split(" ");
+            if(parts[2].equals("0"))
+                pic = new ImageIcon("src/images/FRIEND.jpg");
+            else
+                pic = new ImageIcon("src/images/ENEMY.jpg");
+            img = pic.getImage();
+            repaint();
+        }
     }
 
     /**

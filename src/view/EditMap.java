@@ -109,7 +109,7 @@ public class EditMap extends JPanel implements MouseListener{
         items.setSelectedIndex(-1);
         items.setPreferredSize(new Dimension(100, 30));
         button_chest = new JButton("Add Chest");
-        button_chest.addActionListener(new setContent("Chest"));
+        button_chest.addActionListener(new setContent("CHEST"));
         panel_chest.add(items);
         panel_chest.add(button_chest);
 
@@ -132,8 +132,13 @@ public class EditMap extends JPanel implements MouseListener{
      * @return List of the items.
      */
     private JComboBox<Integer> getItemList() {
-        // TODO Auto-generated method stub
+        JSONArray json_items = map_controller.getItemList();
         JComboBox<Integer> items = new JComboBox<Integer>();
+
+        for (int i = 0; i < json_items.length(); i++) {
+            int item_id = json_items.getJSONObject(i).getInt("id");
+            items.addItem(item_id);
+        }
         return items;
     }
 
@@ -251,18 +256,34 @@ public class EditMap extends JPanel implements MouseListener{
         @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            map_controller.setContent(previous_cell.x, previous_cell.y, content);
-            if(content.equals("ENTRY") || content.equals("EXIT")) {
+            String co = "";
+            if(content == "CHEST"){
+                int item_id;
+                if(items.getSelectedItem() != null) {
+                    item_id = (int)items.getSelectedItem();
+                    co = content + " " + Integer.toString(item_id);
+                }
+                else
+                    co = content;
+            }
+            else if(content == "CHARACTER") {
+                int character_id = (int)characters.getSelectedItem();
+                co = content + " " + characters.getSelectedItem();
+            }
+            else
+                co = content;
+            map_controller.setContent(previous_cell.x, previous_cell.y, co);
+            if(co.equals("ENTRY") || co.equals("EXIT")) {
                 for(int i = 0; i < width; i++) {
                     for(int j = 0; j < height; j++) {
-                        if(cells[i][j].content.equals(content)){
+                        if(cells[i][j].content.equals(co)){
                             cells[i][j].removeContent();
                             break;
                         }
                     }
                 }
             }
-            cells[previous_cell.x][previous_cell.y].setContent(content);
+            cells[previous_cell.x][previous_cell.y].setContent(co);
         }
     }
 
