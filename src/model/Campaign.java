@@ -65,12 +65,11 @@ public class Campaign {
     /**
      * Remove a map from a campaign
      * @param map_id
+     * @param index
      */
-    public void removeMap(String map_id){
-        for(int i=0;i<map_list.size();i++){
-            if(map_list.get(i).equals(map_id)){
-                map_list.remove(i);
-            }
+    public void removeMap(String map_id, int index){
+        if(map_list.get(index).equals(map_id)){
+            map_list.remove(index);
         }
     }
 

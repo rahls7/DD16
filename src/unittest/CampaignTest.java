@@ -41,7 +41,7 @@ public class CampaignTest {
     @Test
     public void testRemoveCampaign(){
         int before_remove_length=campaign.getMapList().size();
-        campaign.removeMap("1");
+        campaign.removeMap("1",0);
         assertEquals(before_remove_length-1,campaign.getMapList().size());
     }
     /**
