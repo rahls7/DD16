@@ -18,6 +18,8 @@ public class Main extends JFrame {
     private About about_panel;
     private Map map_panel;
     private Item item_panel;
+    private Character character_panel;
+    private Campaign campaign_panel;
     public static Main mainFrame;
 
 
@@ -109,6 +111,12 @@ public class Main extends JFrame {
                     menuAction(about_panel);
                 }else if(cmd.equals("Close")) {
                     System.exit(0);
+                }else if(cmd.equals("Character Editor")) {
+                    character_panel = new Character();
+                    menuAction(character_panel);
+                }else if(cmd.equals("Campaign Editor")) {
+                    campaign_panel = new Campaign();
+                    menuAction(campaign_panel);
                 }
             }
         };
