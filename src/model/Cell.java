@@ -53,15 +53,6 @@ public class Cell {
      */
     public void setContent(String content) {
         this.content = content;
-        if(content.equals("WALL")) {
-
-        }
-        else if(content.equals("ENTRY")) {
-
-        }
-        else if(content.equals("EXIT")) {
-
-        }
     }
 
     /**

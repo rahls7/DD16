@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import controller.MapEditorController;
+import org.json.JSONArray;
 
 /**
  * Create a panel for map creation.
@@ -32,7 +33,8 @@ public class CreateMap extends JPanel implements MouseListener{
     private CellPanel [][] cells;
     private CellPanel current_cell, previous_cell;
     private int width, height;
-    private JComboBox<Integer> characters, items;
+    private JComboBox<Integer> items;
+    private JComboBox<String> characters;
     private JButton button_wall, button_entry, button_exit, button_remove, button_validate, button_save, button_character, button_chest;
     private JCheckBox checkbox_hostile;
     private JLabel label_enemy;
@@ -82,12 +84,12 @@ public class CreateMap extends JPanel implements MouseListener{
 
         panel_character = new JPanel();
         characters = getCharacterList();
-        characters.setSelectedIndex(-1);
         characters.setPreferredSize(new Dimension(100, 30));
+        characters.setSelectedIndex(0);
         button_character = new JButton("Add Character");
         checkbox_hostile = new JCheckBox();
         label_enemy = new JLabel("Is Hostile");
-        button_character.addActionListener(new setContent("Character"));
+        button_character.addActionListener(new setContent("CHARACTER"));
         panel_character.add(characters);
         panel_character.add(label_enemy);
         panel_character.add(checkbox_hostile);
@@ -95,10 +97,10 @@ public class CreateMap extends JPanel implements MouseListener{
 
         panel_chest = new JPanel();
         items = getItemList();
-        items.setSelectedIndex(-1);
         items.setPreferredSize(new Dimension(100, 30));
+        items.setSelectedIndex(0);
         button_chest = new JButton("Add Chest");
-        button_chest.addActionListener(new setContent("Chest"));
+        button_chest.addActionListener(new setContent("CHEST"));
         panel_chest.add(items);
         panel_chest.add(button_chest);
 
@@ -122,8 +124,13 @@ public class CreateMap extends JPanel implements MouseListener{
      * @return List of the items.
      */
     private JComboBox<Integer> getItemList() {
-        // TODO Auto-generated method stub
+        JSONArray json_items = map_controller.getItemList();
         JComboBox<Integer> items = new JComboBox<Integer>();
+        for (int i = 0; i < json_items.length(); i++) {
+            int item_id = json_items.getJSONObject(i).getInt("id");
+            items.addItem(item_id);
+        }
+
         return items;
     }
 
@@ -132,9 +139,15 @@ public class CreateMap extends JPanel implements MouseListener{
      *
      * @return List of the characters.
      */
-    private JComboBox<Integer> getCharacterList() {
+    private JComboBox<String> getCharacterList() {
         // TODO Auto-generated method stub
-        JComboBox<Integer> characters = new JComboBox<Integer>();
+        JComboBox<String> characters = new JComboBox<String>();
+        JSONArray json_items = map_controller.getCharacterList();
+
+        for (int i = 0; i < json_items.length(); i++) {
+            String character_id = json_items.getJSONObject(i).getString("id");
+            characters.addItem(character_id);
+        }
         return characters;
     }
 
@@ -222,18 +235,41 @@ public class CreateMap extends JPanel implements MouseListener{
         @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            map_controller.setContent(previous_cell.x, previous_cell.y, content);
-            if(content.equals("ENTRY") || content.equals("EXIT")) {
+            String co = "";
+            if(content == "CHEST"){
+                int item_id;
+                if(items.getSelectedItem() != null) {
+                    item_id = (int)items.getSelectedItem();
+                    co = content + " " + Integer.toString(item_id);
+                }
+                else
+                    co = content;
+            }
+            else if(content == "CHARACTER") {
+                String character_id;
+                int isHostile = 0;
+                if(checkbox_hostile.isSelected())
+                    isHostile = 1;
+                if(characters.getSelectedItem() != null){
+                    character_id = (String)characters.getSelectedItem();
+                    co = content + " " + characters.getSelectedItem() + " " + isHostile;
+                }
+            }
+            else
+                co = content;
+
+            map_controller.setContent(previous_cell.x, previous_cell.y, co);
+            if(co.equals("ENTRY") || co.equals("EXIT")) {
                 for(int i = 0; i < width; i++) {
                     for(int j = 0; j < height; j++) {
-                        if(cells[i][j].content.equals(content)){
+                        if(cells[i][j].content.equals(co)){
                             cells[i][j].removeContent();
                             break;
                         }
                     }
                 }
             }
-            cells[previous_cell.x][previous_cell.y].setContent(content);
+            cells[previous_cell.x][previous_cell.y].setContent(co);
         }
     }
 
@@ -275,7 +311,13 @@ public class CreateMap extends JPanel implements MouseListener{
         @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            map_controller.saveMap();
+            if(map_controller.validateMap()){
+                map_controller.saveMap();
+                JOptionPane.showMessageDialog( Main.mainFrame, "Success");
+            }
+            else
+                JOptionPane.showMessageDialog( Main.mainFrame, "The map is not valid.");
+
         }
     }
 }
