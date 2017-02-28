@@ -236,40 +236,43 @@ public class CreateMap extends JPanel implements MouseListener{
         @Override
         public void actionPerformed(ActionEvent arg0) {
             String co = "";
-            if(content == "CHEST"){
-                int item_id;
-                if(items.getSelectedItem() != null) {
-                    item_id = (int)items.getSelectedItem();
-                    co = content + " " + Integer.toString(item_id);
+            if(previous_cell != null) {
+                if(content.equals("CHEST")){
+                    int item_id;
+                    if(items.getSelectedItem() != null) {
+                        item_id = (int)items.getSelectedItem();
+                        co = content + " " + Integer.toString(item_id);
+                    }
+                    else
+                        co = content;
+                }
+                else if(content.equals("CHARACTER")) {
+                    String character_id;
+                    int isHostile = 0;
+                    if(checkbox_hostile.isSelected())
+                        isHostile = 1;
+                    if(characters.getSelectedItem() != null){
+                        character_id = (String)characters.getSelectedItem();
+                        co = content + " " + characters.getSelectedItem() + " " + isHostile;
+                    }
                 }
                 else
                     co = content;
-            }
-            else if(content == "CHARACTER") {
-                String character_id;
-                int isHostile = 0;
-                if(checkbox_hostile.isSelected())
-                    isHostile = 1;
-                if(characters.getSelectedItem() != null){
-                    character_id = (String)characters.getSelectedItem();
-                    co = content + " " + characters.getSelectedItem() + " " + isHostile;
-                }
-            }
-            else
-                co = content;
 
-            map_controller.setContent(previous_cell.x, previous_cell.y, co);
-            if(co.equals("ENTRY") || co.equals("EXIT")) {
-                for(int i = 0; i < width; i++) {
-                    for(int j = 0; j < height; j++) {
-                        if(cells[i][j].content.equals(co)){
-                            cells[i][j].removeContent();
-                            break;
+                map_controller.setContent(previous_cell.x, previous_cell.y, co);
+                if(co.equals("ENTRY") || co.equals("EXIT")) {
+                    for(int i = 0; i < width; i++) {
+                        for(int j = 0; j < height; j++) {
+                            if(cells[i][j].content.equals(co)){
+                                cells[i][j].removeContent();
+                                break;
+                            }
                         }
                     }
                 }
+                cells[previous_cell.x][previous_cell.y].setContent(co);
             }
-            cells[previous_cell.x][previous_cell.y].setContent(co);
+
         }
     }
 
