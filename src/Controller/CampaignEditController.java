@@ -66,8 +66,8 @@ public class CampaignEditController {
      *Remove the map from the list when creating or editing a campaign
      * @param map_id
      */
-    public void removeMap(String map_id){
-        campaign.removeMap(map_id);
+    public void removeMap(String map_id,int index){
+        campaign.removeMap(map_id,index);
     }
 
     /**

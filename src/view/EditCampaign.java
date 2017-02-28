@@ -70,7 +70,7 @@ public class EditCampaign extends JPanel implements MouseListener {
             if(current_map_panel!=null){
                 String remove_map_id=current_map_panel.getMapId();
                 int remove_index=current_map_panel.getIndex();
-                campaign_controller.removeMap(remove_map_id);
+                campaign_controller.removeMap(remove_map_id,remove_index);
                 for(int i=0;i<map_panel.size();i++){
                     if(map_panel.get(i).getMapId().equals(remove_map_id)&&map_panel.get(i).getIndex()==current_map_panel.getIndex()){
                         map_panel.remove(i);
@@ -80,6 +80,8 @@ public class EditCampaign extends JPanel implements MouseListener {
                 updateMapList(map_panel);
                 campaign_panel.revalidate();
                 campaign_panel.repaint();
+                current_map_panel=null;
+                previous_map_panel=null;
             }
         }
     }
@@ -191,7 +193,6 @@ public class EditCampaign extends JPanel implements MouseListener {
                     }
                 }
                 updateMapList(map_panel);
-                //campaign_panel.removeAll();
                 campaign_panel.revalidate();
                 campaign_panel.repaint();
             }
