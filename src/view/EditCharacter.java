@@ -21,14 +21,18 @@ public class EditCharacter extends JPanel{
     public JButton EditButton, confirmButton,  takeoffButton, putonButton, deleteButton, pickButton;
     public JTextField nameTextField;
     public JTextField[] attributeTextField = new JTextField[6];
-    public JTextField[][] statsTextField = new JTextField[7][2];
+    public JTextField[][] statsTextField = new JTextField[6][2];
     String id;
     String name;
     int[] attribute = new int[6];
-    int[][] stats = new int[7][2];
+    int[][] stats = new int[6][2];
     ArrayList<String> items, backpack, equipment;
     JComboBox equipmentComboBox, backpackJComboBox, itemJComboBox;
 
+    /**
+     * Constructor of editCharacter to create an object of editCharacter
+     * @param id
+     */
     public EditCharacter(String id){
 
         //initiate
@@ -52,16 +56,15 @@ public class EditCharacter extends JPanel{
         add(new AttributeLabel("Multiple Attacks:", 7));
 
         // Create StatsLabels
-        add(new StatsLabel("Ability:", 0));
-        add(new StatsLabel("Strength:", 1));
-        add(new StatsLabel("Dexterity:", 2));
-        add(new StatsLabel("Constitution:", 3));
-        add(new StatsLabel("Intelligence:", 4));
-        add(new StatsLabel("Wisdom:", 5));
-        add(new StatsLabel("Charisma:", 6));
+        add(new StatsLabel("Strength:", 0));
+        add(new StatsLabel("Dexterity:", 1));
+        add(new StatsLabel("Constitution:", 2));
+        add(new StatsLabel("Intelligence:", 3));
+        add(new StatsLabel("Wisdom:", 4));
+        add(new StatsLabel("Charisma:", 5));
 
         //Create Modifier Labels and the TextFiels of Stats
-        for (int i=0; i<7; i++) {
+        for (int i=0; i<6; i++) {
             add(new StatsLabel("modifier:", i));
             for (int j = 0; j < 2; j++) {
                 statsTextField[i][j] = new StatsTextField(i, j);
@@ -140,7 +143,7 @@ public class EditCharacter extends JPanel{
         nameTextField.setText(characterController.getName());
 
         stats = characterController.getStats();
-        for (int i=0; i<7; i++)
+        for (int i=0; i<6; i++)
             for (int j=0; j<2; j++)
                 statsTextField[i][j].setText(Integer.toString(stats[i][j]));
         attribute = characterController.getAttributes();
@@ -162,7 +165,7 @@ public class EditCharacter extends JPanel{
         public void actionPerformed(ActionEvent event){
             if (event.getSource()==EditButton){
                 characterController.setName(nameTextField.getText());
-                for (int i=0; i<7; i++)
+                for (int i=0; i<6; i++)
                     stats[i][0] = Integer.parseInt(statsTextField[i][0].getText());
                 for (int i=0; i<5; i++)
                     attribute[i] = Integer.parseInt(attributeTextField[i].getText());

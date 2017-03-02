@@ -2,6 +2,8 @@ package view;
 //import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 
 
+import model.*;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -18,6 +20,7 @@ public class Main extends JFrame {
     private About about_panel;
     private Map map_panel;
     private Item item_panel;
+    private Character character_panel;
     public static Main mainFrame;
 
 
@@ -109,12 +112,16 @@ public class Main extends JFrame {
                     menuAction(about_panel);
                 }else if(cmd.equals("Close")) {
                     System.exit(0);
+                }else if (cmd.equals("Character Editor")){
+                    character_panel = new Character();
+                    menuAction(character_panel);
                 }
             }
         };
         item_map.addActionListener(actionListener);
         item_item.addActionListener(actionListener);
         item_about.addActionListener(actionListener);
+        item_character.addActionListener(actionListener);
 
 
 
