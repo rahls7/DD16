@@ -182,7 +182,6 @@ public class EditCharacter extends JPanel{
             }else if (event.getSource()==takeoffButton){
                 int i = equipmentComboBox.getSelectedIndex();
                 characterController.setEquipmentBackpack(i);
-                characterController.deleteEquipment(i);
                 display();
                 validate();
                 repaint();
