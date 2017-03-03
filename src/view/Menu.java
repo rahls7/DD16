@@ -19,6 +19,9 @@ import java.io.IOException;
 public class Menu extends JPanel {
 
     private Map mapPanel;
+    private Character charPanel;
+    private Campaign camPanel;
+    private About aboutPanel;
     private JButton buttonPlay, buttonMap, buttonCharacter, buttonCampaign, buttonAbout, buttonExit;
 
 
@@ -30,7 +33,7 @@ public class Menu extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.black));
         //setSize(getPreferredSize());
         setLayout(new GridLayout(10,1));
-        //addButtons();
+        addButtons();
     }
 
     /**
@@ -65,48 +68,90 @@ public class Menu extends JPanel {
      * Adds Buttons which creates new instance of other JPanels. Overrides ActionListener method to switch between JPanel.
      */
     public void addButtons() {
-        buttonPlay = new JButton("P L A Y");
+        buttonPlay = new JButton("P l a y");
+        buttonPlay.setForeground(Color.BLUE);
+        buttonPlay.setOpaque(false);
+        buttonPlay.setContentAreaFilled(false);
+        buttonPlay.setBorderPainted(false);
+        buttonPlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        buttonPlay.setFont(new Font("Times New Roman", Font.BOLD, 40));
         add(buttonPlay);
 
-        buttonMap = new JButton("M A P E D I T O R");
+        buttonMap = new JButton("M a p E d i t o r");
         buttonMap.setForeground(Color.BLUE);
         buttonMap.setOpaque(false);
         buttonMap.setContentAreaFilled(false);
         buttonMap.setBorderPainted(false);
+        buttonMap.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        buttonMap.setFont(new Font("Times New Roman", Font.BOLD,40));
         add(buttonMap);
 
 
-        JButton buttonCharacter = new JButton("C H A R A C T E R E D I T O R");
-
+        buttonCharacter = new JButton("C h a r a c t e r E d i t o r");
+        buttonCharacter.setForeground(Color.BLUE);
+        buttonCharacter.setOpaque(false);
+        buttonCharacter.setContentAreaFilled(false);
+        buttonCharacter.setBorderPainted(false);
+        buttonCharacter.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        buttonCharacter.setFont(new Font("Times New Roman", Font.BOLD,40));
         add(buttonCharacter);
 
-        buttonCampaign = new JButton("C A M P A I G N E D I T O R");
-
+        buttonCampaign = new JButton("C a m p a i g n E d i t o r");
+        buttonCampaign.setForeground(Color.BLUE);
+        buttonCampaign.setOpaque(false);
+        buttonCampaign.setContentAreaFilled(false);
+        buttonCampaign.setBorderPainted(false);
+        buttonCampaign.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        buttonCampaign.setFont(new Font("Times New Roman", Font.BOLD,40));
         add(buttonCampaign);
 
-        buttonAbout = new JButton("A B O U T");
+        buttonAbout = new JButton("A b o u t");
+        buttonAbout.setForeground(Color.BLUE);
+        buttonAbout.setOpaque(false);
+        buttonAbout.setContentAreaFilled(false);
+        buttonAbout.setBorderPainted(false);
+        buttonAbout.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        buttonAbout.setFont(new Font("Times New Roman", Font.BOLD,40));
         add(buttonAbout);
 
 
-        buttonExit = new JButton("E X I T");
+        buttonExit = new JButton("E x i t");
+        buttonExit.setForeground(Color.BLUE);
+        buttonExit.setOpaque(false);
+        buttonExit.setContentAreaFilled(false);
+        buttonExit.setBorderPainted(false);
+        buttonExit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        buttonExit.setFont(new Font("Times New Roman", Font.BOLD,40));
         add(buttonExit);
 
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String cmd = e.getActionCommand();
-                if(cmd.equals("M A P E D I T O R")) {
+                if(cmd.equals("M a p E d i t o r")) {
                     mapPanel = new Map();
-                    Main.mainFrame.getContentPane().add(mapPanel);
+                    menuAction(mapPanel);
                     //setLayout(new GridLayout(1,0));
-                }else if(cmd.equals("E X I T")) {
+                }else if(cmd.equals("E x i t")) {
                     System.exit(0);
+                }else if(cmd.equals("C h a r a c t e r E d i t o r")) {
+                    charPanel = new Character();
+                    menuAction(charPanel);
+                }else if(cmd.equals("C a m p a i g n E d i t o r")) {
+                    camPanel = new Campaign();
+                    menuAction(camPanel);
+                }else if(cmd.equals("A b o u t")) {
+                    aboutPanel = new About();
+                    menuAction(aboutPanel);
                 }
             }
         };
 
         buttonMap.addActionListener(actionListener);
         buttonExit.addActionListener(actionListener);
+        buttonCharacter.addActionListener(actionListener);
+        buttonAbout.addActionListener(actionListener);
+        buttonCampaign.addActionListener(actionListener);
     }
 
 
@@ -119,10 +164,10 @@ public class Menu extends JPanel {
      *              </code>
      */
     public void menuAction(JPanel panel) {
-        Main.mainFrame.getContentPane().removeAll();
+        removeAll();
         System.out.println("Menu MenuAction Caled");
-        Main.mainFrame.getContentPane().add(panel);
-        Main.mainFrame.getContentPane().doLayout();
+        add(panel);
+        doLayout();
         repaint();
         validate();
     }
