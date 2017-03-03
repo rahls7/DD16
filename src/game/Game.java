@@ -1,6 +1,7 @@
 package game;
 
-import display.Screen;
+import view.*;
+import view.Menu;
 
 import javax.swing.JFrame;
 import java.awt.*;
@@ -22,6 +23,17 @@ public class Game extends Canvas implements Runnable{
     private JFrame frame;
 
     private Screen screen;
+
+
+
+    private enum STATE{
+        MENU,
+        GAME
+    };
+
+    private view.Menu Menu = new Menu();
+
+    private STATE State = STATE.MENU;
 
     private BufferedImage image = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData(); // Converting image object into array of pixels.
@@ -61,6 +73,10 @@ public class Game extends Canvas implements Runnable{
 
     public void update() {
 
+        if(State == STATE.MENU) {
+
+        }
+
     }
 
     public void render() {
@@ -70,18 +86,20 @@ public class Game extends Canvas implements Runnable{
             return;
         }
         screen.clear();
+
         screen.render();
 
         for(int i =0; i < pixels.length;i++) {
             pixels[i] = screen.pixels[i];
         }
-
         Graphics g = bs.getDrawGraphics();
 
         g.drawImage(image,0,0,getWidth(),getHeight(),null);
         g.dispose();
 
         bs.show();
+
+
     }
 
     public static void main(String[] args) {
@@ -93,6 +111,7 @@ public class Game extends Canvas implements Runnable{
         game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.frame.setLocationRelativeTo(null);
         game.frame.setVisible(true);
+
 
         game.start();
     }

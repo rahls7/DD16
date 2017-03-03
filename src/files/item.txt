@@ -1,0 +1,1 @@
+{"items":[{"id":3,"attribute":"Armor Class","attribute_value":3,"type":"Armor"},{"id":4,"attribute":"Constitution","attribute_value":2,"type":"Ring"},{"id":2,"attribute":"Damage Bonus","attribute_value":2,"type":"Weapon"},{"id":1,"attribute":"Constitution","attribute_value":3,"type":"Belt"},{"id":5,"attribute":"Constitution","attribute_value":5,"type":"Ring"}]}

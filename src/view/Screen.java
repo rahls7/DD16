@@ -1,7 +1,8 @@
-package display;
+package view;
 
 /**
  * Created by rahls7 on 05/02/17.
+ * Edited on 18/2/2017
  */
 public class Screen {
 
