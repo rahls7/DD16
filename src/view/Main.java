@@ -114,11 +114,9 @@ public class Main extends JFrame {
                     System.exit(0);
                 }else if(cmd.equals("Character Editor")) {
                     character_panel = new Character();
-                    System.out.println(cmd);
                     menuAction(character_panel);
                 }else if(cmd.equals("Campaign Editor")) {
                     campaign_panel = new Campaign();
-                    System.out.println(cmd);
                     menuAction(campaign_panel);
                 }
             }
@@ -129,7 +127,7 @@ public class Main extends JFrame {
         item_character.addActionListener(actionListener);
         item_compaign.addActionListener(actionListener);
         item_close.addActionListener(actionListener);
-        
+
         return menu;
     }
 
@@ -152,4 +150,5 @@ public class Main extends JFrame {
 
 
 }
+
 

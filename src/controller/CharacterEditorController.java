@@ -25,7 +25,7 @@ public class CharacterEditorController{
 
     /**
      *Constructor of character controller, create a controller, called by the character view
-     * @param id
+     * @param id ID of the character
      */
     public CharacterEditorController(String id){
         characterModel = new Character(id);
@@ -58,82 +58,140 @@ public class CharacterEditorController{
 
     /**
      * get a Character from file by its id
-     * @param id
+     * @param id ID of the character
      */
     public void getCharacter(String id){
         characterModel = characterIO.getCharacter(id);
     }
 
-    //saveCharacter
+    /**
+     * Save this character into character file.
+      */
     public void saveCharacter(){
         characterIO.saveCharacter(characterModel);
     }
 
-    //initiate
+    /**
+     * initiate the stats and attributes of character
+      */
     public void initiateStats(){characterModel.initiateStats();}
 
-    //name
+    /**
+     * set the character model's name
+     * @param name Name of the character
+     */
     public void setName(String name){characterModel.setName(name);}
 
+    /**
+     * get the character's name from character model
+     * @return
+     */
     public String getName(){return characterModel.getName();}
 
-    //Equipment
+    /**
+     * set the model character's euipment,
+      * @param equipment items dressed
+     */
     public void setEquipment(int equipment) {
         characterModel.setEquipment(characterModel.getBackpack().get(equipment));
         characterModel.recalculateStats();
     }
 
+    /**
+     * get the model character's equipment
+     * @return euipment, model character's equipment
+     */
     public ArrayList<String> getEquipment() {
         return itemToString(characterModel.getEquipment());
     }
 
+    /**
+     * delete the model's item
+     * @param equipment
+     */
     public void deleteEquipment(int equipment) {
         characterModel.deleteEquipment(characterModel.getEquipment().get(equipment));
         characterModel.recalculateStats();
     }
 
-    //Backpack
+    /**
+     * set the model's backpack
+     * @param backpack backpack of the character model
+     */
     public void setBackpack(int backpack) {
         characterModel.setBackpack(items.get(backpack));
     }
 
+    /**
+     * put one item on the model's backpack
+     * @param equipmentBackpack
+     */
     public void setEquipmentBackpack(int equipmentBackpack){
         characterModel.setBackpack(characterModel.getEquipment().get(equipmentBackpack));
     }
 
+    /**
+     * get all items in model's backpack
+     * @return
+     */
     public ArrayList<String > getBackpack() {
         return itemToString(characterModel.getBackpack());
     }
 
+    /**
+     * delete item from backpack
+     * @param backpack
+     */
     public void removeBackpack(int backpack) {
         characterModel.removeBackpack(characterModel.getBackpack().get(backpack));
     }
 
-    // Items
+    /**
+     * get the items from database
+     * @return
+     */
     public ArrayList<String> getItem(){
 
         return itemToString(items);
     }
 
-    //Stats
+    /**
+     * set character model's stats
+     * @param stats
+     */
     public void setStats(int[][] stats) {
         characterModel.setStats(stats);
     }
 
+    /**
+     * get character model's stats
+     * @return stats, its model's stats
+     */
     public int[][] getStats() {
         return characterModel.getStats();
     }
 
-    //Atributes
+    /**
+     * set character model's attributes
+     * @param attributes
+     */
     public void setAttributes(int[] attributes) {
         characterModel.setAttributes(attributes);
     }
 
+    /**
+     * get character model's attributes
+     * @return attributes
+     */
     public int[] getAttributes() {
         return characterModel.getAttributes();
     }
 
-    //items to string
+    /**
+     *
+     * @param items
+     * @return
+     */
     public ArrayList<String> itemToString(ArrayList<Item> items){
         ArrayList<String> strings = new ArrayList<String>();
         String s;
