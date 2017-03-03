@@ -29,7 +29,7 @@ public class CellPanel extends JPanel{
         this.y = y;
         Border blackline = BorderFactory.createLineBorder(Color.black);
         setBorder(blackline);
-        ImageIcon pic = new ImageIcon("src/images/FLOOR.jpg");
+        ImageIcon pic = new ImageIcon("src/images/floor.jpg");
         img = pic.getImage();
         repaint();
     }
@@ -68,17 +68,32 @@ public class CellPanel extends JPanel{
     public void setContent(String content) {
         this.content = content;
         if(content.equals("WALL")) {
-            ImageIcon pic = new ImageIcon("src/images/WALL.jpg");
+            ImageIcon pic = new ImageIcon("src/images/wall.png");
             img = pic.getImage();
             repaint();
         }
         else if(content.equals("ENTRY")) {
-            ImageIcon pic = new ImageIcon("src/images/ENTRY.jpg");
+            ImageIcon pic = new ImageIcon("src/images/entry.png");
             img = pic.getImage();
             repaint();
         }
         else if(content.equals("EXIT")) {
-            ImageIcon pic = new ImageIcon("src/images/EXIT.jpg");
+            ImageIcon pic = new ImageIcon("src/images/exit.png");
+            img = pic.getImage();
+            repaint();
+        }
+        else if(content.equals("CHEST") || (content.length() > 5 && content.substring(0, 5).equals("CHEST"))) {
+            ImageIcon pic = new ImageIcon("src/images/chest.jpg");
+            img = pic.getImage();
+            repaint();
+        }
+        else if (content.length() > 9 && content.substring(0,9).equals("CHARACTER")) {
+            ImageIcon pic;
+            String[] parts = content.split(" ");
+            if(parts[2].equals("0"))
+                pic = new ImageIcon("src/images/friend.png");
+            else
+                pic = new ImageIcon("src/images/enemy.png");
             img = pic.getImage();
             repaint();
         }
@@ -89,7 +104,7 @@ public class CellPanel extends JPanel{
      */
     public void removeContent() {
         content = "";
-        ImageIcon pic = new ImageIcon("src/images/FLOOR.jpg");
+        ImageIcon pic = new ImageIcon("src/images/floor.jpg");
         img = pic.getImage();
         repaint();
     }

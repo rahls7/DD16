@@ -1,11 +1,8 @@
 package controller;
 
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import model.MapIO;
-import model.Cell;
-import model.Map;
 
 /**
  * controller class to mediate the communication between models and views.
@@ -18,6 +15,8 @@ public class MapEditorController {
     private Map map;
     private Cell [][] cells;
     private MapIO mapio;
+    private ItemIO itemio;
+    private CharacterIO characterio;
 
     /**
      * Initiate an instance of MapIO.
@@ -25,6 +24,8 @@ public class MapEditorController {
     public MapEditorController() {
         //map = new Map(width, height);
         mapio = new MapIO();
+        itemio = new ItemIO();
+        characterio = new CharacterIO();
         //cells = map.cells;
     }
 
@@ -101,6 +102,24 @@ public class MapEditorController {
      */
     public JSONArray getMapList() {
         return mapio.getMapList();
+    }
+
+    /**
+     * Get item list from the file.
+     *
+     * @return List of items.
+     */
+    public JSONArray getItemList() {
+        return itemio.getItemList();
+    }
+
+    /**
+     * Get character list from the file.
+     *
+     * @return List of characters.
+     */
+    public JSONArray getCharacterList() {
+        return characterio.getItemList();
     }
 }
 
