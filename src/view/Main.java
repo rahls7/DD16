@@ -2,8 +2,6 @@ package view;
 //import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 
 
-import model.*;
-
 import javax.swing.*;
 
 import java.awt.*;
@@ -21,6 +19,7 @@ public class Main extends JFrame {
     private Map map_panel;
     private Item item_panel;
     private Character character_panel;
+    private Campaign campaign_panel;
     public static Main mainFrame;
 
 
@@ -101,6 +100,7 @@ public class Main extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String cmd = e.getActionCommand();
+                System.out.println(cmd);
                 if(cmd.equals("Map Editor")) {
                     map_panel = new Map();
                     menuAction(map_panel);
@@ -112,9 +112,12 @@ public class Main extends JFrame {
                     menuAction(about_panel);
                 }else if(cmd.equals("Close")) {
                     System.exit(0);
-                }else if (cmd.equals("Character Editor")){
+                }else if(cmd.equals("Character Editor")) {
                     character_panel = new Character();
                     menuAction(character_panel);
+                }else if(cmd.equals("Campaign Editor")) {
+                    campaign_panel = new Campaign();
+                    menuAction(campaign_panel);
                 }
             }
         };
@@ -122,8 +125,8 @@ public class Main extends JFrame {
         item_item.addActionListener(actionListener);
         item_about.addActionListener(actionListener);
         item_character.addActionListener(actionListener);
-
-
+        item_compaign.addActionListener(actionListener);
+        item_close.addActionListener(actionListener);
 
         return menu;
     }
@@ -147,4 +150,5 @@ public class Main extends JFrame {
 
 
 }
+
 
