@@ -30,13 +30,13 @@ public class CreateItem extends JPanel {
         item_controller = new ItemEditorController();
 
         attributes = new JComboBox<>();
-        attributes.setPreferredSize(new Dimension(140,30));
+        attributes.setPreferredSize(new Dimension(140, 30));
         attributes.addItem("Intelligence");
         attributes.addItem("Wisdom");
         attributes.addItem("Armor Class");
 
         items = new JComboBox<>();
-        items.setPreferredSize(new Dimension(140,30));
+        items.setPreferredSize(new Dimension(140, 30));
         items.addItem("Helmet");
         items.addItem("Armor");
         items.addItem("Shield");
@@ -93,7 +93,7 @@ public class CreateItem extends JPanel {
         items.addItemListener(itemListener);
 
         attribute_values = new JComboBox<>();
-        attribute_values.setPreferredSize(new Dimension(100,40));
+        attribute_values.setPreferredSize(new Dimension(100, 40));
         attribute_values.addItem(1);
         attribute_values.addItem(2);
         attribute_values.addItem(3);
@@ -112,8 +112,7 @@ public class CreateItem extends JPanel {
     /**
      * Action performed in order to save an item.
      */
-    class saveItem implements ActionListener
-    {
+    class saveItem implements ActionListener {
         @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent arg0) {
@@ -121,10 +120,10 @@ public class CreateItem extends JPanel {
             String attribute = (String) attributes.getSelectedItem();
             int attribute_value = (Integer) attribute_values.getSelectedItem();
             boolean result = item_controller.saveItem(item, attribute, attribute_value);
-            if(result)
-                JOptionPane.showMessageDialog( Main.mainFrame, "Success");
+            if (result)
+                JOptionPane.showMessageDialog(Main.mainFrame, "Success");
             else
-                JOptionPane.showMessageDialog( Main.mainFrame, "Fail");
+                JOptionPane.showMessageDialog(Main.mainFrame, "Fail");
         }
     }
 }

@@ -28,7 +28,7 @@ public class CharacterIO {
             JSONObject json = generateJSON(id, character);
             for (int i = 0; i < json_items.length(); i++) {
                 item_id = json_items.getJSONObject(i).getString("id");
-                if (id.compareTo(item_id)==0) {
+                if (id.compareTo(item_id) == 0) {
                     json_items.remove(i);
                     break;
                 }
@@ -43,7 +43,7 @@ public class CharacterIO {
     /**
      * Generate JSON for an item.
      *
-     * @param id Id of the item.
+     * @param id        Id of the item.
      * @param character Object of the item.
      * @return JSON of the item.
      */
@@ -52,12 +52,12 @@ public class CharacterIO {
         jsonObject.put("id", character.getId());
         jsonObject.put("name", character.getName());
         ArrayList<Integer> equipment = new ArrayList<Integer>();
-        for (Item item:character.getEquipment()){
+        for (Item item : character.getEquipment()) {
             equipment.add(item.getSaveId());
         }
         jsonObject.put("equipment", equipment);
         ArrayList<Integer> backpack = new ArrayList<Integer>();
-        for (Item item: character.getBackpack()){
+        for (Item item : character.getBackpack()) {
             backpack.add(item.getSaveId());
         }
         jsonObject.put("backpack", backpack);
@@ -78,18 +78,14 @@ public class CharacterIO {
      */
     private String readCharacterFile() {
         String content = "";
-        try
-        {
+        try {
             BufferedReader reader = new BufferedReader(new FileReader("src/files/character.txt"));
             String line;
-            while ((line = reader.readLine()) != null)
-            {
+            while ((line = reader.readLine()) != null) {
                 content += line;
             }
             reader.close();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -101,7 +97,7 @@ public class CharacterIO {
      *
      * @param json_content Content to be written.
      */
-    public void writeCharacterFile(JSONObject json_content){
+    public void writeCharacterFile(JSONObject json_content) {
         try {
             PrintWriter writer = new PrintWriter("src/files/character.txt", "UTF-8");
             writer.println(json_content);
@@ -139,48 +135,48 @@ public class CharacterIO {
         for (int i = 0; i < json_items.length(); i++) {
             json_item = json_items.getJSONObject(i);
             id = json_item.getString("id");
-            if(id.equals(item_id)){
+            if (id.equals(item_id)) {
                 String name = json_item.getString("name");
 
-                ItemIO itemIO= new ItemIO();
-                int [] equipment = null;
+                ItemIO itemIO = new ItemIO();
+                int[] equipment = null;
                 data = json_item.getJSONArray("equipment");
                 equipment = new int[data.length()];
-                for (int j=0; j<data.length(); j++) {
+                for (int j = 0; j < data.length(); j++) {
                     equipment[j] = data.getInt(j);
                     character.setEquipment(itemIO.getItem(equipment[j]));
                 }
 
-                int [] backpack = null;
+                int[] backpack = null;
                 data = json_item.getJSONArray("backpack");
                 backpack = new int[data.length()];
-                for (int j=0; j<data.length(); j++) {
+                for (int j = 0; j < data.length(); j++) {
                     backpack[j] = data.getInt(j);
                     character.setBackpack(itemIO.getItem(backpack[j]));
                 }
 
-                int [][] stats = new int[7][2];
+                int[][] stats = new int[7][2];
                 data = json_item.getJSONArray("stats");
-                for (int j=0; j<6; j++){
+                for (int j = 0; j < 6; j++) {
                     JSONArray data2 = data.getJSONArray(j);
-                    for (int k=0; k<2; k++)
+                    for (int k = 0; k < 2; k++)
                         stats[j][k] = data2.getInt(k);
                 }
-                int [][] basicStats = new int[7][2];
+                int[][] basicStats = new int[7][2];
                 data = json_item.getJSONArray("basicStats");
-                for (int j=0; j<6; j++){
+                for (int j = 0; j < 6; j++) {
                     JSONArray data2 = data.getJSONArray(j);
-                    for (int k=0; k<2; k++)
+                    for (int k = 0; k < 2; k++)
                         basicStats[j][k] = data2.getInt(k);
                 }
 
                 int[] attributes = new int[6];
                 data = json_item.getJSONArray("attributes");
-                for (int j=0; j<6; j++)
+                for (int j = 0; j < 6; j++)
                     attributes[j] = data.getInt(j);
-                int [] basicAttribute = new int[6];
+                int[] basicAttribute = new int[6];
                 data = json_item.getJSONArray("basicAttributes");
-                for (int j=0; j<6; j++)
+                for (int j = 0; j < 6; j++)
                     basicAttribute[j] = data.getInt(j);
 
                 character.setAttributes(attributes);

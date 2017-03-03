@@ -11,8 +11,8 @@ import javax.swing.JPanel;
  * Created by rahls7 on 2017/02/10
  */
 
-public class About  extends JPanel{
-    public About(){
+public class About extends JPanel {
+    public About() {
         super();
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
@@ -22,7 +22,7 @@ public class About  extends JPanel{
         // Draw Text
         String str = "Welcome to the Fantasy World of Dragon and Dungeons. This game is created by an exceptional team of" +
                 "Developers using Java.";
-        g.drawString(str,50,50);
+        g.drawString(str, 50, 50);
     }
 }
 

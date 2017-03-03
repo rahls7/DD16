@@ -15,10 +15,10 @@ import java.util.Random;
 /**
  * Created by Silas on 2017/2/10.
  */
-public class CreateCharacter extends JPanel{
+public class CreateCharacter extends JPanel {
 
     private CharacterEditorController characterController;
-    public JButton createButton, confirmButton,  takeoffButton, putonButton, deleteButton, pickButton;
+    public JButton createButton, confirmButton, takeoffButton, putonButton, deleteButton, pickButton;
     public JTextField nameTextField;
     public JTextField[] attributeTextField = new JTextField[6];
     public JTextField[][] statsTextField = new JTextField[6][2];
@@ -31,19 +31,20 @@ public class CreateCharacter extends JPanel{
 
     /**
      * Constructor of createCharacter to create an object of CreateCharacter View
+     *
      * @param id, ID of the character
      */
-    public CreateCharacter(String id){
+    public CreateCharacter(String id) {
 
         //initiate
         super();
-        setSize(2500,600);
+        setSize(2500, 600);
         setLayout(null);
         this.id = id;
         characterController = new CharacterEditorController(id);
         items = new ArrayList<String>();
         backpack = new ArrayList<String>();
-        equipment = new ArrayList<String >();
+        equipment = new ArrayList<String>();
 
         // Create AttributeLabels
         add(new AttributeLabel("name:", 0));
@@ -64,7 +65,7 @@ public class CreateCharacter extends JPanel{
         add(new StatsLabel("Charisma:", 5));
 
         //Create Modifier Labels and the TextFiels of Stats
-        for (int i=0; i<6; i++) {
+        for (int i = 0; i < 6; i++) {
             add(new StatsLabel("modifier:", i));
             for (int j = 0; j < 2; j++) {
                 statsTextField[i][j] = new StatsTextField(i, j);
@@ -75,8 +76,8 @@ public class CreateCharacter extends JPanel{
         //Create AttributeTextFields
         nameTextField = new AttributeTextField(0);
         add(nameTextField);
-        for (int i=0; i<6; i++){
-            attributeTextField[i] = new AttributeTextField(i+2);
+        for (int i = 0; i < 6; i++) {
+            attributeTextField[i] = new AttributeTextField(i + 2);
             add(attributeTextField[i]);
         }
 
@@ -88,7 +89,7 @@ public class CreateCharacter extends JPanel{
         createButton.addActionListener(handler);
 
         confirmButton = new JButton("Confirm");
-        confirmButton.setBounds(630,450,100,50);
+        confirmButton.setBounds(630, 450, 100, 50);
         add(confirmButton);
         confirmButton.addActionListener(handler);
 
@@ -100,7 +101,7 @@ public class CreateCharacter extends JPanel{
         putonButton = createItemJButton("Put on", 1100, 300);
         deleteButton = createItemJButton("Delete", 1100, 370);
         pickButton = createItemJButton("Pick", 1350, 300);
-        add(takeoffButton );
+        add(takeoffButton);
         takeoffButton.addActionListener(handler);
         add(putonButton);
         putonButton.addActionListener(handler);
@@ -124,29 +125,29 @@ public class CreateCharacter extends JPanel{
         add(itemJComboBox);
     }
 
-    JLabel createItemJLabel(String name, int x, int y){
+    JLabel createItemJLabel(String name, int x, int y) {
         JLabel label = new JLabel(name);
         label.setBounds(x, y, 150, 50);
         label.setFont(new Font("dialog", 0, 20));
         return label;
     }
 
-    JButton createItemJButton(String name, int x, int y){
+    JButton createItemJButton(String name, int x, int y) {
         JButton button = new JButton(name);
         button.setBounds(x, y, 100, 50);
         return button;
     }
 
-    public void display(){
+    public void display() {
         stats = characterController.getStats();
-        for (int i=0; i<6; i++)
-            for (int j=0; j<2; j++)
+        for (int i = 0; i < 6; i++)
+            for (int j = 0; j < 2; j++)
                 statsTextField[i][j].setText(Integer.toString(stats[i][j]));
         attribute = characterController.getAttributes();
-        for (int i=0; i<6; i++)
+        for (int i = 0; i < 6; i++)
             attributeTextField[i].setText(Integer.toString(attribute[i]));
 
-        if (attribute[5]==1)
+        if (attribute[5] == 1)
             attributeTextField[5].setText("true");
         else
             attributeTextField[5].setText("False");
@@ -156,10 +157,10 @@ public class CreateCharacter extends JPanel{
         backpackJComboBox.setModel(new DefaultComboBoxModel(characterController.getBackpack().toArray()));
     }
 
-    class Handler implements ActionListener{
+    class Handler implements ActionListener {
 
-        public void actionPerformed(ActionEvent event){
-            if (event.getSource()==createButton){
+        public void actionPerformed(ActionEvent event) {
+            if (event.getSource() == createButton) {
                 String name = nameTextField.getText();
                 characterController.setName(name);
                 characterController.initiateStats();
@@ -167,31 +168,30 @@ public class CreateCharacter extends JPanel{
                 display();
                 validate();
                 repaint();
-            }
-            else if (event.getSource()==confirmButton){
+            } else if (event.getSource() == confirmButton) {
                 characterController.saveCharacter();
-                JOptionPane.showMessageDialog(confirmButton,"Success");
+                JOptionPane.showMessageDialog(confirmButton, "Success");
 
-            }else if (event.getSource()==takeoffButton){
+            } else if (event.getSource() == takeoffButton) {
                 int i = equipmentComboBox.getSelectedIndex();
                 characterController.setEquipmentBackpack(i);
                 display();
                 validate();
                 repaint();
-            }else if (event.getSource()==putonButton){
+            } else if (event.getSource() == putonButton) {
                 int i = backpackJComboBox.getSelectedIndex();
                 characterController.setEquipment(i);
                 characterController.removeBackpack(i);
                 display();
                 validate();
                 repaint();
-            }else if (event.getSource()==deleteButton){
+            } else if (event.getSource() == deleteButton) {
                 int i = backpackJComboBox.getSelectedIndex();
                 characterController.removeBackpack(i);
                 display();
                 validate();
                 repaint();
-            }else if (event.getSource()==pickButton){
+            } else if (event.getSource() == pickButton) {
                 int i = itemJComboBox.getSelectedIndex();
                 characterController.setBackpack(i);
                 display();
@@ -205,41 +205,41 @@ public class CreateCharacter extends JPanel{
 
 }
 
-class StatsLabel extends JLabel{
-    StatsLabel(String name, int number){
+class StatsLabel extends JLabel {
+    StatsLabel(String name, int number) {
         setText(name);
         if (name.equals("modifier:"))
-            setBounds(560, number*50+20, 120, 40);
+            setBounds(560, number * 50 + 20, 120, 40);
         else
-            setBounds(330, number*50+20, 120, 40);
+            setBounds(330, number * 50 + 20, 120, 40);
         setFont(new Font("dialog", 0, 15));
     }
 }
 
-class StatsTextField extends JTextField{
-    StatsTextField(int i, int j){
+class StatsTextField extends JTextField {
+    StatsTextField(int i, int j) {
         setVisible(true);
         setFont(new Font("dialog", 0, 15));
-        setLocation(430+j*200,i*50+20);
-        setSize(100,40);
+        setLocation(430 + j * 200, i * 50 + 20);
+        setSize(100, 40);
         setHorizontalAlignment(JTextField.CENTER);
     }
 }
 
-class AttributeLabel extends JLabel{
-    AttributeLabel(String name, int number){
+class AttributeLabel extends JLabel {
+    AttributeLabel(String name, int number) {
         setText(name);
-        setBounds(20, number*50+20, 160, 40);
+        setBounds(20, number * 50 + 20, 160, 40);
         setFont(new Font("dialog", 0, 15));
     }
 }
 
-class  AttributeTextField extends JTextField{
-    AttributeTextField(int i){
+class AttributeTextField extends JTextField {
+    AttributeTextField(int i) {
         setVisible(true);
         setFont(new Font("dialog", 0, 15));
-        setLocation(140,i*50+20);
-        setSize(100,40);
+        setLocation(140, i * 50 + 20);
+        setSize(100, 40);
         setHorizontalAlignment(JTextField.CENTER);
     }
 }

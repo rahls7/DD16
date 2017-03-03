@@ -12,7 +12,7 @@ import java.awt.image.DataBufferInt;
 /**
  * Created by rahls7 on 05/02/17.
  */
-public class Game extends Canvas implements Runnable{
+public class Game extends Canvas implements Runnable {
 
     //resolution
     public static int width = 300;
@@ -25,23 +25,24 @@ public class Game extends Canvas implements Runnable{
     private Screen screen;
 
 
-
-    private enum STATE{
+    private enum STATE {
         MENU,
         GAME
-    };
+    }
+
+    ;
 
     private view.Menu Menu = new Menu();
 
     private STATE State = STATE.MENU;
 
-    private BufferedImage image = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
-    private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData(); // Converting image object into array of pixels.
+    private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData(); // Converting image object into array of pixels.
 
     private boolean running = false;
 
     public Game() {
-        Dimension size = new Dimension(width *scale, height*scale);
+        Dimension size = new Dimension(width * scale, height * scale);
         setPreferredSize(size);
 
         screen = new Screen(width, height);
@@ -50,16 +51,16 @@ public class Game extends Canvas implements Runnable{
 
     public void run() {
         long lastTime = System.nanoTime();
-        final double ns = 1000000000.0 / 60.0 ;
+        final double ns = 1000000000.0 / 60.0;
         double delta = 0;
-        int frames =0;
+        int frames = 0;
         int updates = 0;
         //Game Loop
-        while(running) {
+        while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
-            while(delta>=1) {
+            while (delta >= 1) {
                 update();
                 updates++; // Times update method is called.
 
@@ -73,7 +74,7 @@ public class Game extends Canvas implements Runnable{
 
     public void update() {
 
-        if(State == STATE.MENU) {
+        if (State == STATE.MENU) {
 
         }
 
@@ -81,7 +82,7 @@ public class Game extends Canvas implements Runnable{
 
     public void render() {
         BufferStrategy bs = getBufferStrategy();
-        if(bs==null) {
+        if (bs == null) {
             createBufferStrategy(3); // Multi-buffering
             return;
         }
@@ -89,12 +90,12 @@ public class Game extends Canvas implements Runnable{
 
         screen.render();
 
-        for(int i =0; i < pixels.length;i++) {
+        for (int i = 0; i < pixels.length; i++) {
             pixels[i] = screen.pixels[i];
         }
         Graphics g = bs.getDrawGraphics();
 
-        g.drawImage(image,0,0,getWidth(),getHeight(),null);
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.dispose();
 
         bs.show();
@@ -125,9 +126,9 @@ public class Game extends Canvas implements Runnable{
 
     public synchronized void stop() {
         running = false;
-        try{
+        try {
             thread.join();
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

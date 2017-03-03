@@ -19,14 +19,16 @@ public class ItemContentTest {
     /**
      * Initiate an item object.
      */
-    @Before public void before(){
+    @Before
+    public void before() {
         item = new Item("Weapon", "Damage Bonus", 5);
     }
 
     /**
      * Test function of setting type of the item.
      */
-    @Test public void testSetType(){
+    @Test
+    public void testSetType() {
         item.setType("Helmet");
         assertEquals("Helmet", item.getType());
     }
@@ -34,7 +36,8 @@ public class ItemContentTest {
     /**
      * Test function of setting attribute of the item.
      */
-    @Test public void testSetAttribute(){
+    @Test
+    public void testSetAttribute() {
         item.setAttribute("Attack Bonus");
         assertEquals("Attack Bonus", item.getAttribute());
     }
@@ -42,7 +45,8 @@ public class ItemContentTest {
     /**
      * Test function of setting attribute value of the item.
      */
-    @Test public void testSetAttributeValue(){
+    @Test
+    public void testSetAttributeValue() {
         item.setAttributeValue(3);
         assertEquals(3, item.getAttributeValue());
     }
@@ -50,7 +54,8 @@ public class ItemContentTest {
     /**
      * Test function of setting is saved status of the item.
      */
-    @Test public void testSetIsSaved(){
+    @Test
+    public void testSetIsSaved() {
         item.setIsSaved(false);
         assertFalse(item.getIsSaved());
     }
@@ -58,7 +63,8 @@ public class ItemContentTest {
     /**
      * Test function of setting id of the item.
      */
-    @Test public void testSetSaveId(){
+    @Test
+    public void testSetSaveId() {
         item.setSaveId(6);
         assertEquals(6, item.getSaveId());
     }

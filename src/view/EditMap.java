@@ -29,10 +29,10 @@ import controller.MapEditorController;
  * @author Jiayao Zhou
  * @version 1.0.0
  */
-public class EditMap extends JPanel implements MouseListener{
+public class EditMap extends JPanel implements MouseListener {
 
     private JPanel map_panel, setting_panel, panel_character, panel_chest;
-    private CellPanel [][] cells;
+    private CellPanel[][] cells;
     private CellPanel current_cell, previous_cell;
     private int width, height;
     private JComboBox<Integer> items;
@@ -49,7 +49,7 @@ public class EditMap extends JPanel implements MouseListener{
      * @param map_id Id of the map.
      */
     public EditMap(int map_id) {
-        super(new GridLayout(1,0));
+        super(new GridLayout(1, 0));
 
         map_controller = new MapEditorController();
         json_map = new JSONObject();
@@ -62,11 +62,11 @@ public class EditMap extends JPanel implements MouseListener{
         JSONArray json_cells = json_map.getJSONArray("cells");
 
         map_panel = new JPanel(new GridLayout(width, height));
-        map_panel.setBorder(BorderFactory.createTitledBorder(null, "Map", TitledBorder.TOP,TitledBorder.CENTER, new Font("Lucida Calligraphy",Font.PLAIN,20), Color.BLACK));
+        map_panel.setBorder(BorderFactory.createTitledBorder(null, "Map", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
 
         cells = new CellPanel[width][height];
-        for(int i = 0; i < width; i++) {
-            for(int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 cells[i][j] = new CellPanel(i, j);
                 cells[i][j].addMouseListener(this);
                 String content = getJSONContent(json_cells, i, j);
@@ -76,8 +76,8 @@ public class EditMap extends JPanel implements MouseListener{
             }
         }
 
-        setting_panel = new JPanel(new GridLayout(3,2));
-        setting_panel.setBorder(BorderFactory.createTitledBorder(null, "Setting", TitledBorder.TOP,TitledBorder.CENTER, new Font("Lucida Calligraphy",Font.PLAIN,20), Color.BLACK));
+        setting_panel = new JPanel(new GridLayout(3, 2));
+        setting_panel.setBorder(BorderFactory.createTitledBorder(null, "Setting", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
 
         button_wall = new JButton("Add Wall");
         button_wall.addActionListener(new setContent("WALL"));
@@ -164,16 +164,16 @@ public class EditMap extends JPanel implements MouseListener{
      * Get content of a cell from the data formatted in JSON from the file.
      *
      * @param json_cells Cell information in JSON format.
-     * @param x X Coordinate of a cell.
-     * @param y Y Coordinate of a cell.
+     * @param x          X Coordinate of a cell.
+     * @param y          Y Coordinate of a cell.
      * @return Content of the cell.
      */
     private String getJSONContent(JSONArray json_cells, int x, int y) {
-        for(int i = 0; i < json_cells.length(); i++) {
+        for (int i = 0; i < json_cells.length(); i++) {
             JSONObject json_cell = json_cells.getJSONObject(i);
             int cell_x = json_cell.getInt("cell_x");
             int cell_y = json_cell.getInt("cell_y");
-            if(cell_x == x && cell_y == y)
+            if (cell_x == x && cell_y == y)
                 return json_cell.getString("cell_content");
         }
         return null;
@@ -185,20 +185,17 @@ public class EditMap extends JPanel implements MouseListener{
      * @param arg0 The mouse event.
      */
     @Override
-    public void mouseClicked(MouseEvent arg0){
+    public void mouseClicked(MouseEvent arg0) {
         // TODO Auto-generated method stub
-        current_cell = (CellPanel)arg0.getSource();
-        if(previous_cell == null) {
+        current_cell = (CellPanel) arg0.getSource();
+        if (previous_cell == null) {
             current_cell.select();
             previous_cell = current_cell;
-        }
-        else {
-            if(current_cell.x == previous_cell.x && current_cell.y == previous_cell.y)
-            {
+        } else {
+            if (current_cell.x == previous_cell.x && current_cell.y == previous_cell.y) {
                 current_cell.deselect();
                 previous_cell = null;
-            }
-            else {
+            } else {
                 previous_cell.deselect();
                 current_cell.select();
                 previous_cell = current_cell;
@@ -253,10 +250,10 @@ public class EditMap extends JPanel implements MouseListener{
     /**
      * Set the content of a cell.
      */
-    class setContent implements ActionListener
-    {
+    class setContent implements ActionListener {
         private String content = "";
-        setContent(String c){
+
+        setContent(String c) {
             content = c;
         }
 
@@ -264,32 +261,29 @@ public class EditMap extends JPanel implements MouseListener{
         @Override
         public void actionPerformed(ActionEvent arg0) {
             String co = "";
-            if(content == "CHEST"){
+            if (content == "CHEST") {
                 int item_id;
-                if(items.getSelectedItem() != null) {
-                    item_id = (int)items.getSelectedItem();
+                if (items.getSelectedItem() != null) {
+                    item_id = (int) items.getSelectedItem();
                     co = content + " " + Integer.toString(item_id);
-                }
-                else
+                } else
                     co = content;
-            }
-            else if(content == "CHARACTER") {
+            } else if (content == "CHARACTER") {
                 String character_id;
                 int isHostile = 0;
-                if(checkbox_hostile.isSelected())
+                if (checkbox_hostile.isSelected())
                     isHostile = 1;
-                if(characters.getSelectedItem() != null){
-                    character_id = (String)characters.getSelectedItem();
+                if (characters.getSelectedItem() != null) {
+                    character_id = (String) characters.getSelectedItem();
                     co = content + " " + characters.getSelectedItem() + " " + isHostile;
                 }
-            }
-            else
+            } else
                 co = content;
             map_controller.setContent(previous_cell.x, previous_cell.y, co);
-            if(co.equals("ENTRY") || co.equals("EXIT")) {
-                for(int i = 0; i < width; i++) {
-                    for(int j = 0; j < height; j++) {
-                        if(cells[i][j].content.equals(co)){
+            if (co.equals("ENTRY") || co.equals("EXIT")) {
+                for (int i = 0; i < width; i++) {
+                    for (int j = 0; j < height; j++) {
+                        if (cells[i][j].content.equals(co)) {
                             cells[i][j].removeContent();
                             break;
                         }
@@ -303,46 +297,44 @@ public class EditMap extends JPanel implements MouseListener{
     /**
      * Remove the content of a cell.
      */
-    class removeContent implements ActionListener
-    {
+    class removeContent implements ActionListener {
 
         @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            if(previous_cell != null) {
+            if (previous_cell != null) {
                 map_controller.removeContent(previous_cell.x, previous_cell.y);
                 cells[previous_cell.x][previous_cell.y].removeContent();
             }
         }
     }
+
     /**
      * Validate the map.
      */
-    class validateMap implements ActionListener
-    {
+    class validateMap implements ActionListener {
         @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            if(map_controller.validateMap())
-                JOptionPane.showMessageDialog( Main.mainFrame, "Success");
+            if (map_controller.validateMap())
+                JOptionPane.showMessageDialog(Main.mainFrame, "Success");
             else
-                JOptionPane.showMessageDialog( Main.mainFrame, "Fail");
+                JOptionPane.showMessageDialog(Main.mainFrame, "Fail");
         }
     }
+
     /**
      * Save the map to the file.
      */
-    class saveMap implements ActionListener
-    {
+    class saveMap implements ActionListener {
         @SuppressWarnings("deprecation")
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            if(map_controller.validateMap()){
+            if (map_controller.validateMap()) {
                 map_controller.saveMap();
-                JOptionPane.showMessageDialog( Main.mainFrame, "Success");
-            }
-            else
-                JOptionPane.showMessageDialog( Main.mainFrame, "The map is not valid.");
+                JOptionPane.showMessageDialog(Main.mainFrame, "Success");
+            } else
+                JOptionPane.showMessageDialog(Main.mainFrame, "The map is not valid.");
         }
     }
 }

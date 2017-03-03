@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class MapEditorController {
     private Map map;
-    private Cell [][] cells;
+    private Cell[][] cells;
     private MapIO mapio;
     private ItemIO itemio;
     private CharacterIO characterio;
@@ -32,7 +32,7 @@ public class MapEditorController {
     /**
      * Initiate an instance of Map.
      *
-     * @param width The width of the Map instance.
+     * @param width  The width of the Map instance.
      * @param height The height of the Map instance.
      */
     public void createMap(int width, int height, boolean isSaved) {
@@ -42,16 +42,18 @@ public class MapEditorController {
 
     /**
      * Set the Id of the map.
+     *
      * @param map_id
      */
-    public void setId(int map_id){
+    public void setId(int map_id) {
         map.setID(map_id);
     }
+
     /**
      * Set content of a cell.
      *
-     * @param x X Coordinate of the cell.
-     * @param y Y Coordinate of the cell.
+     * @param x       X Coordinate of the cell.
+     * @param y       Y Coordinate of the cell.
      * @param content Content of the cell.
      */
     public void setContent(int x, int y, String content) {
