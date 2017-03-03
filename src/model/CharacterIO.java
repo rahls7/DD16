@@ -161,14 +161,14 @@ public class CharacterIO {
 
                 int [][] stats = new int[7][2];
                 data = json_item.getJSONArray("stats");
-                for (int j=0; j<7; j++){
+                for (int j=0; j<6; j++){
                     JSONArray data2 = data.getJSONArray(j);
                     for (int k=0; k<2; k++)
                         stats[j][k] = data2.getInt(k);
                 }
                 int [][] basicStats = new int[7][2];
                 data = json_item.getJSONArray("basicStats");
-                for (int j=0; j<7; j++){
+                for (int j=0; j<6; j++){
                     JSONArray data2 = data.getJSONArray(j);
                     for (int k=0; k<2; k++)
                         basicStats[j][k] = data2.getInt(k);
