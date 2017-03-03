@@ -30,13 +30,13 @@ public class CreateItem extends JPanel {
         item_controller = new ItemEditorController();
 
         attributes = new JComboBox<>();
-        attributes.setPreferredSize(new Dimension(120,30));
+        attributes.setPreferredSize(new Dimension(140,30));
         attributes.addItem("Intelligence");
         attributes.addItem("Wisdom");
         attributes.addItem("Armor Class");
 
         items = new JComboBox<>();
-        items.setPreferredSize(new Dimension(100,30));
+        items.setPreferredSize(new Dimension(140,30));
         items.addItem("Helmet");
         items.addItem("Armor");
         items.addItem("Shield");
@@ -93,7 +93,7 @@ public class CreateItem extends JPanel {
         items.addItemListener(itemListener);
 
         attribute_values = new JComboBox<>();
-        attribute_values.setPreferredSize(new Dimension(40,30));
+        attribute_values.setPreferredSize(new Dimension(100,40));
         attribute_values.addItem(1);
         attribute_values.addItem(2);
         attribute_values.addItem(3);

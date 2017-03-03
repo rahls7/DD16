@@ -18,7 +18,7 @@ import static org.junit.Assert.assertFalse;
  * @version 1.0.0
  */
 
-public class characterContentClass {
+public class CharacterContentClass {
 
     Character character;
     CharacterIO characterIO = new CharacterIO();

@@ -19,12 +19,12 @@ public class Character extends JPanel{
             setLayout(null);
 
             JTextField  idTextField= new JTextField();
-            idTextField.setBounds(150,200,150,50);
+            idTextField.setBounds(150,0,150,50);
             JLabel idLabel = new JLabel("ID:");
-            idLabel.setBounds(100,200,50,50);
+            idLabel.setBounds(100,0,50,50);
             idLabel.setFont(new Font("dialog", 0, 20));
             JButton createButton = new JButton("Create Character");
-            createButton.setBounds(300,200,150,50);
+            createButton.setBounds(300,0,150,50);
 
             createButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -43,12 +43,12 @@ public class Character extends JPanel{
 //
 
             JTextField  idTextField1= new JTextField();
-            idTextField1.setBounds(750,200,150,50);
+            idTextField1.setBounds(750,0,150,50);
             JLabel idLabel1 = new JLabel("ID:");
-            idLabel1.setBounds(700,200,50,50);
+            idLabel1.setBounds(700,0,50,50);
             idLabel1.setFont(new Font("dialog", 0, 20));
             JButton editButton = new JButton("Edit Character");
-            editButton.setBounds(900,200,150,50);
+            editButton.setBounds(900,0,150,50);
 
             editButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {

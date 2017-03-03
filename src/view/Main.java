@@ -88,6 +88,7 @@ public class Main extends JFrame {
         JMenuItem item_close = new JMenuItem("Close");
 
 
+
         menu.add(item_play);
         menu.add(item_map);
         menu.add(item_compaign);

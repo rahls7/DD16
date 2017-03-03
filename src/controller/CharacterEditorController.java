@@ -119,6 +119,7 @@ public class CharacterEditorController{
      * @param backpack backpack of the character model
      */
     public void setBackpack(int backpack) {
+        if (characterModel.getBackpack().size()<10)
         characterModel.setBackpack(items.get(backpack));
     }
 
@@ -127,7 +128,10 @@ public class CharacterEditorController{
      * @param equipmentBackpack
      */
     public void setEquipmentBackpack(int equipmentBackpack){
-        characterModel.setBackpack(characterModel.getEquipment().get(equipmentBackpack));
+        if (characterModel.getBackpack().size()<10){
+            characterModel.setBackpack(characterModel.getEquipment().get(equipmentBackpack));
+            deleteEquipment(equipmentBackpack);
+        }
     }
 
     /**
