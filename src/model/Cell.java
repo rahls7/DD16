@@ -27,7 +27,7 @@ public class Cell {
      * Set the status of a cell to selected if it is selected by users.
      */
     public void select() {
-        this.isSelected=true;
+        this.isSelected = true;
     }
 
     /**

@@ -33,12 +33,13 @@ public class Menu extends JPanel {
 
         setBorder(BorderFactory.createLineBorder(Color.black));
         //setSize(getPreferredSize());
-        setLayout(new GridLayout(10,1));
+        setLayout(new GridLayout(10, 1));
         addButtons();
     }
 
     /**
      * Getter function. Specifies the dimensions of the JPanel window.
+     *
      * @return Dimension.
      */
 
@@ -48,6 +49,7 @@ public class Menu extends JPanel {
 
     /**
      * Adds the Background image on the JPanel.
+     *
      * @param g Graphics Object
      */
 
@@ -84,7 +86,7 @@ public class Menu extends JPanel {
         buttonMap.setContentAreaFilled(false);
         buttonMap.setBorderPainted(false);
         buttonMap.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        buttonMap.setFont(new Font("Times New Roman", Font.BOLD,40));
+        buttonMap.setFont(new Font("Times New Roman", Font.BOLD, 40));
         add(buttonMap);
 
 
@@ -94,7 +96,7 @@ public class Menu extends JPanel {
         buttonCharacter.setContentAreaFilled(false);
         buttonCharacter.setBorderPainted(false);
         buttonCharacter.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        buttonCharacter.setFont(new Font("Times New Roman", Font.BOLD,40));
+        buttonCharacter.setFont(new Font("Times New Roman", Font.BOLD, 40));
         add(buttonCharacter);
 
         buttonCampaign = new JButton("C a m p a i g n  E d i t o r");
@@ -103,7 +105,7 @@ public class Menu extends JPanel {
         buttonCampaign.setContentAreaFilled(false);
         buttonCampaign.setBorderPainted(false);
         buttonCampaign.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        buttonCampaign.setFont(new Font("Times New Roman", Font.BOLD,40));
+        buttonCampaign.setFont(new Font("Times New Roman", Font.BOLD, 40));
         add(buttonCampaign);
 
         buttonItem = new JButton("I t e m  E d i t o r");
@@ -112,7 +114,7 @@ public class Menu extends JPanel {
         buttonItem.setContentAreaFilled(false);
         buttonItem.setBorderPainted(false);
         buttonItem.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        buttonItem.setFont(new Font("Times New Roman", Font.BOLD,40));
+        buttonItem.setFont(new Font("Times New Roman", Font.BOLD, 40));
         add(buttonItem);
 
         buttonAbout = new JButton("A b o u t");
@@ -121,7 +123,7 @@ public class Menu extends JPanel {
         buttonAbout.setContentAreaFilled(false);
         buttonAbout.setBorderPainted(false);
         buttonAbout.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        buttonAbout.setFont(new Font("Times New Roman", Font.BOLD,40));
+        buttonAbout.setFont(new Font("Times New Roman", Font.BOLD, 40));
         add(buttonAbout);
 
 
@@ -131,29 +133,29 @@ public class Menu extends JPanel {
         buttonExit.setContentAreaFilled(false);
         buttonExit.setBorderPainted(false);
         buttonExit.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        buttonExit.setFont(new Font("Times New Roman", Font.BOLD,40));
+        buttonExit.setFont(new Font("Times New Roman", Font.BOLD, 40));
         add(buttonExit);
 
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String cmd = e.getActionCommand();
-                if(cmd.equals("M a p  E d i t o r")) {
+                if (cmd.equals("M a p  E d i t o r")) {
                     mapPanel = new Map();
                     menuAction(mapPanel);
                     //setLayout(new GridLayout(1,0));
-                }else if(cmd.equals("E x i t")) {
+                } else if (cmd.equals("E x i t")) {
                     System.exit(0);
-                }else if(cmd.equals("C h a r a c t e r  E d i t o r")) {
+                } else if (cmd.equals("C h a r a c t e r  E d i t o r")) {
                     charPanel = new Character();
                     menuAction(charPanel);
-                }else if(cmd.equals("C a m p a i g n  E d i t o r")) {
+                } else if (cmd.equals("C a m p a i g n  E d i t o r")) {
                     camPanel = new Campaign();
                     menuAction(camPanel);
-                }else if(cmd.equals("A b o u t")) {
+                } else if (cmd.equals("A b o u t")) {
                     aboutPanel = new About();
                     menuAction(aboutPanel);
-                }else if(cmd.equals("I t e m  E d i t o r")) {
+                } else if (cmd.equals("I t e m  E d i t o r")) {
                     itemPanel = new Item();
                     menuAction(itemPanel);
                 }
@@ -171,6 +173,7 @@ public class Menu extends JPanel {
 
     /**
      * Resets all the content of the JFrame to switch between different JPanel
+     *
      * @param panel Panel that needs to be displayed. For eg: Map Panel can be created as:
      *              <code>
      *              map_panel = new Map();

@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+
 import controller.ItemEditorController;
 import org.json.JSONArray;
 
@@ -24,7 +25,7 @@ public class Item extends JPanel {
      * Initiate the panel for item editor. The panel includes two parts: item creation and item editing.
      */
     public Item() {
-        super(new GridLayout(1,0));
+        super(new GridLayout(1, 0));
         item_controller = new ItemEditorController();
 
         create_panel = new JPanel();
@@ -51,7 +52,7 @@ public class Item extends JPanel {
         JButton button_edit = new JButton("Edit Item");
         button_edit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int item_id = (int)items.getSelectedItem();
+                int item_id = (int) items.getSelectedItem();
                 Main.mainFrame.getContentPane().removeAll();
                 Main.mainFrame.getContentPane().add(new EditItem(item_id), BorderLayout.CENTER);
                 Main.mainFrame.getContentPane().doLayout();

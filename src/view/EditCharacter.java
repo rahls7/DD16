@@ -15,10 +15,10 @@ import java.util.Random;
 /**
  * Created by Silas on 2017/2/10.
  */
-public class EditCharacter extends JPanel{
+public class EditCharacter extends JPanel {
 
     private CharacterEditorController characterController;
-    public JButton EditButton, confirmButton,  takeoffButton, putonButton, deleteButton, pickButton;
+    public JButton EditButton, confirmButton, takeoffButton, putonButton, deleteButton, pickButton;
     public JTextField nameTextField;
     public JTextField[] attributeTextField = new JTextField[6];
     public JTextField[][] statsTextField = new JTextField[6][2];
@@ -31,20 +31,21 @@ public class EditCharacter extends JPanel{
 
     /**
      * Constructor of editCharacter to create an object of editCharacter
+     *
      * @param id
      */
-    public EditCharacter(String id){
+    public EditCharacter(String id) {
 
         //initiate
         super();
-        setSize(2500,600);
+        setSize(2500, 600);
         setLayout(null);
         this.id = id;
         characterController = new CharacterEditorController(id);
         characterController.getCharacter(id);
         items = new ArrayList<String>();
         backpack = new ArrayList<String>();
-        equipment = new ArrayList<String >();
+        equipment = new ArrayList<String>();
 
         // Create AttributeLabels
         add(new AttributeLabel("name:", 0));
@@ -64,7 +65,7 @@ public class EditCharacter extends JPanel{
         add(new StatsLabel("Charisma:", 5));
 
         //Create Modifier Labels and the TextFiels of Stats
-        for (int i=0; i<6; i++) {
+        for (int i = 0; i < 6; i++) {
             add(new StatsLabel("modifier:", i));
             for (int j = 0; j < 2; j++) {
                 statsTextField[i][j] = new StatsTextField(i, j);
@@ -75,8 +76,8 @@ public class EditCharacter extends JPanel{
         //Create AttributeTextFields
         nameTextField = new AttributeTextField(0);
         add(nameTextField);
-        for (int i=0; i<6; i++){
-            attributeTextField[i] = new AttributeTextField(i+2);
+        for (int i = 0; i < 6; i++) {
+            attributeTextField[i] = new AttributeTextField(i + 2);
             add(attributeTextField[i]);
         }
 
@@ -88,7 +89,7 @@ public class EditCharacter extends JPanel{
         EditButton.addActionListener(handler);
 
         confirmButton = new JButton("Confirm");
-        confirmButton.setBounds(630,450,100,50);
+        confirmButton.setBounds(630, 450, 100, 50);
         add(confirmButton);
         confirmButton.addActionListener(handler);
 
@@ -100,7 +101,7 @@ public class EditCharacter extends JPanel{
         putonButton = createItemJButton("Put on", 1100, 300);
         deleteButton = createItemJButton("Delete", 1100, 370);
         pickButton = createItemJButton("Pick", 1350, 300);
-        add(takeoffButton );
+        add(takeoffButton);
         takeoffButton.addActionListener(handler);
         add(putonButton);
         putonButton.addActionListener(handler);
@@ -126,31 +127,31 @@ public class EditCharacter extends JPanel{
         display();
     }
 
-    JLabel createItemJLabel(String name, int x, int y){
+    JLabel createItemJLabel(String name, int x, int y) {
         JLabel label = new JLabel(name);
         label.setBounds(x, y, 150, 50);
         label.setFont(new Font("dialog", 0, 20));
         return label;
     }
 
-    JButton createItemJButton(String name, int x, int y){
+    JButton createItemJButton(String name, int x, int y) {
         JButton button = new JButton(name);
         button.setBounds(x, y, 100, 50);
         return button;
     }
 
-    public void display(){
+    public void display() {
         nameTextField.setText(characterController.getName());
 
         stats = characterController.getStats();
-        for (int i=0; i<6; i++)
-            for (int j=0; j<2; j++)
+        for (int i = 0; i < 6; i++)
+            for (int j = 0; j < 2; j++)
                 statsTextField[i][j].setText(Integer.toString(stats[i][j]));
         attribute = characterController.getAttributes();
-        for (int i=0; i<6; i++)
+        for (int i = 0; i < 6; i++)
             attributeTextField[i].setText(Integer.toString(attribute[i]));
 
-        if (attribute[5]==1)
+        if (attribute[5] == 1)
             attributeTextField[5].setText("true");
         else
             attributeTextField[5].setText("False");
@@ -160,14 +161,14 @@ public class EditCharacter extends JPanel{
         backpackJComboBox.setModel(new DefaultComboBoxModel(characterController.getBackpack().toArray()));
     }
 
-    class Handler implements ActionListener{
+    class Handler implements ActionListener {
 
-        public void actionPerformed(ActionEvent event){
-            if (event.getSource()==EditButton){
+        public void actionPerformed(ActionEvent event) {
+            if (event.getSource() == EditButton) {
                 characterController.setName(nameTextField.getText());
-                for (int i=0; i<6; i++)
+                for (int i = 0; i < 6; i++)
                     stats[i][0] = Integer.parseInt(statsTextField[i][0].getText());
-                for (int i=0; i<5; i++)
+                for (int i = 0; i < 5; i++)
                     attribute[i] = Integer.parseInt(attributeTextField[i].getText());
                 characterController.setStats(stats);
                 characterController.setAttributes(attribute);
@@ -175,30 +176,29 @@ public class EditCharacter extends JPanel{
                 display();
                 validate();
                 repaint();
-            }
-            else if (event.getSource()==confirmButton){
+            } else if (event.getSource() == confirmButton) {
                 characterController.saveCharacter();
-                JOptionPane.showMessageDialog(confirmButton,"Success");
-            }else if (event.getSource()==takeoffButton){
+                JOptionPane.showMessageDialog(confirmButton, "Success");
+            } else if (event.getSource() == takeoffButton) {
                 int i = equipmentComboBox.getSelectedIndex();
                 characterController.setEquipmentBackpack(i);
                 display();
                 validate();
                 repaint();
-            }else if (event.getSource()==putonButton){
+            } else if (event.getSource() == putonButton) {
                 int i = backpackJComboBox.getSelectedIndex();
                 characterController.setEquipment(i);
                 characterController.removeBackpack(i);
                 display();
                 validate();
                 repaint();
-            }else if (event.getSource()==deleteButton){
+            } else if (event.getSource() == deleteButton) {
                 int i = backpackJComboBox.getSelectedIndex();
                 characterController.removeBackpack(i);
                 display();
                 validate();
                 repaint();
-            }else if (event.getSource()==pickButton){
+            } else if (event.getSource() == pickButton) {
                 int i = itemJComboBox.getSelectedIndex();
                 characterController.setBackpack(i);
                 display();

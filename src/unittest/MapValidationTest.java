@@ -22,14 +22,16 @@ public class MapValidationTest {
     /**
      * Initiate the instance of Map.
      */
-    @Before public void before() {
+    @Before
+    public void before() {
         map = new Map(10, 10, false);
     }
 
     /**
      * Test the correctness of the map that doesn't have an exit.
      */
-    @Test public void testMapWithoutExit() {
+    @Test
+    public void testMapWithoutExit() {
         map.cells[2][8].setContent("ENTRY");
         assertFalse(map.validation());
     }
@@ -37,7 +39,8 @@ public class MapValidationTest {
     /**
      * Test the correctness of the map that doesn't have an entry.
      */
-    @Test public void testMapWithoutEntry() {
+    @Test
+    public void testMapWithoutEntry() {
         map.cells[4][7].setContent("EXIT");
         assertFalse(map.validation());
     }
@@ -45,7 +48,8 @@ public class MapValidationTest {
     /**
      * Test the correctness of the map that doesn't have a viable path from entry to exit.
      */
-    @Test public void testMapWithoutViablePath() {
+    @Test
+    public void testMapWithoutViablePath() {
         map.cells[0][0].setContent("ENTRY");
         map.cells[1][0].setContent("WALL");
         map.cells[0][1].setContent("WALL");

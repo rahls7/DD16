@@ -21,11 +21,12 @@ public class Character {
 
     /**
      * constructor to construct an object of character
+     *
      * @param id
      */
     public Character(String id) {
         this.id = id;
-        name= new String("");
+        name = new String("");
         isSaved = false;
         equipment = new ArrayList<Item>();
         backpack = new ArrayList<Item>();
@@ -60,9 +61,9 @@ public class Character {
         attributes[0] = 1;
         basicAttributes[0] = attributes[0];
         //hitpoint
-        attributes[1] = rand.nextInt(10)+1;
+        attributes[1] = rand.nextInt(10) + 1;
         basicAttributes[1] = attributes[1];
-        attributes[1] = (basicAttributes[1] +  stats[2][1]) * attributes[0];
+        attributes[1] = (basicAttributes[1] + stats[2][1]) * attributes[0];
         //armor class
         attributes[2] = 10 + stats[1][1]; //+armor class bonus from items
         basicAttributes[2] = attributes[2];
@@ -76,7 +77,7 @@ public class Character {
         if (attributes[3] > 6)
             attributes[5] = 1;
         else
-            attributes[5]=0;
+            attributes[5] = 0;
         basicAttributes[5] = attributes[5];
     }
 
@@ -84,32 +85,38 @@ public class Character {
      * everytime level or equipment is changed, recalculate the stats modifier and attributes
      * of this character
      */
-    public void recalculateStats(){
+    public void recalculateStats() {
 
-        for (int i=0; i<6; i++)
-            for (int j=0; j<2; j++)
+        for (int i = 0; i < 6; i++)
+            for (int j = 0; j < 2; j++)
                 stats[i][j] = basicStats[i][j];
 
         // first loop
-        for (Item item: equipment){
-            switch (item.getAttribute()){
-                case "Strength": stats[0][1] = stats[0][1] + item.getAttributeValue();
+        for (Item item : equipment) {
+            switch (item.getAttribute()) {
+                case "Strength":
+                    stats[0][1] = stats[0][1] + item.getAttributeValue();
                     break;
-                case "Dexterity": stats[1][1] = stats[1][1] + item.getAttributeValue();
+                case "Dexterity":
+                    stats[1][1] = stats[1][1] + item.getAttributeValue();
                     break;
-                case "Constitution": stats[2][1] = stats[2][1] + item.getAttributeValue();
+                case "Constitution":
+                    stats[2][1] = stats[2][1] + item.getAttributeValue();
                     break;
-                case "Intelligence": stats[3][1] = stats[3][1] + item.getAttributeValue();
+                case "Intelligence":
+                    stats[3][1] = stats[3][1] + item.getAttributeValue();
                     break;
-                case "Wisdom": stats[4][1] = stats[4][1] + item.getAttributeValue();
+                case "Wisdom":
+                    stats[4][1] = stats[4][1] + item.getAttributeValue();
                     break;
-                case "Charisma": stats[5][1] = stats[5][1] + item.getAttributeValue();
+                case "Charisma":
+                    stats[5][1] = stats[5][1] + item.getAttributeValue();
                     break;
             }
         }
 
         //hitpoint
-        attributes[1] = (basicAttributes[1] +  stats[2][1]) * attributes[0];
+        attributes[1] = (basicAttributes[1] + stats[2][1]) * attributes[0];
         //armor class
         attributes[2] = 10 + stats[1][1];
         //attack bonus
@@ -118,15 +125,19 @@ public class Character {
         attributes[4] = stats[0][1];
 
         //second loop
-        for (Item item : equipment){
-            switch (item.getAttribute()){
-                case "Hit Point": attributes[1] = attributes[1] + item.getAttributeValue();
+        for (Item item : equipment) {
+            switch (item.getAttribute()) {
+                case "Hit Point":
+                    attributes[1] = attributes[1] + item.getAttributeValue();
                     break;
-                case "Armor Class": attributes[2] = attributes[2] + item.getAttributeValue();
+                case "Armor Class":
+                    attributes[2] = attributes[2] + item.getAttributeValue();
                     break;
-                case "Attack Bonus": attributes[3] = attributes[3] + item.getAttributeValue();
+                case "Attack Bonus":
+                    attributes[3] = attributes[3] + item.getAttributeValue();
                     break;
-                case "Damage Bonus": attributes[4] = attributes[4] + item.getAttributeValue();
+                case "Damage Bonus":
+                    attributes[4] = attributes[4] + item.getAttributeValue();
                     break;
             }
         }
@@ -135,34 +146,40 @@ public class Character {
         if (attributes[3] > 6)
             attributes[5] = 1;
         else
-            attributes[5]=0;
+            attributes[5] = 0;
 
     }
 
     /**
      * set the character is saved
+     *
      * @param flag
      */
-    public void setIsSaved(boolean flag){
+    public void setIsSaved(boolean flag) {
         this.isSaved = flag;
     }
 
     /**
      * get the state of character that if he is saved
+     *
      * @return
      */
-    public boolean getIsSaved(){
+    public boolean getIsSaved() {
         return this.isSaved;
     }
 
     /**
      * get the id of character
+     *
      * @return
      */
-    public String getId(){return this.id;}
+    public String getId() {
+        return this.id;
+    }
 
     /**
      * modify character's name
+     *
      * @param name
      */
     public void setName(String name) {
@@ -171,6 +188,7 @@ public class Character {
 
     /**
      * get character's name
+     *
      * @return character's name
      */
     public String getName() {
@@ -179,11 +197,12 @@ public class Character {
 
     /**
      * character put on euipment
+     *
      * @param equipment
      */
     public void setEquipment(Item equipment) {
         String type = new String();
-        for (Item item: this.equipment){
+        for (Item item : this.equipment) {
             if (item.getType().equals(equipment.getType())) {
                 this.equipment.remove(item);
                 this.equipment.add(equipment);
@@ -196,6 +215,7 @@ public class Character {
 
     /**
      * get all equipment dressed
+     *
      * @return equipment in arraylist
      */
     public ArrayList<Item> getEquipment() {
@@ -204,6 +224,7 @@ public class Character {
 
     /**
      * take off the quipment
+     *
      * @param equipment
      */
     public void deleteEquipment(Item equipment) {
@@ -212,6 +233,7 @@ public class Character {
 
     /**
      * take item from database to backpack
+     *
      * @param backpack item to be added to backpack
      */
     public void setBackpack(Item backpack) {
@@ -220,6 +242,7 @@ public class Character {
 
     /**
      * get all items in backpack
+     *
      * @return backpack
      */
     public ArrayList<Item> getBackpack() {
@@ -228,6 +251,7 @@ public class Character {
 
     /**
      * remove item from backpack
+     *
      * @param backpack all items in backpack
      */
     public void removeBackpack(Item backpack) {
@@ -236,17 +260,18 @@ public class Character {
 
     /**
      * set the character's stats
+     *
      * @param stats abilities of character
      */
     public void setStats(int[][] stats) {
-        for (int i=0; i<6; i++)
-            for (int j=0; j<2; j++)
+        for (int i = 0; i < 6; i++)
+            for (int j = 0; j < 2; j++)
                 this.stats[i][j] = stats[i][j];
     }
 
     public void setBasicStats(int[][] basicStats) {
-        for (int i=0; i<6; i++)
-            for (int j=0; j<2; j++)
+        for (int i = 0; i < 6; i++)
+            for (int j = 0; j < 2; j++)
                 this.basicStats[i][j] = basicStats[i][j];
     }
 
@@ -254,25 +279,29 @@ public class Character {
         return stats;
     }
 
-    /** give character new attributes
+    /**
+     * give character new attributes
+     *
      * @param attributes the new attributes of character
      */
     public void setAttributes(int[] attributes) {
-        for (int i=0; i<6; i++)
+        for (int i = 0; i < 6; i++)
             this.attributes[i] = attributes[i];
     }
 
     /**
      * set the character's basic attributes
+     *
      * @param basicAttributes initiated attributes of character
      */
     public void setBasicAttributes(int[] basicAttributes) {
-        for (int i=0; i<6; i++)
+        for (int i = 0; i < 6; i++)
             this.basicAttributes[i] = basicAttributes[i];
     }
 
     /**
      * get the attributes of character
+     *
      * @return attributes
      */
     public int[] getAttributes() {

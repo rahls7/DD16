@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+
 import model.Character;
 import model.CharacterIO;
 import model.ItemIO;
@@ -16,7 +17,7 @@ import org.json.JSONObject;
  * This class is a controller that controls actions about Character.
  * It contains an object of Character model and uses awt library.
  */
-public class CharacterEditorController{
+public class CharacterEditorController {
 
     private Character characterModel;
     private ItemIO itemIO;
@@ -24,24 +25,25 @@ public class CharacterEditorController{
     private ArrayList<Item> items;
 
     /**
-     *Constructor of character controller, create a controller, called by the character view
+     * Constructor of character controller, create a controller, called by the character view
+     *
      * @param id ID of the character
      */
-    public CharacterEditorController(String id){
+    public CharacterEditorController(String id) {
         characterModel = new Character(id);
         items = new ArrayList<Item>();
         itemIO = new ItemIO();
         characterIO = new CharacterIO();
         Item item;
         JSONArray jsonArray = itemIO.getItemList();
-        int itemId=0, itemAttributeValue;
-        String itemType, itemAttribute ;
-        for (int i =0; i<jsonArray.length(); i++){
+        int itemId = 0, itemAttributeValue;
+        String itemType, itemAttribute;
+        for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             itemId = jsonObject.getInt("id");
             itemType = jsonObject.getString("type");
-            itemAttribute  = jsonObject.getString("attribute");
-            itemAttributeValue= jsonObject.getInt("attribute_value");
+            itemAttribute = jsonObject.getString("attribute");
+            itemAttributeValue = jsonObject.getInt("attribute_value");
             item = new Item(itemType, itemAttribute, itemAttributeValue);
             item.setIsSaved(true);
             item.setSaveId(itemId);
@@ -52,45 +54,55 @@ public class CharacterEditorController{
     /**
      * recalculate the attributes and stats of Character when euipments or levels are changed
      */
-    public void recalculate(){
+    public void recalculate() {
         characterModel.recalculateStats();
     }
 
     /**
      * get a Character from file by its id
+     *
      * @param id ID of the character
      */
-    public void getCharacter(String id){
+    public void getCharacter(String id) {
         characterModel = characterIO.getCharacter(id);
     }
 
     /**
      * Save this character into character file.
-      */
-    public void saveCharacter(){
+     */
+    public void saveCharacter() {
         characterIO.saveCharacter(characterModel);
     }
 
     /**
      * initiate the stats and attributes of character
-      */
-    public void initiateStats(){characterModel.initiateStats();}
+     */
+    public void initiateStats() {
+        characterModel.initiateStats();
+    }
 
     /**
      * set the character model's name
+     *
      * @param name Name of the character
      */
-    public void setName(String name){characterModel.setName(name);}
+    public void setName(String name) {
+        characterModel.setName(name);
+    }
 
     /**
      * get the character's name from character model
+     *
      * @return
      */
-    public String getName(){return characterModel.getName();}
+    public String getName() {
+        return characterModel.getName();
+    }
 
     /**
      * set the model character's euipment,
-      * @param equipment items dressed
+     *
+     * @param equipment items dressed
      */
     public void setEquipment(int equipment) {
         characterModel.setEquipment(characterModel.getBackpack().get(equipment));
@@ -99,6 +111,7 @@ public class CharacterEditorController{
 
     /**
      * get the model character's equipment
+     *
      * @return euipment, model character's equipment
      */
     public ArrayList<String> getEquipment() {
@@ -107,6 +120,7 @@ public class CharacterEditorController{
 
     /**
      * delete the model's item
+     *
      * @param equipment
      */
     public void deleteEquipment(int equipment) {
@@ -116,19 +130,21 @@ public class CharacterEditorController{
 
     /**
      * set the model's backpack
+     *
      * @param backpack backpack of the character model
      */
     public void setBackpack(int backpack) {
-        if (characterModel.getBackpack().size()<10)
-        characterModel.setBackpack(items.get(backpack));
+        if (characterModel.getBackpack().size() < 10)
+            characterModel.setBackpack(items.get(backpack));
     }
 
     /**
      * put one item on the model's backpack
+     *
      * @param equipmentBackpack
      */
-    public void setEquipmentBackpack(int equipmentBackpack){
-        if (characterModel.getBackpack().size()<10){
+    public void setEquipmentBackpack(int equipmentBackpack) {
+        if (characterModel.getBackpack().size() < 10) {
             characterModel.setBackpack(characterModel.getEquipment().get(equipmentBackpack));
             deleteEquipment(equipmentBackpack);
         }
@@ -136,14 +152,16 @@ public class CharacterEditorController{
 
     /**
      * get all items in model's backpack
+     *
      * @return
      */
-    public ArrayList<String > getBackpack() {
+    public ArrayList<String> getBackpack() {
         return itemToString(characterModel.getBackpack());
     }
 
     /**
      * delete item from backpack
+     *
      * @param backpack
      */
     public void removeBackpack(int backpack) {
@@ -152,15 +170,17 @@ public class CharacterEditorController{
 
     /**
      * get the items from database
+     *
      * @return
      */
-    public ArrayList<String> getItem(){
+    public ArrayList<String> getItem() {
 
         return itemToString(items);
     }
 
     /**
      * set character model's stats
+     *
      * @param stats
      */
     public void setStats(int[][] stats) {
@@ -169,6 +189,7 @@ public class CharacterEditorController{
 
     /**
      * get character model's stats
+     *
      * @return stats, its model's stats
      */
     public int[][] getStats() {
@@ -177,6 +198,7 @@ public class CharacterEditorController{
 
     /**
      * set character model's attributes
+     *
      * @param attributes
      */
     public void setAttributes(int[] attributes) {
@@ -185,6 +207,7 @@ public class CharacterEditorController{
 
     /**
      * get character model's attributes
+     *
      * @return attributes
      */
     public int[] getAttributes() {
@@ -192,15 +215,14 @@ public class CharacterEditorController{
     }
 
     /**
-     *
      * @param items
      * @return
      */
-    public ArrayList<String> itemToString(ArrayList<Item> items){
+    public ArrayList<String> itemToString(ArrayList<Item> items) {
         ArrayList<String> strings = new ArrayList<String>();
         String s;
-        for (Item item: items){
-            s = item.getType()+":"+item.getAttribute()+"+"+item.getAttributeValue();
+        for (Item item : items) {
+            s = item.getType() + ":" + item.getAttribute() + "+" + item.getAttributeValue();
             strings.add(s);
         }
         return strings;

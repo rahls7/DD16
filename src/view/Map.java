@@ -23,14 +23,15 @@ import org.json.JSONArray;
  * @author Jiayao Zhou
  * @version 1.0.0
  */
-public class Map extends JPanel{
+public class Map extends JPanel {
     private JPanel create_panel, edit_panel;
     private MapEditorController map_controller;
+
     /**
      * Initiate a map editor panel including two panels: map creation panel and map editing panel.
      */
-    public Map(){
-        super(new GridLayout(1,0));
+    public Map() {
+        super(new GridLayout(1, 0));
         map_controller = new MapEditorController();
 
         JTextField textfield_width = new JTextField("8");
@@ -73,7 +74,7 @@ public class Map extends JPanel{
         JButton button_edit = new JButton("Edit Map");
         button_edit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int map_id = (int)maps.getSelectedItem();
+                int map_id = (int) maps.getSelectedItem();
 
                 Main.mainFrame.getContentPane().removeAll();
                 Main.mainFrame.getContentPane().add(new EditMap(map_id), BorderLayout.CENTER);

@@ -18,15 +18,15 @@ public class ItemEditorController {
     /**
      * Initiate an instance of ItemEditorController.
      */
-    public ItemEditorController(){
+    public ItemEditorController() {
         itemio = new ItemIO();
     }
 
     /**
      * Save item into the file.
      *
-     * @param item Item type.
-     * @param attribute Item attribute.
+     * @param item            Item type.
+     * @param attribute       Item attribute.
      * @param attribute_value Value of item attribute.
      * @return True if saving successfully, otherwise false.
      */
@@ -49,8 +49,8 @@ public class ItemEditorController {
     /**
      * Update item information in item file.
      *
-     * @param item Item type.
-     * @param attribute Item attribute.
+     * @param item            Item type.
+     * @param attribute       Item attribute.
      * @param attribute_value Value of item attribute.
      * @return True if updating is successfully, otherwise false.
      */

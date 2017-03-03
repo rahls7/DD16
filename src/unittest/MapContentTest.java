@@ -22,17 +22,19 @@ public class MapContentTest {
     /**
      * Initiate the map object.
      */
-    @Before public void before() {
+    @Before
+    public void before() {
         map = new Map(8, 8, false);
     }
 
     /**
      * Test the function of setting content of a cell.
      */
-    @Test public void testSetContent() {
-        map.setContent(5, 6,"WALL");
-        map.setContent(2, 4,"EXIT");
-        map.setContent(7, 1,"ENTRY");
+    @Test
+    public void testSetContent() {
+        map.setContent(5, 6, "WALL");
+        map.setContent(2, 4, "EXIT");
+        map.setContent(7, 1, "ENTRY");
 
         assertEquals("WALL", map.cells[5][6].content);
         assertEquals("EXIT", map.cells[2][4].content);
@@ -42,8 +44,9 @@ public class MapContentTest {
     /**
      * Test the function of removing content of a cell.
      */
-    @Test public void testRemoveContent() {
-        map.setContent(5, 6,"WALL");
+    @Test
+    public void testRemoveContent() {
+        map.setContent(5, 6, "WALL");
         map.removeContent(5, 6);
 
         assertEquals("", map.cells[5][6].content);

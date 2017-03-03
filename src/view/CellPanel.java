@@ -11,7 +11,7 @@ import javax.swing.border.Border;
  * @author Jiayao Zhou
  * @version 1.0.1
  */
-public class CellPanel extends JPanel{
+public class CellPanel extends JPanel {
     public int x;
     public int y;
     private boolean isSelected = false;
@@ -67,30 +67,26 @@ public class CellPanel extends JPanel{
      */
     public void setContent(String content) {
         this.content = content;
-        if(content.equals("WALL")) {
+        if (content.equals("WALL")) {
             ImageIcon pic = new ImageIcon("src/images/wall.png");
             img = pic.getImage();
             repaint();
-        }
-        else if(content.equals("ENTRY")) {
+        } else if (content.equals("ENTRY")) {
             ImageIcon pic = new ImageIcon("src/images/entry.png");
             img = pic.getImage();
             repaint();
-        }
-        else if(content.equals("EXIT")) {
+        } else if (content.equals("EXIT")) {
             ImageIcon pic = new ImageIcon("src/images/exit.png");
             img = pic.getImage();
             repaint();
-        }
-        else if(content.equals("CHEST") || (content.length() > 5 && content.substring(0, 5).equals("CHEST"))) {
+        } else if (content.equals("CHEST") || (content.length() > 5 && content.substring(0, 5).equals("CHEST"))) {
             ImageIcon pic = new ImageIcon("src/images/chest.jpg");
             img = pic.getImage();
             repaint();
-        }
-        else if (content.length() > 9 && content.substring(0,9).equals("CHARACTER")) {
+        } else if (content.length() > 9 && content.substring(0, 9).equals("CHARACTER")) {
             ImageIcon pic;
             String[] parts = content.split(" ");
-            if(parts[2].equals("0"))
+            if (parts[2].equals("0"))
                 pic = new ImageIcon("src/images/friend.png");
             else
                 pic = new ImageIcon("src/images/enemy.png");
@@ -110,8 +106,8 @@ public class CellPanel extends JPanel{
     }
 
     @Override
-    public void paintComponent (Graphics g) {
-        super.paintComponent (g);
-        g.drawImage (img, 0, 0, getWidth(), getHeight(), null);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
     }
 }
