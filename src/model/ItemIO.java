@@ -147,4 +147,27 @@ public class ItemIO {
         }
         return null;
     }
+
+    /**
+     * Get an pitem from the file.
+     *
+     * @param item_id Id of the item.
+     * @return Object of the item.
+     */
+    public PItem getPItem(int item_id) {
+        PItem item;
+        JSONArray json_items = getItemList();
+        for (int i = 0; i < json_items.length(); i++) {
+            JSONObject json_item = json_items.getJSONObject(i);
+            int id = json_item.getInt("id");
+            if (id == item_id) {
+                String type = json_item.getString("type");
+                String attribute = json_item.getString("attribute");
+                int attribute_value = json_item.getInt("attribute_value");
+                item = new PItem(item_id, type, attribute, attribute_value);
+                return item;
+            }
+        }
+        return null;
+    }
 }
