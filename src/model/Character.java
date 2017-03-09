@@ -68,6 +68,7 @@ public class Character {
         attributes[2] = 10 + stats[1][1]; //+armor class bonus from items
         basicAttributes[2] = attributes[2];
         //attack bonus
+        // ATTACK BONUS
         attributes[3] = attributes[0];
         basicAttributes[3] = attributes[3];
         //damage bonus
@@ -79,6 +80,7 @@ public class Character {
         else
             attributes[5] = 0;
         basicAttributes[5] = attributes[5];
+        recalculateStats();
     }
 
     /**
@@ -87,12 +89,15 @@ public class Character {
      */
     public void recalculateStats() {
 
+        boolean weaponEquipped = false;
         for (int i = 0; i < 6; i++)
             for (int j = 0; j < 2; j++)
                 stats[i][j] = basicStats[i][j];
 
         // first loop
         for (Item item : equipment) {
+            if (item.getType().equals("Weapon"))
+                weaponEquipped = true;
             switch (item.getAttribute()) {
                 case "Strength":
                     stats[0][1] = stats[0][1] + item.getAttributeValue();
@@ -148,6 +153,8 @@ public class Character {
         else
             attributes[5] = 0;
 
+        if (!weaponEquipped)
+            attributes[4] = 0;
     }
 
     /**
@@ -279,6 +286,9 @@ public class Character {
         return stats;
     }
 
+    public int[][] getBasicStats(){return basicStats;}
+
+
     /**
      * give character new attributes
      *
@@ -307,4 +317,6 @@ public class Character {
     public int[] getAttributes() {
         return attributes;
     }
+
+    public int[] getBasicAttributes(){return basicAttributes;}
 }
