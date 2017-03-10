@@ -39,4 +39,28 @@ public class PMap {
 
     public PCell[][] getCells() { return cells; }
 
+    public int getId(){ return map_id;}
+
+    public void setPlayer(PCharacter player) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                PCell cell = cells[i][j];
+                if(cell.getType().equals("ENTRY")) {
+                    cell.setPlayer(player);
+                }
+            }
+        }
+    }
+
+    public void setPlayer(int previous_x, int previous_y, int current_x, int current_y, PCharacter player) {
+        cells[previous_x][previous_y].removePlayer();
+        cells[current_x][current_y].setPlayer(player);
+        System.out.println("------------------------");
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if(cells[i][j].getContent() != null)
+                    System.out.println(i + " " + j + " " + cells[i][j].getContent().getType());
+            }
+        }
+    }
 }

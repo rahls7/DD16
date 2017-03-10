@@ -5,9 +5,9 @@ import java.util.ArrayList;
 /**
  * Created by mo on 2017-03-08.
  */
-public class PCharacter {
+public class PCharacter extends PCellContent{
 
-    private boolean isSaved;
+    private int category; //0: friend, 1: enemy, 2: player
     private String id;
     private String name;
     private ArrayList<Item> equipment;
@@ -20,10 +20,10 @@ public class PCharacter {
     private int basicLevel, basicHitPoint, basicArmorClass, basicAttackBonus, basicDamageBonus, basicMultipleAttacks;
     private int level, hitPoint, armorClass, attackBonus, damageBonus, multipleAttacks;
 
-    PCharacter(String id){
+    public PCharacter(String id, String isHostile){
+        type = "PLAYER";
         CharacterIO characterIO = new CharacterIO();
         Character character = characterIO.getCharacter(id);
-        this.isSaved = character.getIsSaved();
         this.id = character.getId();
         this.name = character.getName();
         this.equipment = character.getEquipment();
@@ -71,6 +71,13 @@ public class PCharacter {
         basicAttackBonus = basicAttributes[3];
         basicDamageBonus = basicAttributes[4];
         basicMultipleAttacks = basicAttributes[5];
+
+        if(isHostile.equals("1"))
+            this.category = 1;
+        else if(isHostile.equals("0"))
+            this.category = 0;
+        else
+            this.category = 2;
     }
 
     /**
@@ -147,14 +154,6 @@ public class PCharacter {
 
         if (!weaponEquipped)
             damageBonus = 0;
-    }
-
-    public boolean isSaved() {
-        return isSaved;
-    }
-
-    public void setSaved(boolean saved) {
-        isSaved = saved;
     }
 
     public String getId() {

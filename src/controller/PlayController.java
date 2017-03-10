@@ -6,41 +6,28 @@ import org.json.JSONObject;
 
 public class PlayController {
     private CampaignIO campaignio;
-    private CharacterIO characterio;
-    private MapIO mapio;
     private PCampaign campaign;
     private PCharacter player;
-    private int current_mapindex;
 
     public PlayController(String character_id, int campaign_id) {
-        mapio = new MapIO();
         campaignio = new CampaignIO();
-        characterio = new CharacterIO();
 
         JSONObject json_campaign = readCampaign(campaign_id);
         campaign = new PCampaign(json_campaign);
-        current_mapindex = 0;
 
-        JSONObject json_player = readCharacter(character_id);
-
-
+        player = new PCharacter(character_id, "2");
+        campaign.setPlayer(player);
     }
 
-    private JSONObject readCharacter(String character_id) {
-    }
-
-    public JSONObject readCampaign(int campaign_id) {
+    private JSONObject readCampaign(int campaign_id) {
         return campaignio.readCampaign(campaign_id);
     }
 
-    public JSONObject readMap() {
-        int map_id = getCurrentMapId(current_mapindex);
-        return mapio.readMap(map_id);
+    public JSONObject readCurrentMap() {
+        return campaign.readCurrentMap();
     }
 
-    private int getCurrentMapId(int current_mapindex) {
-
+    public void setPlayer(int previous_x, int previous_y, int current_x, int current_y) {
+        campaign.setPlayer(previous_x, previous_y, current_x, current_y, player);
     }
-
-
 }

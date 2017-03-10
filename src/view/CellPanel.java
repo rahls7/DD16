@@ -71,8 +71,9 @@ public class CellPanel extends JPanel {
             ImageIcon pic = new ImageIcon("src/images/wall.png");
             img = pic.getImage();
             repaint();
-        } else if (content.equals("ENTRY")) {
-            ImageIcon pic = new ImageIcon("src/images/entry.png");
+        } else if (content.equals("ENTRY") || content.equals("PLAYER")) {
+            this.content = "PLAYER";
+            ImageIcon pic = new ImageIcon("src/images/player.png");
             img = pic.getImage();
             repaint();
         } else if (content.equals("EXIT")) {

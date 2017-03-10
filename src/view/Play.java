@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class Play  extends JPanel implements MouseListener {
-    private JPanel map_panel, setting_panel;
+    private JPanel map_panel, action_panel;
     private CellPanel[][] cells;
     private CellPanel current_cell, previous_cell;
     private PlayController play_controller;
@@ -27,12 +27,11 @@ public class Play  extends JPanel implements MouseListener {
         play_controller = new PlayController(character_id, campaign_id);
 
         json_map = new JSONObject();
-        json_map = play_controller.readMap(map_id);
+        json_map = play_controller.readCurrentMap();
 
         width = json_map.getInt("width");
         height = json_map.getInt("height");
-        map_controller.createMap(width, height, true);
-        map_controller.setId(map_id);
+
         JSONArray json_cells = json_map.getJSONArray("cells");
 
         map_panel = new JPanel(new GridLayout(width, height));
@@ -45,21 +44,36 @@ public class Play  extends JPanel implements MouseListener {
                 cells[i][j].addMouseListener(this);
                 String content = getJSONContent(json_cells, i, j);
                 cells[i][j].setContent(content);
-                map_controller.setContent(i, j, content);
                 map_panel.add(cells[i][j]);
             }
         }
 
-        setting_panel = new JPanel(new GridLayout(3, 2));
-        setting_panel.setBorder(BorderFactory.createTitledBorder(null, "Details", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
-
-
+        action_panel = new JPanel(new GridLayout(3, 2));
+        action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
 
         add(map_panel);
-        add(setting_panel);
+        add(action_panel);
 
     }
 
+    /**
+     * Get content of a cell from the data formatted in JSON from the file.
+     *
+     * @param json_cells Cell information in JSON format.
+     * @param x          X Coordinate of a cell.
+     * @param y          Y Coordinate of a cell.
+     * @return Content of the cell.
+     */
+    private String getJSONContent(JSONArray json_cells, int x, int y) {
+        for (int i = 0; i < json_cells.length(); i++) {
+            JSONObject json_cell = json_cells.getJSONObject(i);
+            int cell_x = json_cell.getInt("cell_x");
+            int cell_y = json_cell.getInt("cell_y");
+            if (cell_x == x && cell_y == y)
+                return json_cell.getString("cell_content");
+        }
+        return null;
+    }
 
     /**
      * The action when the mouse is clicked.
@@ -80,6 +94,13 @@ public class Play  extends JPanel implements MouseListener {
             } else {
                 previous_cell.deselect();
                 current_cell.select();
+
+                if(previous_cell.content.equals("PLAYER") && current_cell.content.equals("")){
+                    previous_cell.removeContent();
+                    current_cell.setContent("PLAYER");
+                    play_controller.setPlayer(previous_cell.x, previous_cell.y, current_cell.x, current_cell.y);
+                }
+
                 previous_cell = current_cell;
             }
         }

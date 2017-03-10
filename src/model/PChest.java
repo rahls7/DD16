@@ -8,5 +8,6 @@ public class PChest extends PCellContent{
         item_id = Integer.parseInt(id);
         itemio = new ItemIO();
         item = itemio.getPItem(item_id);
+        type = "CHEST";
     }
 }

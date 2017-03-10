@@ -22,6 +22,19 @@ public class PCell {
             else
                 this.content = new PConstant(type);
         }
-
     }
+
+    public String getType() { return type; }
+
+    public void setPlayer(PCharacter player) {
+        if(type.equals("") || type.equals("ENTRY")) {
+            content = player;
+        }
+    }
+
+    public void removePlayer() {
+        content = new PConstant("");
+    }
+
+    public PCellContent getContent() { return content; }
 }

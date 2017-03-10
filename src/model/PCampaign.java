@@ -9,18 +9,40 @@ import java.util.List;
 
 public class PCampaign {
 
-    int campaign_id;
-    List<PMap> maps;
+    private MapIO mapio;
+    private int campaign_id;
+    private List<PMap> maps;
+    private int current_mapindex;
 
     public PCampaign(JSONObject json_campaign) {
+        mapio = new MapIO();
         campaign_id = json_campaign.getInt("id");
+        current_mapindex = 0;
 
         maps = new ArrayList<PMap>();
-        JSONArray json_maps = json_campaign.getJSONArray("maps");
-        for (int i = 0; i < json_maps.length(); i++) {
-            int map_id = json_maps.getJSONObject(i).getInt("id");
-            PMap map = new PMap(json_maps.getJSONObject(i), i);
+        JSONArray json_maps_id = json_campaign.getJSONArray("maps");
+        for (int i = 0; i < json_maps_id.length(); i++) {
+            int map_id = json_maps_id.getJSONObject(i).getInt("id");
+            JSONObject json_map = mapio.readMap(map_id);
+            PMap map = new PMap(json_map, i);
             maps.add(map);
         }
+    }
+
+    public int getCurrentMapId(int current_mapindex) {
+        return maps.get(current_mapindex).getId();
+    }
+
+    public JSONObject readCurrentMap() {
+        int map_id = getCurrentMapId(current_mapindex);
+        return mapio.readMap(map_id);
+    }
+
+    public void setPlayer(PCharacter player) {
+        maps.get(current_mapindex).setPlayer(player);
+    }
+
+    public void setPlayer(int previous_x, int previous_y, int current_x, int current_y, PCharacter player) {
+        maps.get(current_mapindex).setPlayer(previous_x, previous_y, current_x, current_y, player);
     }
 }
