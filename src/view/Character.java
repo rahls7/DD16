@@ -24,13 +24,18 @@ public class Character extends JPanel {
         JLabel idLabel = new JLabel("ID:");
         idLabel.setBounds(100, 0, 50, 50);
         idLabel.setFont(new Font("dialog", 0, 20));
+        JLabel typeLabel = new JLabel("Type:");
+        typeLabel.setBounds(80, 70, 70, 50);
+        typeLabel.setFont(new Font("dialog", 0, 20));
         JButton createButton = new JButton("Create Character");
-        createButton.setBounds(300, 0, 150, 50);
-
+        createButton.setBounds(300, 70, 150, 50);
+        String[] type = {"Bully", "Nimble", "Tank"};
+        JComboBox typeComboBox = new JComboBox(type);
+        typeComboBox.setBounds(150,70,150,50);
         createButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Main.mainFrame.getContentPane().removeAll();
-                Main.mainFrame.getContentPane().add(new CreateCharacter(idTextField.getText()), BorderLayout.CENTER);
+                Main.mainFrame.getContentPane().add(new CreateCharacter(idTextField.getText(), String.valueOf(typeComboBox.getSelectedItem())), BorderLayout.CENTER);
                 Main.mainFrame.getContentPane().doLayout();
                 repaint();
                 validate();
@@ -39,7 +44,9 @@ public class Character extends JPanel {
         });
 
         add(idLabel);
+        add(typeLabel);
         add(idTextField);
+        add(typeComboBox);
         add(createButton);
 //
 

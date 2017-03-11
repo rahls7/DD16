@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -11,6 +13,7 @@ import java.util.Random;
 public class Character {
     private String id;
     private String name;
+    private String type;
     private ArrayList<Item> equipment;
     private ArrayList<Item> backpack;
     public int[][] basicStats;
@@ -39,24 +42,42 @@ public class Character {
     /**
      * initiate the attributes and stats of a character
      */
-    public void initiateStats() {
+    public void initiateStats(String type) {
         int dice = 0;
         int modifierValue = 0;
         Random rand = new Random();
-        for (int i = 0; i < 6; i++) {
-            // StatsValue
-            for (int k = 0; k < 4; k++) dice = dice + rand.nextInt(6) + 1;
-            for (int j = 0; j < 2; j++) {
-                //ModifierValue
-                modifierValue = dice / 2 - 5;
-            }
-            stats[i][0] = dice;
-            basicStats[i][0] = stats[i][0];
-            stats[i][1] = modifierValue;
-            basicStats[i][1] = stats[i][1];
+        int[] diceStats = new int[6];
+
+        for (int i=0; i<6; i++){
+            for (int j=0; j<4; j++)
+                dice = dice + rand.nextInt(6) + 1;
+            diceStats[i] = dice;
             dice = 0;
-            modifierValue = 0;
         }
+        Arrays.sort(diceStats);
+        if (type.equals("Bully")){
+            stats[0][0] = diceStats[5];
+            stats[2][0] = diceStats[4];
+            stats[1][0] = diceStats[3];
+        }else if (type.equals("Nimble")){
+            stats[1][0] = diceStats[5];
+            stats[2][0] = diceStats[4];
+            stats[0][0] = diceStats[3];
+        }else if (type.equals("Tank")){
+            stats[2][0] = diceStats[5];
+            stats[1][0] = diceStats[4];
+            stats[0][0] = diceStats[3];
+        }
+        stats[3][0] = diceStats[2];
+        stats[5][0] = diceStats[1];
+        stats[4][0] = diceStats[0];
+
+        for (int i = 0; i < 6; i++) {
+            basicStats[i][0] = stats[i][0];
+            stats[i][1] = stats[i][0] / 2 -5;
+            basicStats[i][1] = stats[i][1];
+        }
+
         //level
         attributes[0] = 1;
         basicAttributes[0] = attributes[0];
@@ -68,8 +89,7 @@ public class Character {
         attributes[2] = 10 + stats[1][1]; //+armor class bonus from items
         basicAttributes[2] = attributes[2];
         //attack bonus
-        // ATTACK BONUS
-        attributes[3] = attributes[0];
+        attributes[3] = attributes[0] + stats[0][1] + stats[1][1];
         basicAttributes[3] = attributes[3];
         //damage bonus
         attributes[4] = stats[0][1];
@@ -125,7 +145,7 @@ public class Character {
         //armor class
         attributes[2] = 10 + stats[1][1];
         //attack bonus
-        attributes[3] = attributes[0];
+        attributes[3] = attributes[0] + stats[0][1] + stats[1][1];
         //damage bonus
         attributes[4] = stats[0][1];
 
@@ -200,6 +220,14 @@ public class Character {
      */
     public String getName() {
         return name;
+    }
+
+    public void setType(String type){
+        this.type = type;
+    }
+
+    public String getType(){
+        return this.type;
     }
 
     /**
