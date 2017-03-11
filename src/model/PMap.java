@@ -55,12 +55,20 @@ public class PMap {
     public void setPlayer(int previous_x, int previous_y, int current_x, int current_y, PCharacter player) {
         cells[previous_x][previous_y].removePlayer();
         cells[current_x][current_y].setPlayer(player);
-        System.out.println("------------------------");
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if(cells[i][j].getContent() != null)
-                    System.out.println(i + " " + j + " " + cells[i][j].getContent().getType());
-            }
-        }
     }
+
+    public PItem getChestItem(int x, int y) {
+
+        if(cells[x][y].getContent().type == "CHEST") {
+            PChest chest = (PChest)cells[x][y].getContent();
+            PItem item = chest.getItem();
+            if(item != null) {
+                chest.removeItem();
+                return item;
+            }
+            return null;
+        }
+        return null;
+    }
+
 }

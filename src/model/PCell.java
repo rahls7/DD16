@@ -29,6 +29,7 @@ public class PCell {
     public void setPlayer(PCharacter player) {
         if(type.equals("") || type.equals("ENTRY")) {
             content = player;
+            type = "PLAYER";
         }
     }
 
@@ -37,4 +38,5 @@ public class PCell {
     }
 
     public PCellContent getContent() { return content; }
+
 }

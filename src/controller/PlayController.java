@@ -30,4 +30,12 @@ public class PlayController {
     public void setPlayer(int previous_x, int previous_y, int current_x, int current_y) {
         campaign.setPlayer(previous_x, previous_y, current_x, current_y, player);
     }
+
+    public void lootChest(int x, int y) {
+        if(player.getEquipment().size() < 10){
+            PItem item = campaign.getChestItem(x, y);
+            player.addEquipment(item);
+        }
+    }
+
 }

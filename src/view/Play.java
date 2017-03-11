@@ -1,6 +1,5 @@
 package view;
 
-import controller.MapEditorController;
 import controller.PlayController;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,15 +7,15 @@ import org.json.JSONObject;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class Play  extends JPanel implements MouseListener {
-    private JPanel map_panel, action_panel;
-    private CellPanel[][] cells;
-    private CellPanel current_cell, previous_cell;
+    private JPanel map_panel, action_panel, inventory_panel;
+    private PInformationPanel information_panel;
+    private PCharacteristicPanel characteristic_panel;
+    private PCellPanel[][] cells;
+    private PCellPanel current_cell, previous_cell;
     private PlayController play_controller;
     private JSONObject json_map;
     private int width, height;
@@ -37,19 +36,25 @@ public class Play  extends JPanel implements MouseListener {
         map_panel = new JPanel(new GridLayout(width, height));
         map_panel.setBorder(BorderFactory.createTitledBorder(null, "Map", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
 
-        cells = new CellPanel[width][height];
+        cells = new PCellPanel[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                cells[i][j] = new CellPanel(i, j);
+                cells[i][j] = new PCellPanel(i, j);
                 cells[i][j].addMouseListener(this);
                 String content = getJSONContent(json_cells, i, j);
                 cells[i][j].setContent(content);
                 map_panel.add(cells[i][j]);
             }
         }
+        inventory_panel = new JPanel();
+        information_panel = new PInformationPanel(play_controller);
+        characteristic_panel= new PCharacteristicPanel();
 
-        action_panel = new JPanel(new GridLayout(3, 2));
+
+        action_panel = new JPanel(new GridLayout(3, 0));
         action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
+        action_panel.add(information_panel);
+        action_panel.add(inventory_panel);
 
         add(map_panel);
         add(action_panel);
@@ -82,11 +87,12 @@ public class Play  extends JPanel implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent arg0) {
-        // TODO Auto-generated method stub
-        current_cell = (CellPanel) arg0.getSource();
+
+        current_cell = (PCellPanel) arg0.getSource();
         if (previous_cell == null) {
             current_cell.select();
             previous_cell = current_cell;
+            information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y));
         } else {
             if (current_cell.x == previous_cell.x && current_cell.y == previous_cell.y) {
                 current_cell.deselect();
@@ -102,8 +108,32 @@ public class Play  extends JPanel implements MouseListener {
                 }
 
                 previous_cell = current_cell;
+                information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y));
             }
         }
+    }
+
+    private boolean isAdjacent(int x, int y) {
+        int player_x = -1;
+        int player_y = -1;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if(cells[i][j].content.equals("PLAYER")) {
+                    player_x = i;
+                    player_y = j;
+                    break;
+                }
+            }
+        }
+        if(player_x == x - 1 && player_y == y)
+            return true;
+        else if(player_x == x + 1 && player_y == y)
+            return true;
+        else if(player_x == x && player_y == y - 1)
+            return true;
+        else if(player_x == x && player_y == y + 1)
+            return true;
+        return false;
     }
 
     /**

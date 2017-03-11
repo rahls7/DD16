@@ -45,4 +45,9 @@ public class PCampaign {
     public void setPlayer(int previous_x, int previous_y, int current_x, int current_y, PCharacter player) {
         maps.get(current_mapindex).setPlayer(previous_x, previous_y, current_x, current_y, player);
     }
+
+    public PItem getChestItem(int x, int y) {
+        return maps.get(current_mapindex).getChestItem(x, y);
+    }
+
 }
