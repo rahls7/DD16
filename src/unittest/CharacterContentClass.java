@@ -31,7 +31,7 @@ public class CharacterContentClass {
     @Before
     public void before() {
         character = new Character("123");
-        character.initiateStats();
+        character.initiateStats("Bully");
         character.setIsSaved(true);
         item = new Item("Ring", "Damage Bonus", 5);
     }
