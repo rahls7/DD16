@@ -59,7 +59,7 @@ public class MapIO {
     /**
      * Transform information of a map into JSON format.
      *
-     * @param id Id of the map.
+     * @param id  Id of the map.
      * @param map The map instance.
      * @return The transformed result.
      */
@@ -125,18 +125,14 @@ public class MapIO {
      */
     private String readMapFile() {
         String content = "";
-        try
-        {
+        try {
             BufferedReader reader = new BufferedReader(new FileReader("src/files/map.txt"));
             String line;
-            while ((line = reader.readLine()) != null)
-            {
+            while ((line = reader.readLine()) != null) {
                 content += line;
             }
             reader.close();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -148,7 +144,7 @@ public class MapIO {
      *
      * @param json_content The information of the map.
      */
-    public void writeMapFile(JSONObject json_content){
+    public void writeMapFile(JSONObject json_content) {
         try {
             PrintWriter writer = new PrintWriter("src/files/map.txt", "UTF-8");
             writer.println(json_content);

@@ -20,6 +20,7 @@ public class Main extends JFrame {
     private Item item_panel;
     private Character character_panel;
     private Campaign campaign_panel;
+    private Play play_panel;
     public static Main mainFrame;
 
 
@@ -47,6 +48,7 @@ public class Main extends JFrame {
 
     /**
      * Creates a JmenuBar for the frame.
+     *
      * @param name Name for the Menu Bar.
      * @return bar JMenuBar
      */
@@ -60,6 +62,7 @@ public class Main extends JFrame {
 
     /**
      * Creates the menu for the JMenuBar. Over rides the Action Listener methods of JButton.
+     *
      * @param name
      * @return menu Menu with options to create Map, Character, Campaign.
      */
@@ -88,7 +91,6 @@ public class Main extends JFrame {
         JMenuItem item_close = new JMenuItem("Close");
 
 
-
         menu.add(item_play);
         menu.add(item_map);
         menu.add(item_compaign);
@@ -102,26 +104,30 @@ public class Main extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String cmd = e.getActionCommand();
                 System.out.println(cmd);
-                if(cmd.equals("Map Editor")) {
+                if (cmd.equals("Map Editor")) {
                     map_panel = new Map();
                     menuAction(map_panel);
-                }else if(cmd.equals("Item Editor")) {
+                } else if (cmd.equals("Item Editor")) {
                     item_panel = new Item();
                     menuAction(item_panel);
-                }else if(cmd.equals("About")) {
+                } else if (cmd.equals("About")) {
                     about_panel = new About();
                     menuAction(about_panel);
-                }else if(cmd.equals("Close")) {
+                } else if (cmd.equals("Close")) {
                     System.exit(0);
-                }else if(cmd.equals("Character Editor")) {
+                } else if (cmd.equals("Character Editor")) {
                     character_panel = new Character();
                     menuAction(character_panel);
-                }else if(cmd.equals("Campaign Editor")) {
+                } else if (cmd.equals("Campaign Editor")) {
                     campaign_panel = new Campaign();
                     menuAction(campaign_panel);
+                } else if (cmd.equals("Play")) {
+                    play_panel = new Play("123456", 4);
+                    menuAction(play_panel);
                 }
             }
         };
+        item_play.addActionListener(actionListener);
         item_map.addActionListener(actionListener);
         item_item.addActionListener(actionListener);
         item_about.addActionListener(actionListener);
@@ -134,6 +140,7 @@ public class Main extends JFrame {
 
     /**
      * Resets all the content of the JFrame to switch between different JPanel
+     *
      * @param panel Panel that needs to be displayed. For eg: Map Panel can be created as:
      *              <code>
      *              map_panel = new Map();

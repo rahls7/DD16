@@ -16,11 +16,11 @@ public class Campaign extends JPanel {
     private CampaignEditController campaign_controller;
 
     /**
-     *Create a campaign panel
+     * Create a campaign panel
      */
-    public Campaign(){
-        super(new GridLayout(1,0));
-        campaign_controller= new CampaignEditController();
+    public Campaign() {
+        super(new GridLayout(1, 0));
+        campaign_controller = new CampaignEditController();
         JButton button_create = new JButton("Create Campaign");
         button_create.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -37,13 +37,13 @@ public class Campaign extends JPanel {
         create_panel = new JPanel();
         create_panel.add(button_create);
 
-        edit_panel=new JPanel();
+        edit_panel = new JPanel();
         JComboBox<Integer> campaigns = getCampaignList();
         edit_panel.add(campaigns);
         JButton button_edit = new JButton("Edit Campaign");
         button_edit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int compaign_id = (int)campaigns.getSelectedItem();
+                int compaign_id = (int) campaigns.getSelectedItem();
                 Main.mainFrame.getContentPane().removeAll();
                 Main.mainFrame.getContentPane().add(new EditCampaign(compaign_id), BorderLayout.CENTER);
                 Main.mainFrame.getContentPane().doLayout();
@@ -59,10 +59,11 @@ public class Campaign extends JPanel {
     }
 
     /**
-     *Get the existing campaign list
+     * Get the existing campaign list
+     *
      * @return
      */
-    public JComboBox<Integer> getCampaignList(){
+    public JComboBox<Integer> getCampaignList() {
         JComboBox<Integer> campaigns = new JComboBox<Integer>();
         JSONArray json_campaigns = campaign_controller.getCompaignList();
         for (int i = 0; i < json_campaigns.length(); i++) {

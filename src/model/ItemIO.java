@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 
 /**
  * Read and write the item file.
+ *
  * @author Jiayao Zhou
  * @version 1.0.0
  */
@@ -58,7 +59,7 @@ public class ItemIO {
     /**
      * Generate JSON for an item.
      *
-     * @param id Id of the item.
+     * @param id   Id of the item.
      * @param item Object of the item.
      * @return JSON of the item.
      */
@@ -80,18 +81,14 @@ public class ItemIO {
      */
     private String readItemFile() {
         String content = "";
-        try
-        {
+        try {
             BufferedReader reader = new BufferedReader(new FileReader("src/files/item.txt"));
             String line;
-            while ((line = reader.readLine()) != null)
-            {
+            while ((line = reader.readLine()) != null) {
                 content += line;
             }
             reader.close();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -103,7 +100,7 @@ public class ItemIO {
      *
      * @param json_content Content to be written.
      */
-    public void writeItemFile(JSONObject json_content){
+    public void writeItemFile(JSONObject json_content) {
         try {
             PrintWriter writer = new PrintWriter("src/files/item.txt", "UTF-8");
             writer.println(json_content);
@@ -138,13 +135,36 @@ public class ItemIO {
         for (int i = 0; i < json_items.length(); i++) {
             JSONObject json_item = json_items.getJSONObject(i);
             int id = json_item.getInt("id");
-            if(id == item_id){
+            if (id == item_id) {
                 String type = json_item.getString("type");
                 String attribute = json_item.getString("attribute");
                 int attribute_value = json_item.getInt("attribute_value");
                 item = new Item(type, attribute, attribute_value);
                 item.setIsSaved(true);
                 item.setSaveId(item_id);
+                return item;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get an pitem from the file.
+     *
+     * @param item_id Id of the item.
+     * @return Object of the item.
+     */
+    public PItem getPItem(int item_id) {
+        PItem item;
+        JSONArray json_items = getItemList();
+        for (int i = 0; i < json_items.length(); i++) {
+            JSONObject json_item = json_items.getJSONObject(i);
+            int id = json_item.getInt("id");
+            if (id == item_id) {
+                String type = json_item.getString("type");
+                String attribute = json_item.getString("attribute");
+                int attribute_value = json_item.getInt("attribute_value");
+                item = new PItem(item_id, type, attribute, attribute_value);
                 return item;
             }
         }

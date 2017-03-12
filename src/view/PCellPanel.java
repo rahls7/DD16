@@ -11,7 +11,7 @@ import javax.swing.border.Border;
  * @author Jiayao Zhou
  * @version 1.0.1
  */
-public class CellPanel extends JPanel {
+public class PCellPanel extends JPanel {
     public int x;
     public int y;
     private boolean isSelected = false;
@@ -24,7 +24,7 @@ public class CellPanel extends JPanel {
      * @param x X Coordinate of the cell.
      * @param y Y Coordinate of the cell.
      */
-    public CellPanel(int x, int y) {
+    public PCellPanel(int x, int y) {
         this.x = x;
         this.y = y;
         Border blackline = BorderFactory.createLineBorder(Color.black);
@@ -71,8 +71,9 @@ public class CellPanel extends JPanel {
             ImageIcon pic = new ImageIcon("src/images/wall.png");
             img = pic.getImage();
             repaint();
-        } else if (content.equals("ENTRY")) {
-            ImageIcon pic = new ImageIcon("src/images/entry.png");
+        } else if (content.equals("ENTRY") || content.equals("PLAYER")) {
+            this.content = "PLAYER";
+            ImageIcon pic = new ImageIcon("src/images/player.png");
             img = pic.getImage();
             repaint();
         } else if (content.equals("EXIT")) {
