@@ -438,7 +438,7 @@ public class PCharacter extends PCellContent{
         this.multipleAttacks = multipleAttacks;
     }
 
-    public void addEquipment(PItem item) {
-        this.equipment.add(item);
+    public void addBackpack(PItem item) {
+        this.backpack.add(item);
     }
 }

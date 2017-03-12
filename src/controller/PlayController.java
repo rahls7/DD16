@@ -32,9 +32,9 @@ public class PlayController {
     }
 
     public void lootChest(int x, int y) {
-        if(player.getEquipment().size() < 10){
+        if(player.getBackpack().size() < 10){
             PItem item = campaign.getChestItem(x, y);
-            player.addEquipment(item);
+            player.addBackpack(item);
         }
     }
 
