@@ -5,13 +5,13 @@ import java.util.ArrayList;
 /**
  * Created by mo on 2017-03-08.
  */
-public class PCharacter {
+public class PCharacter extends PCellContent{
 
-    private boolean isSaved;
+    private int category; //0: friend, 1: enemy, 2: player
     private String id;
     private String name;
-    private ArrayList<Item> equipment;
-    private ArrayList<Item> backpack;
+    private ArrayList<PItem> equipment;
+    private ArrayList<PItem> backpack;
     private int strength, dexterity, constitution, intelligence, wisdom, charisma;
     private int basicStrengthModifier, basicDexterityModifier, basicConstitutionModifier, basicIntelligenceModifier,
             basicWisdomModifier, basicCharismaModifier;
@@ -20,14 +20,24 @@ public class PCharacter {
     private int basicLevel, basicHitPoint, basicArmorClass, basicAttackBonus, basicDamageBonus, basicMultipleAttacks;
     private int level, hitPoint, armorClass, attackBonus, damageBonus, multipleAttacks;
 
-    PCharacter(String id){
+    public PCharacter(String id, String isHostile){
+        type = "PLAYER";
         CharacterIO characterIO = new CharacterIO();
         Character character = characterIO.getCharacter(id);
-        this.isSaved = character.getIsSaved();
         this.id = character.getId();
         this.name = character.getName();
-        this.equipment = character.getEquipment();
-        this.backpack = character.getBackpack();
+
+        this.equipment = new ArrayList<PItem>();
+        for(Item item : character.getEquipment()) {
+            PItem i = new PItem(item.getSaveId(), item.getType(), item.getAttribute(), item.getAttributeValue());
+            this.equipment.add(i);
+        }
+
+        this.backpack = new ArrayList<PItem>();
+        for(Item item : character.getBackpack()) {
+            PItem i = new PItem(item.getSaveId(), item.getType(), item.getAttribute(), item.getAttributeValue());
+            this.backpack.add(i);
+        }
 
         int stats[][] = new int[6][2];
         stats = character.getStats();
@@ -71,6 +81,13 @@ public class PCharacter {
         basicAttackBonus = basicAttributes[3];
         basicDamageBonus = basicAttributes[4];
         basicMultipleAttacks = basicAttributes[5];
+
+        if(isHostile.equals("1"))
+            this.category = 1;
+        else if(isHostile.equals("0"))
+            this.category = 0;
+        else
+            this.category = 2;
     }
 
     /**
@@ -87,7 +104,7 @@ public class PCharacter {
         charismModifier = basicCharismaModifier;
 
         // first loop
-        for (Item item : equipment) {
+        for (PItem item : equipment) {
             if (item.getType().equals("Weapon"))
                 weaponEquipped = true;
             switch (item.getAttribute()) {
@@ -122,7 +139,7 @@ public class PCharacter {
         damageBonus = strengthModifier;
 
         //second loop
-        for (Item item : equipment) {
+        for (PItem item : equipment) {
             switch (item.getAttribute()) {
                 case "Hit Point":
                     hitPoint = hitPoint + item.getAttributeValue();
@@ -149,14 +166,6 @@ public class PCharacter {
             damageBonus = 0;
     }
 
-    public boolean isSaved() {
-        return isSaved;
-    }
-
-    public void setSaved(boolean saved) {
-        isSaved = saved;
-    }
-
     public String getId() {
         return id;
     }
@@ -173,19 +182,19 @@ public class PCharacter {
         this.name = name;
     }
 
-    public ArrayList<Item> getEquipment() {
+    public ArrayList<PItem> getEquipment() {
         return equipment;
     }
 
-    public void setEquipment(ArrayList<Item> equipment) {
+    public void setEquipment(ArrayList<PItem> equipment) {
         this.equipment = equipment;
     }
 
-    public ArrayList<Item> getBackpack() {
+    public ArrayList<PItem> getBackpack() {
         return backpack;
     }
 
-    public void setBackpack(ArrayList<Item> backpack) {
+    public void setBackpack(ArrayList<PItem> backpack) {
         this.backpack = backpack;
     }
 
@@ -427,5 +436,9 @@ public class PCharacter {
 
     public void setMultipleAttacks(int multipleAttacks) {
         this.multipleAttacks = multipleAttacks;
+    }
+
+    public void addEquipment(PItem item) {
+        this.equipment.add(item);
     }
 }
