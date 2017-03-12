@@ -43,7 +43,6 @@ public class PInformationPanel extends JPanel {
 
             }
             else if(info[0].equals("EXIT")) {
-                JButton button_exit = new JButton("Exit");
 
             }
             else if(info[0].equals("PLAYER")) {
@@ -69,5 +68,4 @@ public class PInformationPanel extends JPanel {
             play_controller.lootChest(x, y);
         }
     }
-
 }

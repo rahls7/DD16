@@ -38,4 +38,12 @@ public class PlayController {
         }
     }
 
+    public boolean isFulfilled() {
+        //return campaign.isFulfilled();
+        return true;
+    }
+    public boolean exit() {
+        player.levelUp();
+        return campaign.exit();
+    }
 }

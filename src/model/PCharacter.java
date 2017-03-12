@@ -438,7 +438,20 @@ public class PCharacter extends PCellContent{
         this.multipleAttacks = multipleAttacks;
     }
 
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
     public void addBackpack(PItem item) {
         this.backpack.add(item);
+    }
+
+    public void levelUp() {
+        this.level++;
+        recalculateStats();
     }
 }

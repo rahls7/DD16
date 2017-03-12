@@ -35,6 +35,7 @@ public class PCell {
 
     public void removePlayer() {
         content = new PConstant("");
+        type = "";
     }
 
     public PCellContent getContent() { return content; }

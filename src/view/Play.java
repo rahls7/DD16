@@ -106,9 +106,49 @@ public class Play  extends JPanel implements MouseListener {
                     current_cell.setContent("PLAYER");
                     play_controller.setPlayer(previous_cell.x, previous_cell.y, current_cell.x, current_cell.y);
                 }
+                else if(previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT")) {
+                    if(play_controller.isFulfilled()) {
+                        if(play_controller.exit()) {
+                            JOptionPane.showMessageDialog(Main.mainFrame, "Level Up! Go to Next Map!");
+                            //remove(map_panel);
+                            map_panel.removeAll();
+                            json_map = play_controller.readCurrentMap();
 
-                previous_cell = current_cell;
-                information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y));
+                            width = json_map.getInt("width");
+                            height = json_map.getInt("height");
+
+                            JSONArray json_cells = json_map.getJSONArray("cells");
+                            map_panel.setLayout(new GridLayout(width, height));
+                            map_panel.setBorder(BorderFactory.createTitledBorder(null, "Map", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
+
+                            cells = new PCellPanel[width][height];
+                            for (int i = 0; i < width; i++) {
+                                for (int j = 0; j < height; j++) {
+                                    cells[i][j] = new PCellPanel(i, j);
+                                    cells[i][j].addMouseListener(this);
+                                    String content = getJSONContent(json_cells, i, j);
+                                    cells[i][j].setContent(content);
+                                    map_panel.add(cells[i][j]);
+                                }
+                            }
+                            previous_cell = null;
+                            current_cell = null;
+                            //add(map_panel);
+                            //revalidate();
+                            //repaint();
+                            map_panel.revalidate();
+                            map_panel.repaint();
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(Main.mainFrame, "Complete!");
+                            Main.mainFrame = new Main();
+                        }
+                    }
+                }
+                if(current_cell != null ) {
+                    previous_cell = current_cell;
+                    information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y));
+                }
             }
         }
     }
@@ -179,7 +219,5 @@ public class Play  extends JPanel implements MouseListener {
         // TODO Auto-generated method stub
 
     }
-
-
 
 }

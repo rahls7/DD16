@@ -71,4 +71,19 @@ public class PMap {
         return null;
     }
 
+    public boolean isFulFilled() {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if(cells[i][j].getType().equals("CHARACTER")) {
+                    PCharacter c = (PCharacter) cells[i][j].getContent();
+                    if(c.getCategory() == 1) {
+                        if(c.getHitPoint() != 0) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }
