@@ -33,6 +33,8 @@ public class PCell {
         }
     }
 
+
+
     public void removePlayer() {
         content = new PConstant("");
     }

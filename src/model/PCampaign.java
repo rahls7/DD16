@@ -50,4 +50,15 @@ public class PCampaign {
         return maps.get(current_mapindex).getChestItem(x, y);
     }
 
+    /*public ArrayList<PItem> getFriendsItem(int x , int y, Pitem item) {
+        return maps.get(current_mapindex).giveFriendItem(x,y, item);
+    }*/
+    public PCharacter getFriend(int x, int y) {
+        return maps.get(current_mapindex).getFriend(x,y);
+    }
+
+    public PCharacter getEnemy(int x, int y) {
+        return maps.get(current_mapindex).getEnemy(x,y);
+    }
+
 }
