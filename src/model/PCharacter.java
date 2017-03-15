@@ -442,6 +442,8 @@ public class PCharacter extends PCellContent{
         this.equipment.add(item);
     }
 
+    public void addToBackpack(PItem item) {this.backpack.add(item);}
+
     public int getCategory() {
         return category;
     }

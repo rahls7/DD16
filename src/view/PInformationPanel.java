@@ -1,6 +1,7 @@
 package view;
 
 import controller.PlayController;
+import model.PCharacter;
 import model.PItem;
 
 import javax.swing.*;
@@ -20,6 +21,8 @@ public class PInformationPanel extends JPanel {
     private JButton button_attack;
     private JButton loot_enemy;
     private JButton button_loot;
+    private JComboBox lootEnemyItemBox;
+    private PCellPanel cell;
 
     public PInformationPanel(PlayController play_controller) {
         super();
@@ -29,6 +32,7 @@ public class PInformationPanel extends JPanel {
     }
 
     public void showInformation(PCellPanel cell, boolean isAdjacent) {
+        this.cell = cell;
         removeAll();
         String[] info = cell.content.split(" ");
         if(isAdjacent) {
@@ -47,19 +51,30 @@ public class PInformationPanel extends JPanel {
                 //DefaultComboBoxModel model = new DefaultComboBoxModel(it.toArray(new PItem[it.size()]));
                 //exchangeItBox.setModel(model);
                 for(PItem item: it) {
-                    exchangeItBox.addItem(item.getType());
+                    exchangeItBox.addItem(item.getType()+ " "+ item.getAttribute() + " " + item.getAttributeValue());
                 }
                 add(exchangeItBox);
                 add(button_exchange);
 
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("1")) {
-                button_attack = new JButton("Attack");
-                button_attack.addActionListener(new attackEnemy(cell.x,cell.y));
-                loot_enemy = new JButton("Loot Enemy");
-                loot_enemy.addActionListener(new lootEnemy(cell.x,cell.y));
-                add(button_attack);
-                add(loot_enemy);
+                if(play_controller.getEnemyHitPoint(cell.x, cell.y)==0) {
+                    loot_enemy = new JButton("Loot Enemy");
+                    loot_enemy.addActionListener(new lootEnemy(cell.x,cell.y));
+                    ArrayList<PItem> enemyItem = play_controller.getEnemyItem(cell.x, cell.y);
+                    lootEnemyItemBox = new JComboBox();
+                    System.out.println(enemyItem.size());
+                    for(PItem item : enemyItem) {
+                        lootEnemyItemBox.addItem(item.getType() + " " + item.getAttribute() + " " + item.getAttributeValue());
+                    }
+                    add(lootEnemyItemBox);
+                    add(loot_enemy);
+                }else {
+                    button_attack = new JButton("Attack");
+                    button_attack.addActionListener(new attackEnemy(cell.x,cell.y));
+                    add(button_attack);
+                }
+
 
             }
             else if(info[0].equals("WALL")) {
@@ -106,10 +121,11 @@ public class PInformationPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             if(event.getSource()== button_exchange) {
                 int index = exchangeItBox.getSelectedIndex();
-                ArrayList<PItem> playerItem = play_controller.getPlayerItem();
-                PItem selItem = playerItem.get(index);
-                play_controller.exchangeItem(x,y,index,selItem);
+                play_controller.exchangeItem(x,y,index);
                 JOptionPane.showMessageDialog(button_exchange,"Item Exchanged Successfully");
+                showInformation(cell, true);
+                revalidate();
+                repaint();
             }
 
         }
@@ -124,6 +140,9 @@ public class PInformationPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             play_controller.attackEnemy(x,y);
             JOptionPane.showMessageDialog(button_attack,"Enemy Dead");
+            showInformation(cell, true);
+            revalidate();
+            repaint();
 
         }
     }
@@ -136,8 +155,12 @@ public class PInformationPanel extends JPanel {
         }
 
         public void actionPerformed(ActionEvent event) {
-            play_controller.lootEnemy(x,y);
+            int selIndex = lootEnemyItemBox.getSelectedIndex();
+            play_controller.lootEnemy(x,y,selIndex );
             JOptionPane.showMessageDialog(loot_enemy, "Enemy Looted");
+            showInformation(cell, true);
+            revalidate();
+            repaint();
         }
     }
 
