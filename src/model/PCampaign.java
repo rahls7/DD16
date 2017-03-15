@@ -64,4 +64,6 @@ public class PCampaign {
             return false;
     }
 
+    public List<PMap> getMaps() { return maps; }
+
 }

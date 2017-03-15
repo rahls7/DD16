@@ -133,9 +133,7 @@ public class Play  extends JPanel implements MouseListener {
                             }
                             previous_cell = null;
                             current_cell = null;
-                            //add(map_panel);
-                            //revalidate();
-                            //repaint();
+
                             map_panel.revalidate();
                             map_panel.repaint();
                         }

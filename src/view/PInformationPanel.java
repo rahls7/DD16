@@ -25,7 +25,7 @@ public class PInformationPanel extends JPanel {
         removeAll();
         String[] info = cell.content.split(" ");
         if(isAdjacent) {
-            text = new JLabel(cell.content);
+            text = new JLabel(info[0]);
             add(text);
             if(info[0].equals("CHEST")) {
                 JButton button_loot = new JButton("Loot Chest");

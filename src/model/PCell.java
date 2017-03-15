@@ -23,6 +23,7 @@ public class PCell {
                 this.content = new PConstant(type);
         }
     }
+    public void setType(String type) { this.type = type; }
 
     public String getType() { return type; }
 
