@@ -122,7 +122,7 @@ public class Main extends JFrame {
                     campaign_panel = new Campaign();
                     menuAction(campaign_panel);
                 } else if (cmd.equals("Play")) {
-                    play_panel = new Play("123456", 4);
+                    play_panel = new Play("123456", 5);
                     menuAction(play_panel);
                 }
             }

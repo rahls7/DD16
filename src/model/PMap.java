@@ -43,12 +43,17 @@ public class PMap {
 
     public int getId(){ return map_id;}
 
+    public int getWidth(){ return width;}
+
+    public int getHeight(){ return height;}
+
     public void setPlayer(PCharacter player) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 PCell cell = cells[i][j];
                 if(cell.getType().equals("ENTRY")) {
                     cell.setPlayer(player);
+                    cell.setType("PLAYER");
                 }
             }
         }
@@ -61,7 +66,7 @@ public class PMap {
 
     public PItem getChestItem(int x, int y) {
 
-        if(cells[x][y].getContent().type == "CHEST") {
+        if(cells[x][y].getContent().type.equals("CHEST")) {
             PChest chest = (PChest)cells[x][y].getContent();
             PItem item = chest.getItem();
             if(item != null) {
@@ -103,4 +108,19 @@ public class PMap {
         return null;
     }
 
+    public boolean isFulFilled() {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if(cells[i][j].getType().equals("CHARACTER")) {
+                    PCharacter c = (PCharacter) cells[i][j].getContent();
+                    if(c.getCategory() == 1) {
+                        if(c.getHitPoint() != 0) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }

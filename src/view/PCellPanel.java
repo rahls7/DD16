@@ -106,6 +106,10 @@ public class PCellPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Paint the component on the panel.
+     * @param g The graphic that will be painted on the panel.
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

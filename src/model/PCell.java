@@ -23,6 +23,7 @@ public class PCell {
                 this.content = new PConstant(type);
         }
     }
+    public void setType(String type) { this.type = type; }
 
     public String getType() { return type; }
 
@@ -37,6 +38,7 @@ public class PCell {
 
     public void removePlayer() {
         content = new PConstant("");
+        type = "";
     }
 
     public PCellContent getContent() { return content; }
