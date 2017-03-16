@@ -4,6 +4,8 @@ package model;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class PMap {
 
     private int map_id, map_index, width, height;
@@ -64,7 +66,7 @@ public class PMap {
 
     public PItem getChestItem(int x, int y) {
 
-        if(cells[x][y].getContent().type == "CHEST") {
+        if(cells[x][y].getContent().type.equals("CHEST")) {
             PChest chest = (PChest)cells[x][y].getContent();
             PItem item = chest.getItem();
             if(item != null) {
@@ -72,6 +74,36 @@ public class PMap {
                 return item;
             }
             return null;
+        }
+        return null;
+    }
+
+    public PCharacter getFriend(int x, int y) {
+
+        if(cells[x][y].getType().equals("CHARACTER")) {
+            System.out.println("Inside Loop");
+            PCharacter friend = (PCharacter) cells[x][y].getContent();
+            if(friend!=null&& friend.getCategory()==0) {
+                System.out.println("Yayy!");
+                return friend;
+            }
+            /*if(friend.getCategory()==0) {
+                ArrayList<PItem> friendItems = friend.getBackpack();
+                if(friendItems.size()<10) {
+                    friend.addEquipment(item);
+                }
+            }*/
+        }
+        System.out.println("You are fucked");
+        return null;
+    }
+
+    public PCharacter getEnemy(int x, int y) {
+        if(cells[x][y].getType().equals("CHARACTER")) {
+            PCharacter enemy = (PCharacter) cells[x][y].getContent();
+            if(enemy!=null && enemy.getCategory()==1) {
+                return enemy;
+            }
         }
         return null;
     }

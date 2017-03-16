@@ -454,4 +454,8 @@ public class PCharacter extends PCellContent{
         this.level++;
         recalculateStats();
     }
+
+    public void addToBackpack(PItem item) {this.backpack.add(item);}
+
+  
 }
