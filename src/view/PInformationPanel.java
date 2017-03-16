@@ -25,7 +25,7 @@ public class PInformationPanel extends JPanel {
         removeAll();
         String[] info = cell.content.split(" ");
         if(isAdjacent) {
-            text = new JLabel(cell.content);
+            text = new JLabel(info[0]);
             add(text);
             if(info[0].equals("CHEST")) {
                 JButton button_loot = new JButton("Loot Chest");
@@ -43,7 +43,6 @@ public class PInformationPanel extends JPanel {
 
             }
             else if(info[0].equals("EXIT")) {
-                JButton button_exit = new JButton("Exit");
 
             }
             else if(info[0].equals("PLAYER")) {
@@ -69,5 +68,4 @@ public class PInformationPanel extends JPanel {
             play_controller.lootChest(x, y);
         }
     }
-
 }

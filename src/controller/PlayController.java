@@ -31,11 +31,27 @@ public class PlayController {
         campaign.setPlayer(previous_x, previous_y, current_x, current_y, player);
     }
 
+    public PCharacter getPlayer() {
+        return player;
+    }
+
+    public PCampaign getCampaign() {
+        return campaign;
+    }
+
     public void lootChest(int x, int y) {
-        if(player.getEquipment().size() < 10){
+        if(player.getBackpack().size() < 10){
             PItem item = campaign.getChestItem(x, y);
-            player.addEquipment(item);
+            player.addBackpack(item);
         }
     }
 
+    public boolean isFulfilled() {
+        //return campaign.isFulfilled();
+        return true;
+    }
+    public boolean exit() {
+        player.levelUp();
+        return campaign.exit();
+    }
 }
