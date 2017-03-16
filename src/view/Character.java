@@ -31,7 +31,7 @@ public class Character extends JPanel {
         createButton.setBounds(300, 70, 150, 50);
         String[] type = {"Bully", "Nimble", "Tank"};
         JComboBox typeComboBox = new JComboBox(type);
-        typeComboBox.setBounds(150,70,150,50);
+        typeComboBox.setBounds(150, 70, 150, 50);
         createButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Main.mainFrame.getContentPane().removeAll();

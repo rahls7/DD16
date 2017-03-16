@@ -18,6 +18,7 @@ import org.json.JSONObject;
 public class CharacterEditorController {
 
     private Character characterModel;
+    private PCharacter pCharacter;
     private ItemIO itemIO;
     private CharacterIO characterIO;
     private ArrayList<Item> items;
@@ -66,6 +67,10 @@ public class CharacterEditorController {
      */
     public void recalculate() {
         characterModel.recalculateStats();
+    }
+
+    public void setpCharacter(PCharacter pCharacter){
+        this.pCharacter = pCharacter;
     }
 
     /**

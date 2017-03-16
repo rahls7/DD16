@@ -3,9 +3,9 @@ package model;
 /**
  * Created by mo on 2017-03-11.
  */
-public class BullyCharacterBuilder extends CharacterBuilder{
+public class BullyCharacterBuilder extends CharacterBuilder {
 
-    public void initiate(){
+    public void initiate() {
         character.initiateStats("Bully");
     }
 }

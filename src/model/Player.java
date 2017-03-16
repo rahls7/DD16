@@ -5,16 +5,17 @@ package model;
  */
 public class Player {
     private CharacterBuilder characterBuilder;
-    public void setCharacterBuilder(CharacterBuilder newCharacterBuilder){
+
+    public void setCharacterBuilder(CharacterBuilder newCharacterBuilder) {
         characterBuilder = newCharacterBuilder;
     }
 
-    public void constructCharacter(String id){
+    public void constructCharacter(String id) {
         characterBuilder.createCharacter(id);
         characterBuilder.initiate();
     }
 
-    public Character getCharacter(){
+    public Character getCharacter() {
         return characterBuilder.getCharacter();
     }
 }

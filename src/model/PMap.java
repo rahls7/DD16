@@ -9,7 +9,7 @@ public class PMap {
     private int map_id, map_index, width, height;
     private PCell[][] cells;
 
-    public PMap(JSONObject json_map, int index){
+    public PMap(JSONObject json_map, int index) {
         this.map_id = json_map.getInt("id");
         this.map_index = index;
 
@@ -37,15 +37,35 @@ public class PMap {
         return null;
     }
 
-    public PCell[][] getCells() { return cells; }
+    public PCell[][] getCells() {
+        return cells;
+    }
 
-    public int getId(){ return map_id;}
+    public int getId() {
+        return map_id;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
 
     public void setPlayer(PCharacter player) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 PCell cell = cells[i][j];
-                if(cell.getType().equals("ENTRY")) {
+                if (cell.getType().equals("ENTRY")) {
                     cell.setPlayer(player);
                 }
             }
@@ -59,10 +79,10 @@ public class PMap {
 
     public PItem getChestItem(int x, int y) {
 
-        if(cells[x][y].getContent().type == "CHEST") {
-            PChest chest = (PChest)cells[x][y].getContent();
+        if (cells[x][y].getContent().type == "CHEST") {
+            PChest chest = (PChest) cells[x][y].getContent();
             PItem item = chest.getItem();
-            if(item != null) {
+            if (item != null) {
                 chest.removeItem();
                 return item;
             }

@@ -24,33 +24,27 @@ public class PInformationPanel extends JPanel {
     public void showInformation(PCellPanel cell, boolean isAdjacent) {
         removeAll();
         String[] info = cell.content.split(" ");
-        if(isAdjacent) {
+        if (isAdjacent) {
             text = new JLabel(cell.content);
             add(text);
-            if(info[0].equals("CHEST")) {
+            if (info[0].equals("CHEST")) {
                 JButton button_loot = new JButton("Loot Chest");
                 button_loot.addActionListener(new lootChest(cell.x, cell.y));
                 add(button_loot);
-            }
-            else if(info[0].equals("CHARACTER") && info[2].equals("0")) {
+            } else if (info[0].equals("CHARACTER") && info[2].equals("0")) {
                 JButton button_exchange = new JButton("Exchange Item");
-            }
-            else if(info[0].equals("CHARACTER") && info[2].equals("1")) {
+            } else if (info[0].equals("CHARACTER") && info[2].equals("1")) {
                 JButton button_attack = new JButton("Attack");
 
-            }
-            else if(info[0].equals("WALL")) {
+            } else if (info[0].equals("WALL")) {
 
-            }
-            else if(info[0].equals("EXIT")) {
+            } else if (info[0].equals("EXIT")) {
                 JButton button_exit = new JButton("Exit");
 
-            }
-            else if(info[0].equals("PLAYER")) {
+            } else if (info[0].equals("PLAYER")) {
 
             }
-        }
-        else {
+        } else {
             text = new JLabel(info[0]);
             add(text);
         }
@@ -61,10 +55,12 @@ public class PInformationPanel extends JPanel {
 
     class lootChest implements ActionListener {
         int x, y;
+
         lootChest(int x, int y) {
             this.x = x;
             this.y = y;
         }
+
         public void actionPerformed(ActionEvent arg0) {
             play_controller.lootChest(x, y);
         }

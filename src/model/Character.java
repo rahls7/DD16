@@ -48,22 +48,22 @@ public class Character {
         Random rand = new Random();
         int[] diceStats = new int[6];
 
-        for (int i=0; i<6; i++){
-            for (int j=0; j<4; j++)
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 4; j++)
                 dice = dice + rand.nextInt(6) + 1;
             diceStats[i] = dice;
             dice = 0;
         }
         Arrays.sort(diceStats);
-        if (type.equals("Bully")){
+        if (type.equals("Bully")) {
             stats[0][0] = diceStats[5];
             stats[2][0] = diceStats[4];
             stats[1][0] = diceStats[3];
-        }else if (type.equals("Nimble")){
+        } else if (type.equals("Nimble")) {
             stats[1][0] = diceStats[5];
             stats[2][0] = diceStats[4];
             stats[0][0] = diceStats[3];
-        }else if (type.equals("Tank")){
+        } else if (type.equals("Tank")) {
             stats[2][0] = diceStats[5];
             stats[1][0] = diceStats[4];
             stats[0][0] = diceStats[3];
@@ -74,7 +74,7 @@ public class Character {
 
         for (int i = 0; i < 6; i++) {
             basicStats[i][0] = stats[i][0];
-            stats[i][1] = stats[i][0] / 2 -5;
+            stats[i][1] = stats[i][0] / 2 - 5;
             basicStats[i][1] = stats[i][1];
         }
 
@@ -222,11 +222,11 @@ public class Character {
         return name;
     }
 
-    public void setType(String type){
+    public void setType(String type) {
         this.type = type;
     }
 
-    public String getType(){
+    public String getType() {
         return this.type;
     }
 
@@ -314,7 +314,9 @@ public class Character {
         return stats;
     }
 
-    public int[][] getBasicStats(){return basicStats;}
+    public int[][] getBasicStats() {
+        return basicStats;
+    }
 
 
     /**
@@ -346,5 +348,7 @@ public class Character {
         return attributes;
     }
 
-    public int[] getBasicAttributes(){return basicAttributes;}
+    public int[] getBasicAttributes() {
+        return basicAttributes;
+    }
 }
