@@ -154,7 +154,6 @@ public class PlayController {
 
     public void lootEnemy(int x, int y, int index) {
         if(player.getBackpack().size()<10) {
-            System.out.println("Inside Loot Loop");
             PCharacter enemy = campaign.getEnemy(x,y);
             ArrayList<PItem> enemyBack = enemy.getBackpack();
             ArrayList<PItem> enemyEquip = enemy.getEquipment();
