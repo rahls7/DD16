@@ -34,14 +34,14 @@ public class CreateCharacter extends JPanel {
      *
      * @param id, ID of the character
      */
-    public CreateCharacter(String id) {
+    public CreateCharacter(String id, String type) {
 
         //initiate
         super();
         setSize(2500, 600);
         setLayout(null);
         this.id = id;
-        characterController = new CharacterEditorController(id);
+        characterController = new CharacterEditorController(id, type);
         items = new ArrayList<String>();
         backpack = new ArrayList<String>();
         equipment = new ArrayList<String>();
@@ -113,7 +113,7 @@ public class CreateCharacter extends JPanel {
         equipmentComboBox = new JComboBox(equipment.toArray());
         equipmentComboBox.setBounds(800, 100, 250, 50);
         equipmentComboBox.setMaximumRowCount(7);
-        add(equipmentComboBox); //{"Helmet:gold","Armor:silver","Shield:bronze","Ring:king","Belt:jade","Boots:tiger","Weapon:sword","Weapon:blade"};
+        add(equipmentComboBox);
         backpackJComboBox = new JComboBox(backpack.toArray());
         backpackJComboBox.setBounds(1050, 100, 250, 50);
         backpackJComboBox.setMaximumRowCount(7);
@@ -163,7 +163,7 @@ public class CreateCharacter extends JPanel {
             if (event.getSource() == createButton) {
                 String name = nameTextField.getText();
                 characterController.setName(name);
-                characterController.initiateStats();
+//                characterController.initiateStats();
                 remove(createButton);
                 display();
                 validate();
