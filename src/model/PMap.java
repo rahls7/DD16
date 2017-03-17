@@ -81,20 +81,13 @@ public class PMap {
     public PCharacter getFriend(int x, int y) {
 
         if(cells[x][y].getType().equals("CHARACTER")) {
-            System.out.println("Inside Loop");
             PCharacter friend = (PCharacter) cells[x][y].getContent();
             if(friend!=null&& friend.getCategory()==0) {
                 System.out.println("Yayy!");
                 return friend;
             }
-            /*if(friend.getCategory()==0) {
-                ArrayList<PItem> friendItems = friend.getBackpack();
-                if(friendItems.size()<10) {
-                    friend.addEquipment(item);
-                }
-            }*/
+
         }
-        System.out.println("You are fucked");
         return null;
     }
 
