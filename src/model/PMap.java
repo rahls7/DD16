@@ -4,6 +4,8 @@ package model;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class PMap {
 
     private int map_id, map_index, width, height;
@@ -67,6 +69,7 @@ public class PMap {
                 PCell cell = cells[i][j];
                 if (cell.getType().equals("ENTRY")) {
                     cell.setPlayer(player);
+                    cell.setType("PLAYER");
                 }
             }
         }
@@ -79,8 +82,9 @@ public class PMap {
 
     public PItem getChestItem(int x, int y) {
 
-        if (cells[x][y].getContent().type == "CHEST") {
-            PChest chest = (PChest) cells[x][y].getContent();
+
+        if(cells[x][y].getContent().type.equals("CHEST")) {
+            PChest chest = (PChest)cells[x][y].getContent();
             PItem item = chest.getItem();
             if (item != null) {
                 chest.removeItem();
@@ -91,4 +95,49 @@ public class PMap {
         return null;
     }
 
+    public PCharacter getFriend(int x, int y) {
+
+        if(cells[x][y].getType().equals("CHARACTER")) {
+            System.out.println("Inside Loop");
+            PCharacter friend = (PCharacter) cells[x][y].getContent();
+            if(friend!=null&& friend.getCategory()==0) {
+                System.out.println("Yayy!");
+                return friend;
+            }
+            /*if(friend.getCategory()==0) {
+                ArrayList<PItem> friendItems = friend.getBackpack();
+                if(friendItems.size()<10) {
+                    friend.addEquipment(item);
+                }
+            }*/
+        }
+        System.out.println("You are fucked");
+        return null;
+    }
+
+    public PCharacter getEnemy(int x, int y) {
+        if(cells[x][y].getType().equals("CHARACTER")) {
+            PCharacter enemy = (PCharacter) cells[x][y].getContent();
+            if(enemy!=null && enemy.getCategory()==1) {
+                return enemy;
+            }
+        }
+        return null;
+    }
+
+    public boolean isFulFilled() {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if(cells[i][j].getType().equals("CHARACTER")) {
+                    PCharacter c = (PCharacter) cells[i][j].getContent();
+                    if(c.getCategory() == 1) {
+                        if(c.getHitPoint() != 0) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }

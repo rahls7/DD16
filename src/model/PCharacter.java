@@ -439,9 +439,6 @@ public class PCharacter extends PCellContent {
         this.multipleAttacks = multipleAttacks;
     }
 
-    public void addEquipment(PItem item) {
-        this.equipment.add(item);
-    }
 
     public int getCategory(){
         return category;
@@ -456,4 +453,20 @@ public class PCharacter extends PCellContent {
         setChanged();
         notifyObservers(this);
     }
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
+    public void addBackpack(PItem item) {
+        this.backpack.add(item);
+    }
+
+    public void levelUp() {
+        this.level++;
+        recalculateStats();
+    }
+
+    public void addToBackpack(PItem item) {this.backpack.add(item);}
+
+  
 }
