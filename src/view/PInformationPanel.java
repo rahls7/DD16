@@ -35,6 +35,7 @@ public class PInformationPanel extends JPanel {
         this.cell = cell;
         removeAll();
         String[] info = cell.content.split(" ");
+
         if(isAdjacent) {
             text = new JLabel(info[0]);
             add(text);
@@ -76,18 +77,17 @@ public class PInformationPanel extends JPanel {
                 }
 
 
-            }
-            else if(info[0].equals("WALL")) {
+            } else if (info[0].equals("WALL")) {
 
             }
+
+
             else if(info[0].equals("EXIT")) {
 
-            }
-            else if(info[0].equals("PLAYER")) {
+            } else if (info[0].equals("PLAYER")) {
 
             }
-        }
-        else {
+        } else {
             text = new JLabel(info[0]);
             add(text);
         }
@@ -98,10 +98,12 @@ public class PInformationPanel extends JPanel {
 
     class lootChest implements ActionListener {
         int x, y;
+
         lootChest(int x, int y) {
             this.x = x;
             this.y = y;
         }
+
         public void actionPerformed(ActionEvent arg0) {
 
             play_controller.lootChest(x, y);

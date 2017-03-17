@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by mo on 2017-03-08.
  */
-public class PCharacter extends PCellContent{
+public class PCharacter extends PCellContent {
 
     private int category; //0: friend, 1: enemy, 2: player
     private String id;
@@ -20,7 +20,7 @@ public class PCharacter extends PCellContent{
     private int basicLevel, basicHitPoint, basicArmorClass, basicAttackBonus, basicDamageBonus, basicMultipleAttacks;
     private int level, hitPoint, armorClass, attackBonus, damageBonus, multipleAttacks;
 
-    public PCharacter(String id, String isHostile){
+    public PCharacter(String id, String isHostile) {
         type = "PLAYER";
         CharacterIO characterIO = new CharacterIO();
         Character character = characterIO.getCharacter(id);
@@ -28,20 +28,21 @@ public class PCharacter extends PCellContent{
         this.name = character.getName();
 
         this.equipment = new ArrayList<PItem>();
-        for(Item item : character.getEquipment()) {
+        for (Item item : character.getEquipment()) {
             PItem i = new PItem(item.getSaveId(), item.getType(), item.getAttribute(), item.getAttributeValue());
             this.equipment.add(i);
         }
 
         this.backpack = new ArrayList<PItem>();
-        for(Item item : character.getBackpack()) {
+        for (Item item : character.getBackpack()) {
             PItem i = new PItem(item.getSaveId(), item.getType(), item.getAttribute(), item.getAttributeValue());
             this.backpack.add(i);
         }
 
         int stats[][] = new int[6][2];
         stats = character.getStats();
-        strength = stats[0][0];;
+        strength = stats[0][0];
+        ;
         dexterity = stats[1][0];
         constitution = stats[2][0];
         intelligence = stats[3][0];
@@ -53,7 +54,7 @@ public class PCharacter extends PCellContent{
         constitutionModifier = stats[2][1];
         intelligenceModifier = stats[3][1];
         wisdomModifier = stats[4][1];
-        charismModifier=stats[5][1];
+        charismModifier = stats[5][1];
 
         int basicStats[][] = new int[6][2];
         basicStats = character.getBasicStats();
@@ -62,7 +63,7 @@ public class PCharacter extends PCellContent{
         basicConstitutionModifier = basicStats[2][1];
         basicIntelligenceModifier = basicStats[3][1];
         basicWisdomModifier = basicStats[4][1];
-        basicCharismaModifier=basicStats[5][1];
+        basicCharismaModifier = basicStats[5][1];
 
         int attributes[] = new int[6];
         attributes = character.getAttributes();
@@ -82,9 +83,9 @@ public class PCharacter extends PCellContent{
         basicDamageBonus = basicAttributes[4];
         basicMultipleAttacks = basicAttributes[5];
 
-        if(isHostile.equals("1"))
+        if (isHostile.equals("1"))
             this.category = 1;
-        else if(isHostile.equals("0"))
+        else if (isHostile.equals("0"))
             this.category = 0;
         else
             this.category = 2;
@@ -438,10 +439,20 @@ public class PCharacter extends PCellContent{
         this.multipleAttacks = multipleAttacks;
     }
 
-    public int getCategory() {
+
+    public int getCategory(){
         return category;
     }
 
+    public void characterView() {
+        setChanged();
+        notifyObservers(this);
+    }
+
+    public void inventoryView() {
+        setChanged();
+        notifyObservers(this);
+    }
     public void setCategory(int category) {
         this.category = category;
     }

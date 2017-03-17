@@ -33,6 +33,10 @@ public class PCampaign {
         return maps.get(current_mapindex).getId();
     }
 
+    public PMap getMap() {
+        return maps.get(current_mapindex);
+    }
+
     public JSONObject readCurrentMap() {
         int map_id = getCurrentMapId(current_mapindex);
 

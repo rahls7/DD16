@@ -11,6 +11,7 @@ import java.util.Observable;
 public abstract class PCellContent extends Observable {
     protected String type;
 
+
     /**
      * Return the type of the content.
      * @return The type of the content.
