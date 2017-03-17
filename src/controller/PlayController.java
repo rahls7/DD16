@@ -100,13 +100,7 @@ public class PlayController {
         campaign.setPlayer(previous_x, previous_y, current_x, current_y, player);
     }
 
-    public PCharacter getPlayer() {
-        return player;
-    }
 
-    public PCampaign getCampaign() {
-        return campaign;
-    }
 
     public void lootChest(int x, int y) {
         if(player.getBackpack().size() < 10){
