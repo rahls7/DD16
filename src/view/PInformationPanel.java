@@ -62,7 +62,6 @@ public class PInformationPanel extends JPanel {
                     loot_enemy.addActionListener(new lootEnemy(cell.x,cell.y));
                     ArrayList<PItem> enemyItem = play_controller.getEnemyItem(cell.x, cell.y);
                     lootEnemyItemBox = new JComboBox();
-                    System.out.println(enemyItem.size());
                     for(PItem item : enemyItem) {
                         lootEnemyItemBox.addItem(item.getType() + " " + item.getAttribute() + " " + item.getAttributeValue());
                     }
