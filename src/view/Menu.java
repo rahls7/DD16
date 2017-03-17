@@ -23,6 +23,7 @@ public class Menu extends JPanel {
     private Campaign camPanel;
     private About aboutPanel;
     private Item itemPanel;
+    private Start startPanel;
     private JButton buttonPlay, buttonMap, buttonCharacter, buttonCampaign, buttonAbout, buttonExit, buttonItem;
 
 
@@ -158,10 +159,14 @@ public class Menu extends JPanel {
                 } else if (cmd.equals("I t e m  E d i t o r")) {
                     itemPanel = new Item();
                     menuAction(itemPanel);
+                } else if (cmd.equals("P l a y")){
+                    startPanel = new Start();
+                    menuAction(startPanel);
                 }
             }
         };
 
+        buttonPlay.addActionListener(actionListener);
         buttonMap.addActionListener(actionListener);
         buttonExit.addActionListener(actionListener);
         buttonCharacter.addActionListener(actionListener);
