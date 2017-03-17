@@ -111,10 +111,9 @@ public class Play extends JPanel implements MouseListener {
                     previous_cell.removeContent();
                     current_cell.setContent("PLAYER");
                     play_controller.setPlayer(previous_cell.x, previous_cell.y, current_cell.x, current_cell.y);
-                }
-                else if(previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT")) {
-                    if(play_controller.isFulfilled()) {
-                        if(play_controller.exit()) {
+                } else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT")) {
+                    if (play_controller.isFulfilled()) {
+                        if (play_controller.exit()) {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Level Up! Go to Next Map!");
                             //remove(map_panel);
                             map_panel.removeAll();
@@ -144,14 +143,13 @@ public class Play extends JPanel implements MouseListener {
                             characteristic_panel.clean();
                             map_panel.revalidate();
                             map_panel.repaint();
-                        }
-                        else {
+                        } else {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Complete!");
                             Main.mainFrame = new Main();
                         }
                     }
                 }
-                if(current_cell != null ) {
+                if (current_cell != null) {
                     previous_cell = current_cell;
                     information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y));
                 }
@@ -159,25 +157,30 @@ public class Play extends JPanel implements MouseListener {
         }
 
         // Character view
-        if (current_cell.getContent().length() < 10) {
-            if (current_cell.getContent().equals("PLAYER"))
-                play_controller.characterView();
-            else
-                characteristic_panel.clean();
-        } else if (current_cell.getContent().substring(0, 9).equals("CHARACTER")) {
-            play_controller.characterView(current_cell.x, current_cell.y);
+
+        if (current_cell != null) {
+            if (current_cell.getContent().length() < 10) {
+                if (current_cell.getContent().equals("PLAYER"))
+                    play_controller.characterView();
+                else
+                    characteristic_panel.clean();
+            } else if (current_cell.getContent().substring(0, 9).equals("CHARACTER")) {
+                play_controller.characterView(current_cell.x, current_cell.y);
+            }
         }
 
         // Inventory view
-        if (current_cell.getContent().length() < 10) {
-            if (current_cell.getContent().equals("PLAYER"))
-                play_controller.inventoryView();
-            else
-                inventory_panel.clean();
-        } else if (current_cell.getContent().substring(0, 9).equals("CHARACTER")) {
-            play_controller.inventoryView(current_cell.x, current_cell.y);
-        }
+        if (current_cell != null) {
+            if (current_cell.getContent().length() < 10) {
+                if (current_cell.getContent().equals("PLAYER"))
+                    play_controller.inventoryView();
+                else
+                    inventory_panel.clean();
+            } else if (current_cell.getContent().substring(0, 9).equals("CHARACTER")) {
+                play_controller.inventoryView(current_cell.x, current_cell.y);
+            }
 
+        }
     }
 
     private boolean isAdjacent(int x, int y) {

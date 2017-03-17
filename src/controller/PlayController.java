@@ -170,6 +170,7 @@ public class PlayController {
                 item = enemyEquip.get(index);
                 boolean removeEqip = enemyEquip.remove(item);
                 enemy.recalculateStats();
+                enemy.setHitPoint(0);
 
             }
             player.getBackpack().add(item);
