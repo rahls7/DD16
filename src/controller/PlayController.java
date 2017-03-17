@@ -162,35 +162,22 @@ public class PlayController {
             ArrayList<PItem> enemyBack = enemy.getBackpack();
             ArrayList<PItem> enemyEquip = enemy.getEquipment();
             int equipSize = enemyEquip.size();
-            int backSize = enemyBack.size();
             PItem item;
 
             if(index>=equipSize) {
                 item = enemyBack.get(index-equipSize);
                 boolean removeBack = enemyBack.remove(item);
-                System.out.println("");
             }else {
                 item = enemyEquip.get(index);
                 boolean removeEqip = enemyEquip.remove(item);
-                System.out.println("Removing equipment");
-                System.out.println(removeEqip);
-                System.out.println(enemy.getEquipment().size());
+                enemy.recalculateStats();
+
             }
             player.getBackpack().add(item);
             inventoryView(x,y);
             characterView(x,y);
         }
 
-
-
-
-        /*if(player.getBackpack().size()<10) {
-            for(PItem item : enemyItem) {
-                if(player.getBackpack().size()<10) {
-                    player.addToBackpack(item); // add to backpack
-                }
-            }
-        }*/
     }
 
     public int getEnemyHitPoint(int x, int y) {
@@ -212,19 +199,7 @@ public class PlayController {
         return backEquipEnemy;
     }
 
-    /*public ArrayList<PItem> getExchangeItem(int x, int y) {
-        if(player.getEquipment().size()>0) {
-            ArrayList<PItem> friendsItem = campaign.getFriendsItem(x,y);
-            return friendsItem;
-        }
-        return null;
-    }
-    public String[] getExchangeString(int x, int y) {
-        ArrayList<PItem> exchangeIt = campaign.getFriendsItem(x,y);
-        String[] exchangeString = exchangeIt.toArray();
-        return exchangeString;
-    }
-    */
+
 
     public boolean isFulfilled() {
         return campaign.isFulfilled();

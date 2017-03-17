@@ -49,8 +49,6 @@ public class PInformationPanel extends JPanel {
                 button_exchange.addActionListener(new exchangeItem(cell.x, cell.y));
                 ArrayList<PItem> it = play_controller.getPlayerItem();
                 exchangeItBox = new JComboBox();
-                //DefaultComboBoxModel model = new DefaultComboBoxModel(it.toArray(new PItem[it.size()]));
-                //exchangeItBox.setModel(model);
                 for(PItem item: it) {
                     exchangeItBox.addItem(item.getType()+ " "+ item.getAttribute() + " " + item.getAttributeValue());
                 }
