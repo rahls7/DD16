@@ -139,7 +139,9 @@ public class Play extends JPanel implements MouseListener {
                             }
                             previous_cell = null;
                             current_cell = null;
-
+                            play_controller.readCharacter();
+                            inventory_panel.clean();
+                            characteristic_panel.clean();
                             map_panel.revalidate();
                             map_panel.repaint();
                         }

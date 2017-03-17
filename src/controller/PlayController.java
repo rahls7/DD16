@@ -127,6 +127,8 @@ public class PlayController {
             friend.addToBackpack(playerItemSel);// add to backpack
 
             player.addToBackpack(friendItemSel);//add to backpack from friends backpack
+            inventoryView(x,y);
+            characterView(x,y);
             // remove item from friend backpack
         }
     }
@@ -149,6 +151,7 @@ public class PlayController {
         PCharacter enemy = campaign.getEnemy(x,y);
         if(enemy!=null) {
             enemy.setHitPoint(0);
+            characterView(x,y);
         }
     }
 
@@ -170,6 +173,8 @@ public class PlayController {
 
             }
             player.getBackpack().add(item);
+            inventoryView(x,y);
+            characterView(x,y);
         }
 
     }
@@ -196,8 +201,7 @@ public class PlayController {
 
 
     public boolean isFulfilled() {
-        //return campaign.isFulfilled();
-        return true;
+        return campaign.isFulfilled();
     }
     public boolean exit() {
         player.levelUp();

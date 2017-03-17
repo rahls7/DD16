@@ -135,7 +135,7 @@ public class PCharacter extends PCellContent {
         //armor class
         armorClass = 10 + dexterityModifier;
         //attack bonus
-        attackBonus = level;
+        attackBonus = level + dexterityModifier + strengthModifier;
         //damage bonus
         damageBonus = strengthModifier;
 
