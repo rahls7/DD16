@@ -28,6 +28,9 @@ public class PCampaign {
             maps.add(map);
         }
     }
+    public List<PMap> getMapsList(){
+        return this.maps;
+    }
 
     public int getCurrentMapId(int current_mapindex) {
         return maps.get(current_mapindex).getId();
@@ -43,6 +46,10 @@ public class PCampaign {
         return mapio.readMap(map_id);
     }
 
+    public void adaptMapToLevel(int level){
+        PMap map = maps.get(current_mapindex);
+        map.adaptMapToLevel(level);
+    }
     public void setPlayer(PCharacter player) {
         maps.get(current_mapindex).setPlayer(player);
     }

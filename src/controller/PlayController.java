@@ -35,12 +35,18 @@ public class PlayController {
 
         characters = new ArrayList<PCharacter>();
     }
-
+    public PCampaign getCampaign(){
+        return this.campaign;
+    }
+    public PCharacter getPlayer(){
+        return this.player;
+    }
     private JSONObject readCampaign(int campaign_id) {
         return campaignio.readCampaign(campaign_id);
     }
 
-    public JSONObject readCurrentMap() {
+    public JSONObject readCurrentMap(){
+        campaign.adaptMapToLevel(player.getLevel());
         return campaign.readCurrentMap();
     }
 

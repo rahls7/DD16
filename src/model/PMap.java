@@ -28,6 +28,57 @@ public class PMap {
         }
     }
 
+    public int getWidth(){
+        return this.width;
+    }
+    public int getHeight(){
+        return this.height;
+    }
+    public void adaptMapToLevel(int level){
+        for(int i=0;i<width;i++){
+            for(int j=0;j<height;j++){
+                if(cells[i][j].getType().equals("CHEST")){
+                    PChest chest = (PChest)cells[i][j].getContent();
+                    int new_value=adaptItemAttributeLevel(level);
+                    chest.getItem().setAttributeValue(new_value);
+                }else if(cells[i][j].getType().equals("CHARACTER")){
+                    PCharacter character=(PCharacter)cells[i][j].getContent();
+                    character.setLevel(level);
+                    ArrayList<PItem> backpack= character.getBackpack();
+                    ArrayList<PItem> equipment=character.getEquipment();
+                    for(int k=0;k<backpack.size();k++){
+                        PItem item=(PItem)backpack.get(k);
+                        int new_value=adaptItemAttributeLevel(level);
+                        backpack.get(k).setAttributeValue(new_value);
+                    }
+                    character.setBackpack(backpack);
+                    for(int k=0;k<equipment.size();k++){
+                        PItem item=(PItem)equipment.get(k);
+                        int new_value=adaptItemAttributeLevel(level);
+                        equipment.get(k).setAttributeValue(new_value);
+                    }
+                    character.setEquipment(equipment);
+                    character.recalculateStats();
+                }
+            }
+        }
+
+    }
+    public int adaptItemAttributeLevel(int level){
+        int new_value=1;
+        if(level>=1&&level<=4){
+            new_value=1;
+        }else if(level>=5 &&level<=8){
+            new_value=2;
+        }else if(level>=9&&level<=12){
+            new_value=3;
+        }else if(level>=13&&level<=16){
+            new_value=4;
+        }else if(level>=17){
+            new_value=5;
+        }
+        return new_value;
+    }
     private String getJSONContent(JSONArray json_cells, int x, int y) {
         for (int i = 0; i < json_cells.length(); i++) {
             JSONObject json_cell = json_cells.getJSONObject(i);
