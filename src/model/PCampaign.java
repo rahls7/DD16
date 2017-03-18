@@ -28,9 +28,16 @@ public class PCampaign {
             maps.add(map);
         }
     }
+    public List<PMap> getMapsList(){
+        return this.maps;
+    }
 
     public int getCurrentMapId(int current_mapindex) {
         return maps.get(current_mapindex).getId();
+    }
+
+    public PMap getMap() {
+        return maps.get(current_mapindex);
     }
 
     public JSONObject readCurrentMap() {
@@ -39,6 +46,10 @@ public class PCampaign {
         return mapio.readMap(map_id);
     }
 
+    public void adaptMapToLevel(int level){
+        PMap map = maps.get(current_mapindex);
+        map.adaptMapToLevel(level);
+    }
     public void setPlayer(PCharacter player) {
         maps.get(current_mapindex).setPlayer(player);
     }
@@ -49,6 +60,17 @@ public class PCampaign {
 
     public PItem getChestItem(int x, int y) {
         return maps.get(current_mapindex).getChestItem(x, y);
+    }
+
+    /*public ArrayList<PItem> getFriendsItem(int x , int y, Pitem item) {
+        return maps.get(current_mapindex).giveFriendItem(x,y, item);
+    }*/
+    public PCharacter getFriend(int x, int y) {
+        return maps.get(current_mapindex).getFriend(x,y);
+    }
+
+    public PCharacter getEnemy(int x, int y) {
+        return maps.get(current_mapindex).getEnemy(x,y);
     }
 
     public boolean isFulfilled() {

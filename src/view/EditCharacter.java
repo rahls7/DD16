@@ -41,7 +41,7 @@ public class EditCharacter extends JPanel {
         setSize(2500, 600);
         setLayout(null);
         this.id = id;
-        characterController = new CharacterEditorController(id);
+        characterController = new CharacterEditorController(id, "Bully");
         characterController.getCharacter(id);
         items = new ArrayList<String>();
         backpack = new ArrayList<String>();

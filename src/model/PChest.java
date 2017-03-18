@@ -1,6 +1,6 @@
 package model;
 
-public class PChest extends PCellContent{
+public class PChest extends PCellContent {
     private int item_id, x, y;
     private PItem item;
     private ItemIO itemio;
@@ -12,7 +12,11 @@ public class PChest extends PCellContent{
         type = "CHEST";
     }
 
-    public PItem getItem() { return item; }
+    public PItem getItem() {
+        return item;
+    }
 
-    public void removeItem() { item = null; }
+    public void removeItem() {
+        item = null;
+    }
 }

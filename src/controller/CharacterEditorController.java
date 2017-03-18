@@ -5,10 +5,8 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import model.*;
 import model.Character;
-import model.CharacterIO;
-import model.ItemIO;
-import model.Item;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -20,17 +18,30 @@ import org.json.JSONObject;
 public class CharacterEditorController {
 
     private Character characterModel;
+    private PCharacter pCharacter;
     private ItemIO itemIO;
     private CharacterIO characterIO;
     private ArrayList<Item> items;
+    private Player player;
+    private CharacterBuilder characterBuilder;
 
     /**
      * Constructor of character controller, create a controller, called by the character view
      *
      * @param id ID of the character
      */
-    public CharacterEditorController(String id) {
-        characterModel = new Character(id);
+    public CharacterEditorController(String id, String type) {
+        player = new Player();
+        if (type.equals("Bully"))
+            characterBuilder = new BullyCharacterBuilder();
+        else if (type.equals("Nimble"))
+            characterBuilder = new NimbleCharacterBuilder();
+        else characterBuilder = new TankCharacterBuilder();
+        player.setCharacterBuilder(characterBuilder);
+        player.constructCharacter(id);
+        characterModel = player.getCharacter();
+
+//        characterModel = new Character(id);
         items = new ArrayList<Item>();
         itemIO = new ItemIO();
         characterIO = new CharacterIO();
@@ -58,6 +69,10 @@ public class CharacterEditorController {
         characterModel.recalculateStats();
     }
 
+    public void setpCharacter(PCharacter pCharacter){
+        this.pCharacter = pCharacter;
+    }
+
     /**
      * get a Character from file by its id
      *
@@ -78,7 +93,7 @@ public class CharacterEditorController {
      * initiate the stats and attributes of character
      */
     public void initiateStats() {
-        characterModel.initiateStats();
+        characterModel.initiateStats(characterModel.getType());
     }
 
     /**

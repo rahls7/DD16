@@ -10,14 +10,13 @@ public class PCell {
         x = i;
         y = j;
 
-        if(content != null){
+        if (content != null) {
             String[] parts = content.split(" ");
             type = parts[0];
 
-            if(type.equals("CHARACTER")){
+            if (type.equals("CHARACTER")) {
                 this.content = new PCharacter(parts[1], parts[2]);
-            }
-            else if(type.equals("CHEST"))
+            } else if (type.equals("CHEST"))
                 this.content = new PChest(parts[1]);
             else
                 this.content = new PConstant(type);
@@ -25,20 +24,26 @@ public class PCell {
     }
     public void setType(String type) { this.type = type; }
 
-    public String getType() { return type; }
+    public String getType() {
+        return type;
+    }
 
     public void setPlayer(PCharacter player) {
-        if(type.equals("") || type.equals("ENTRY")) {
+        if (type.equals("") || type.equals("ENTRY")) {
             content = player;
             type = "PLAYER";
         }
     }
+
+
 
     public void removePlayer() {
         content = new PConstant("");
         type = "";
     }
 
-    public PCellContent getContent() { return content; }
+    public PCellContent getContent() {
+        return content;
+    }
 
 }

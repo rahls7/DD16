@@ -47,6 +47,7 @@ public class PCellPanel extends JPanel {
      *
      * @return True if the cell panel is selected, otherwise false.
      */
+
     public boolean isselected() {
         return this.isSelected;
     }
@@ -94,6 +95,10 @@ public class PCellPanel extends JPanel {
             img = pic.getImage();
             repaint();
         }
+    }
+
+    public String getContent() {
+        return content;
     }
 
     /**

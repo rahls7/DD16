@@ -1,5 +1,6 @@
 package model;
 
+
 /**
  * Subclass of PCellContent. Represent the object of the constant content on cells including wall, entry and exit.
  *

@@ -1,6 +1,7 @@
 package view;
 
 import controller.PlayController;
+import model.PCharacter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,10 +11,11 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class Play  extends JPanel implements MouseListener {
-    private JPanel map_panel, action_panel, inventory_panel;
+public class Play extends JPanel implements MouseListener {
+    private JPanel map_panel, action_panel;
     private PInformationPanel information_panel;
     private PCharacteristicPanel characteristic_panel;
+    private PInventoryPanel inventory_panel;
     private PCellPanel[][] cells;
     private PCellPanel current_cell, previous_cell;
     private PlayController play_controller;
@@ -46,14 +48,17 @@ public class Play  extends JPanel implements MouseListener {
                 map_panel.add(cells[i][j]);
             }
         }
-        inventory_panel = new JPanel();
+        inventory_panel = new PInventoryPanel();
         information_panel = new PInformationPanel(play_controller);
-        characteristic_panel= new PCharacteristicPanel();
-
+        characteristic_panel = new PCharacteristicPanel();
+        play_controller.setInventoryObserver(inventory_panel);
+        play_controller.setCharacterObserver(characteristic_panel);
+        inventory_panel.setPlayController(play_controller);
 
         action_panel = new JPanel(new GridLayout(3, 0));
         action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
         action_panel.add(information_panel);
+        action_panel.add(characteristic_panel);
         action_panel.add(inventory_panel);
 
         add(map_panel);
@@ -98,17 +103,17 @@ public class Play  extends JPanel implements MouseListener {
                 current_cell.deselect();
                 previous_cell = null;
             } else {
+                inventory_panel.clean();
                 previous_cell.deselect();
                 current_cell.select();
 
-                if(previous_cell.content.equals("PLAYER") && current_cell.content.equals("")){
+                if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("")) {
                     previous_cell.removeContent();
                     current_cell.setContent("PLAYER");
                     play_controller.setPlayer(previous_cell.x, previous_cell.y, current_cell.x, current_cell.y);
-                }
-                else if(previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT")) {
-                    if(play_controller.isFulfilled()) {
-                        if(play_controller.exit()) {
+                } else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT")) {
+                    if (play_controller.isFulfilled()) {
+                        if (play_controller.exit()) {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Level Up! Go to Next Map!");
                             //remove(map_panel);
                             map_panel.removeAll();
@@ -133,21 +138,48 @@ public class Play  extends JPanel implements MouseListener {
                             }
                             previous_cell = null;
                             current_cell = null;
-
+                            play_controller.readCharacter();
+                            inventory_panel.clean();
+                            characteristic_panel.clean();
                             map_panel.revalidate();
                             map_panel.repaint();
-                        }
-                        else {
+                        } else {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Complete!");
                             Main.mainFrame = new Main();
                         }
                     }
                 }
-                if(current_cell != null ) {
+                if (current_cell != null) {
                     previous_cell = current_cell;
                     information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y));
                 }
             }
+        }
+
+        // Character view
+
+        if (current_cell != null) {
+            if (current_cell.getContent().length() < 10) {
+                if (current_cell.getContent().equals("PLAYER"))
+                    play_controller.characterView();
+                else
+                    characteristic_panel.clean();
+            } else if (current_cell.getContent().substring(0, 9).equals("CHARACTER")) {
+                play_controller.characterView(current_cell.x, current_cell.y);
+            }
+        }
+
+        // Inventory view
+        if (current_cell != null) {
+            if (current_cell.getContent().length() < 10) {
+                if (current_cell.getContent().equals("PLAYER"))
+                    play_controller.inventoryView();
+                else
+                    inventory_panel.clean();
+            } else if (current_cell.getContent().substring(0, 9).equals("CHARACTER")) {
+                play_controller.inventoryView(current_cell.x, current_cell.y);
+            }
+
         }
     }
 
@@ -156,20 +188,20 @@ public class Play  extends JPanel implements MouseListener {
         int player_y = -1;
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if(cells[i][j].content.equals("PLAYER")) {
+                if (cells[i][j].content.equals("PLAYER")) {
                     player_x = i;
                     player_y = j;
                     break;
                 }
             }
         }
-        if(player_x == x - 1 && player_y == y)
+        if (player_x == x - 1 && player_y == y)
             return true;
-        else if(player_x == x + 1 && player_y == y)
+        else if (player_x == x + 1 && player_y == y)
             return true;
-        else if(player_x == x && player_y == y - 1)
+        else if (player_x == x && player_y == y - 1)
             return true;
-        else if(player_x == x && player_y == y + 1)
+        else if (player_x == x && player_y == y + 1)
             return true;
         return false;
     }
