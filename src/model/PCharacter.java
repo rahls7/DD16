@@ -20,6 +20,11 @@ public class PCharacter extends PCellContent {
     private int basicLevel, basicHitPoint, basicArmorClass, basicAttackBonus, basicDamageBonus, basicMultipleAttacks;
     private int level, hitPoint, armorClass, attackBonus, damageBonus, multipleAttacks;
 
+    /**
+     * Constructor of PCharacter to construct the object
+     * @param id, character's id
+     * @param isHostile  if the character is the hostile, friend, or player
+     */
     public PCharacter(String id, String isHostile) {
         type = "PLAYER";
         CharacterIO characterIO = new CharacterIO();
@@ -444,11 +449,17 @@ public class PCharacter extends PCellContent {
         return category;
     }
 
+    /**
+     * notify the character view that character is changed
+     */
     public void characterView() {
         setChanged();
         notifyObservers(this);
     }
 
+    /**
+     * notify the inventory view that chatacter is changed
+     */
     public void inventoryView() {
         setChanged();
         notifyObservers(this);

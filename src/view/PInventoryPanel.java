@@ -26,6 +26,10 @@ public class PInventoryPanel extends JPanel implements Observer {
     JComboBox equipmentComboBox, backpackJComboBox;
     JLabel equipmentLabel, backpackLabel;
 
+    /**
+     * constructor of inventory panel
+     * set all basic components
+     */
     public PInventoryPanel() {
         super();
         setLayout(null);
@@ -51,6 +55,10 @@ public class PInventoryPanel extends JPanel implements Observer {
     }
 
     @Override
+    /**
+     * override the update function of observer
+     * when the character changed, it will show the character again
+     */
     public void update(Observable o, Object arg) {
         removeAll();
         pCharacter = (PCharacter) o;
@@ -76,6 +84,11 @@ public class PInventoryPanel extends JPanel implements Observer {
         repaint();
     }
 
+    /**
+     * transform the items to be strings
+     * @param items
+     * @return
+     */
     public ArrayList<String> itemToString(ArrayList<model.PItem> items) {
         ArrayList<String> strings = new ArrayList<String>();
         String s;
@@ -86,6 +99,9 @@ public class PInventoryPanel extends JPanel implements Observer {
         return strings;
     }
 
+    /**
+     * clean this panel up
+     */
     public void clean() {
         removeAll();
         flag = 0;
@@ -93,10 +109,18 @@ public class PInventoryPanel extends JPanel implements Observer {
         repaint();
     }
 
+    /**
+     * set the play controller
+     * @param playController
+     */
     public void setPlayController(PlayController playController){
         this.playController = playController;
     }
 
+    /**
+     * action listener,
+     * do different tasks when different buttons click
+     */
     class Handler implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             if (event.getSource() == showButton) {
