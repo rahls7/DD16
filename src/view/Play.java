@@ -157,6 +157,8 @@ public class Play extends JPanel implements MouseListener {
                             map_panel.repaint();
                         } else {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Complete!");
+                            Main.mainFrame.setVisible(false);
+                            Main.mainFrame.dispose();
                             Main.mainFrame = new Main();
                         }
                     }
@@ -169,7 +171,6 @@ public class Play extends JPanel implements MouseListener {
         }
 
         // Character view
-
         if (current_cell != null) {
             if (current_cell.getContent().length() < 10) {
                 if (current_cell.getContent().equals("PLAYER"))

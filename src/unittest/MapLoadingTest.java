@@ -25,7 +25,7 @@ public class MapLoadingTest {
      * Initialize the test.
      */
     public void before() {
-        play_controller = new PlayController("123456", 4);
+        play_controller = new PlayController("999", 6);
         player = play_controller.getPlayer();
         map = play_controller.getCampaign().getMaps().get(0);
         cells = map.getCells();
@@ -51,8 +51,8 @@ public class MapLoadingTest {
                         break;
                     }
                 }
-        assertEquals(1, x);
-        assertEquals(2, y);
+        assertEquals(2, x);
+        assertEquals(6, y);
     }
 
 
@@ -73,6 +73,6 @@ public class MapLoadingTest {
                     break;
                 }
         assertEquals(3, x);
-        assertEquals(3, y);
+        assertEquals(2, y);
     }
 }

@@ -20,7 +20,7 @@ public class LootChestTest {
      * Initialize the test.
      */
     public void before() {
-        play_controller = new PlayController("123456", 5);
+        play_controller = new PlayController("999", 6);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class LootChestTest {
      */
     public void testLootChest() {
         int backpackSize = play_controller.getPlayer().getBackpack().size();
-        play_controller.lootChest(3, 3);
+        play_controller.lootChest(3, 2);
         assertEquals(backpackSize + 1, play_controller.getPlayer().getBackpack().size());
     }
 }
