@@ -11,6 +11,11 @@ public class PMap {
     private int map_id, map_index, width, height;
     private PCell[][] cells;
 
+    /**
+     * Initialize a map model of play
+     * @param json_map
+     * @param index
+     */
     public PMap(JSONObject json_map, int index) {
         this.map_id = json_map.getInt("id");
         this.map_index = index;
@@ -28,12 +33,26 @@ public class PMap {
         }
     }
 
+    /**
+     * Get the width of the map
+     * @return
+     */
     public int getWidth(){
         return this.width;
     }
+
+    /**
+     * Get the height of a map
+     * @return
+     */
     public int getHeight(){
         return this.height;
     }
+
+    /**
+     * Adapt the map to its level
+     * @param level
+     */
     public void adaptMapToLevel(int level){
         for(int i=0;i<width;i++){
             for(int j=0;j<height;j++){
@@ -64,6 +83,12 @@ public class PMap {
         }
 
     }
+
+    /**
+     * Adapt the item levels to the map
+     * @param level
+     * @return
+     */
     public int adaptItemAttributeLevel(int level){
         int new_value=1;
         if(level>=1&&level<=4){
@@ -79,6 +104,14 @@ public class PMap {
         }
         return new_value;
     }
+
+    /**
+     * Get the object of a cell
+     * @param json_cells
+     * @param x
+     * @param y
+     * @return
+     */
     private String getJSONContent(JSONArray json_cells, int x, int y) {
         for (int i = 0; i < json_cells.length(); i++) {
             JSONObject json_cell = json_cells.getJSONObject(i);
@@ -90,24 +123,42 @@ public class PMap {
         return null;
     }
 
+    /**
+     * Get the cells of a map
+     * @return
+     */
     public PCell[][] getCells() {
         return cells;
     }
 
+    /**
+     * Get the map id
+     * @return
+     */
     public int getId() {
         return map_id;
     }
-    
 
+    /**
+     * Set the width of a map
+     * @param width
+     */
     public void setWidth(int width) {
         this.width = width;
     }
 
-
+    /**
+     * Set the height of a map
+     * @param height
+     */
     public void setHeight(int height) {
         this.height = height;
     }
 
+    /**
+     * Set the player
+     * @param player
+     */
     public void setPlayer(PCharacter player) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -120,11 +171,25 @@ public class PMap {
         }
     }
 
+    /**
+     * Set the player of a specific cell
+     * @param previous_x
+     * @param previous_y
+     * @param current_x
+     * @param current_y
+     * @param player
+     */
     public void setPlayer(int previous_x, int previous_y, int current_x, int current_y, PCharacter player) {
         cells[previous_x][previous_y].removePlayer();
         cells[current_x][current_y].setPlayer(player);
     }
 
+    /**
+     * Get the chest item of a specific cell
+     * @param x
+     * @param y
+     * @return
+     */
     public PItem getChestItem(int x, int y) {
 
 
@@ -140,6 +205,12 @@ public class PMap {
         return null;
     }
 
+    /**
+     * Get the friend of a specific cell
+     * @param x
+     * @param y
+     * @return
+     */
     public PCharacter getFriend(int x, int y) {
 
         if(cells[x][y].getType().equals("CHARACTER")) {
@@ -153,6 +224,12 @@ public class PMap {
         return null;
     }
 
+    /**
+     * Get the enemy of a specific cell
+     * @param x
+     * @param y
+     * @return
+     */
     public PCharacter getEnemy(int x, int y) {
         if(cells[x][y].getType().equals("CHARACTER")) {
             PCharacter enemy = (PCharacter) cells[x][y].getContent();
@@ -163,6 +240,10 @@ public class PMap {
         return null;
     }
 
+    /**
+     * Check whether all the enemies are killed
+     * @return
+     */
     public boolean isFulFilled() {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {

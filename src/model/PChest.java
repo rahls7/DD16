@@ -5,6 +5,10 @@ public class PChest extends PCellContent {
     private PItem item;
     private ItemIO itemio;
 
+    /**
+     * Initiallize a chest model of play
+     * @param id
+     */
     public PChest(String id) {
         item_id = Integer.parseInt(id);
         itemio = new ItemIO();
@@ -12,10 +16,17 @@ public class PChest extends PCellContent {
         type = "CHEST";
     }
 
+    /**
+     * Get the item of a chest
+     * @return
+     */
     public PItem getItem() {
         return item;
     }
 
+    /**
+     * Remove the item from the chest
+     */
     public void removeItem() {
         item = null;
     }

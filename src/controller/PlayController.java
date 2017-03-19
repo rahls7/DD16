@@ -24,6 +24,11 @@ public class PlayController {
     private PCell[][] cell;
     private Random rgen = new Random();
 
+    /**
+     * Initialize a play controller
+     * @param character_id
+     * @param campaign_id
+     */
     public PlayController(String character_id, int campaign_id) {
         campaignio = new CampaignIO();
 
@@ -35,30 +40,61 @@ public class PlayController {
 
         characters = new ArrayList<PCharacter>();
     }
+
+    /**
+     * Get the campaign model of player
+     * @return
+     */
     public PCampaign getCampaign(){
         return this.campaign;
     }
+
+    /**
+     * Get the player
+     * @return
+     */
     public PCharacter getPlayer(){
         return this.player;
     }
+
+    /**
+     * Get the campaign json based on the campaign id
+     * @param campaign_id
+     * @return
+     */
     private JSONObject readCampaign(int campaign_id) {
         return campaignio.readCampaign(campaign_id);
     }
 
+    /**
+     * Get the json of current map
+     * @return
+     */
     public JSONObject readCurrentMap(){
         campaign.adaptMapToLevel(player.getLevel());
         return campaign.readCurrentMap();
     }
 
+    /**
+     * Set observer to the character panel
+     * @param pCharacteristicPanel
+     */
     public void setCharacterObserver(PCharacteristicPanel pCharacteristicPanel) {
         this.pCharacteristicPanel = pCharacteristicPanel;
         readCharacter();
     }
 
+    /**
+     * Set observer to the inventory panel
+     * @param pInventoryPanel
+     */
     public void setInventoryObserver(PInventoryPanel pInventoryPanel) {
         this.pInventoryPanel = pInventoryPanel;
     }
 
+    /**
+     * Set observers to characters and player
+     */
     public void readCharacter() {
         PMap map = campaign.getMap();
         cell = map.getCells();
@@ -75,6 +111,11 @@ public class PlayController {
         player.addObserver(pInventoryPanel);
     }
 
+    /**
+     * call the function character view to notify observer the observable gets changed
+     * @param x
+     * @param y
+     */
     public void characterView(int x, int y) {
         PCharacter pCharacter = (PCharacter) cell[x][y].getContent();
         pCharacter.addObserver(pCharacteristicPanel);
