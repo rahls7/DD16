@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 /**
- * Records and manipulate properties of the panel of a cell.
+ * Records and manipulate properties of the panel of a cell for playing.
  *
  * @author Jiayao Zhou
  * @version 1.0.1
@@ -97,6 +97,10 @@ public class PCellPanel extends JPanel {
         }
     }
 
+    /**
+     * Return content of the cell.
+     * @return Content of the cell.
+     */
     public String getContent() {
         return content;
     }
