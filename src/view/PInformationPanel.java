@@ -11,7 +11,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Created by Alleria on 2017/3/11.
+ * Panel for cell information representation.
+ *
+ * @author Jiayao
+ * @version 1.0.0
  */
 public class PInformationPanel extends JPanel {
     private JLabel text;
@@ -24,6 +27,11 @@ public class PInformationPanel extends JPanel {
     private JComboBox lootEnemyItemBox;
     private PCellPanel cell;
 
+    /**
+     * Constructor to initiate the information panel.
+     *
+     * @param play_controller Controller for playing.
+     */
     public PInformationPanel(PlayController play_controller) {
         super();
         this.play_controller = play_controller;
@@ -31,6 +39,12 @@ public class PInformationPanel extends JPanel {
         add(text);
     }
 
+    /**
+     * Show information of the selected cell.
+     *
+     * @param cell The selected cell.
+     * @param isAdjacent True if the player is near the cell, otherwise false.
+     */
     public void showInformation(PCellPanel cell, boolean isAdjacent) {
         this.cell = cell;
         removeAll();
@@ -92,7 +106,11 @@ public class PInformationPanel extends JPanel {
         repaint();
 
     }
-    
+
+
+    /**
+     * Action listener for looting chest.
+     */
     class lootChest implements ActionListener {
         int x, y;
 
@@ -108,6 +126,9 @@ public class PInformationPanel extends JPanel {
         }
     }
 
+    /**
+     * Action listener for exchanging item.
+     */
     class exchangeItem implements ActionListener{
         int x, y;
         exchangeItem(int x, int y) {
@@ -129,6 +150,9 @@ public class PInformationPanel extends JPanel {
         }
     }
 
+    /**
+     * Action listener for attacking enemy.
+     */
     class attackEnemy implements ActionListener {
         int x, y;
         attackEnemy(int x, int y) {
@@ -145,6 +169,9 @@ public class PInformationPanel extends JPanel {
         }
     }
 
+    /**
+     * Action listener for looting enemy.
+     */
     class lootEnemy implements ActionListener {
         int x, y;
         lootEnemy(int x, int y) {
