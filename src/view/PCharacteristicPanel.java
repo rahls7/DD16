@@ -117,6 +117,13 @@ public class PCharacteristicPanel extends JPanel implements Observer {
         repaint();
     }
 
+    /**
+     * Setter functions for Attributes.
+     * @param name
+     * @param x
+     * @return
+     */
+
     public JLabel setAttributesLabel(String name, int x) {
         JLabel label = new JLabel(name);
         label.setBounds(10, 20 + x * 20, 150, 20);

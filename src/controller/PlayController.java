@@ -14,6 +14,9 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.*;
 
+/**
+ * This class is the Controller class for the MVC Model of Play.
+ */
 public class PlayController {
     private CampaignIO campaignio;
     private PCampaign campaign;
@@ -284,7 +287,10 @@ public class PlayController {
     }
 
 
-
+    /**
+     * This function checks if every map requirement is fulfilled.
+     * @return
+     */
     public boolean isFulfilled() {
         return campaign.isFulfilled();
     }

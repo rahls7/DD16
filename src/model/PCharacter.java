@@ -172,6 +172,11 @@ public class PCharacter extends PCellContent {
             damageBonus = 0;
     }
 
+    /**
+     * Setters and Getter Functons for Attributes.
+     * @return
+     */
+
     public String getId() {
         return id;
     }
