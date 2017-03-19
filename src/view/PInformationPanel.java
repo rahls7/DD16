@@ -92,7 +92,7 @@ public class PInformationPanel extends JPanel {
         repaint();
 
     }
-
+    
     class lootChest implements ActionListener {
         int x, y;
 
