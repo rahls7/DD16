@@ -177,7 +177,7 @@ public class PlayController {
         PCharacter friend = campaign.getFriend(x,y);
         if(friend.getBackpack().size()>0) {
             int size = friend.getBackpack().size();
-            int itemIndex = rgen.nextInt(size-1);
+            int itemIndex = rgen.nextInt(size);
             PItem playerItemSel = player.getBackpack().get(index);
             PItem friendItemSel = friend.getBackpack().get(itemIndex);
             player.getBackpack().remove(index);
