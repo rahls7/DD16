@@ -6,6 +6,12 @@ public class PCell {
     private String type = "";
     private PCellContent content;
 
+    /**
+     * Initialize a cell Object
+     * @param i
+     * @param j
+     * @param content
+     */
     public PCell(int i, int j, String content) {
         x = i;
         y = j;
@@ -22,12 +28,25 @@ public class PCell {
                 this.content = new PConstant(type);
         }
     }
+
+    /**
+     * Set the type
+     * @param type
+     */
     public void setType(String type) { this.type = type; }
 
+    /**
+     * Get the type
+     * @return
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Set the player
+     * @param player
+     */
     public void setPlayer(PCharacter player) {
         if (type.equals("") || type.equals("ENTRY")) {
             content = player;
@@ -36,12 +55,18 @@ public class PCell {
     }
 
 
-
+    /**
+     * Remove a player
+     */
     public void removePlayer() {
         content = new PConstant("");
         type = "";
     }
 
+    /**
+     * Get the object of a cell
+     * @return
+     */
     public PCellContent getContent() {
         return content;
     }
