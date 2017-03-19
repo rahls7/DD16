@@ -13,6 +13,6 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({MapValidationTest.class, MapContentTest.class})
-public class MapTestSuite {
+public class TestSuite {
 
 }
