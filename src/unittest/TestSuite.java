@@ -1,5 +1,6 @@
 package unittest;
 
+import model.CharacterBuilder;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -12,7 +13,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 
 @RunWith(Suite.class)
-@SuiteClasses({MapValidationTest.class, MapContentTest.class})
+@SuiteClasses({AdaptToLevelTest.class, AttackEnemyTest.class, CampaignTest.class, CharacterBuilder.class, CharacterContentClass.class, CharacterMovementTest.class,
+        ExchangeItemTest.class, ItemContentTest.class, LootChestTest.class, LootEnemyTest.class, MapLoadingTest.class, MapValidationTest.class, MapContentTest.class, })
 public class TestSuite {
 
 }

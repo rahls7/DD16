@@ -22,19 +22,19 @@ public class CharacterMovementTest {
      * Initialize the test.
      */
     public void before() {
-        play_controller = new PlayController("123456", 4);
+        play_controller = new PlayController("999", 6);
     }
 
-    @Test
     /**
      * Test the function of moving character.
      */
+    @Test
     public void testCharacterMovement() {
 
         PCharacter player = play_controller.getPlayer();
         PMap map = play_controller.getCampaign().getMaps().get(0);
         PCell[][] cells = map.getCells();
-        play_controller.setPlayer(0,0,0,1);
+        play_controller.setPlayer(1,2,0,1);
         int x = -1;
         int y = -1;
 
