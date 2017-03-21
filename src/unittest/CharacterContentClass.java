@@ -31,7 +31,7 @@ public class CharacterContentClass {
     @Before
     public void before() {
         character = new Character("123");
-        character.initiateStats();
+        character.initiateStats("Bully");
         character.setIsSaved(true);
         item = new Item("Ring", "Damage Bonus", 5);
     }
@@ -76,7 +76,7 @@ public class CharacterContentClass {
         character.setEquipment(item);
         character.recalculateStats();
         attributesAfter = character.getAttributes();
-        assertEquals(attributesAfter[4], damageBonus + 5);
+        assertEquals(attributesAfter[4], damageBonus);
         character.deleteEquipment(item);
         character.recalculateStats();
     }
@@ -120,7 +120,7 @@ public class CharacterContentClass {
         character.setEquipment(item_Ring);
         character.recalculateStats();
         attributesAfter = character.getAttributes();
-        assertEquals(attributesAfter[4], damageBonus + 3);
+        assertEquals(attributesAfter[4], damageBonus);
         character.deleteEquipment(item);
         character.recalculateStats();
     }

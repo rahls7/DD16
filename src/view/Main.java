@@ -20,6 +20,7 @@ public class Main extends JFrame {
     private Item item_panel;
     private Character character_panel;
     private Campaign campaign_panel;
+    private Start start_panel;
     public static Main mainFrame;
 
 
@@ -120,9 +121,14 @@ public class Main extends JFrame {
                 } else if (cmd.equals("Campaign Editor")) {
                     campaign_panel = new Campaign();
                     menuAction(campaign_panel);
+                } else if (cmd.equals("Play")) {
+
+                    start_panel = new Start();
+                    menuAction(start_panel);
                 }
             }
         };
+        item_play.addActionListener(actionListener);
         item_map.addActionListener(actionListener);
         item_item.addActionListener(actionListener);
         item_about.addActionListener(actionListener);

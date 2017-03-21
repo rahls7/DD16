@@ -28,7 +28,7 @@ public class CampaignTest {
 
     @Test
     /**
-     * test the funcion of adding a campaign
+     * Test the function of adding a campaign
      */
     public void testAddCampaign() {
         int before_add_length = campaign.getMapList().size();
