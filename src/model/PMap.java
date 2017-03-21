@@ -6,6 +6,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Map object.
+ *
+ * @author Jiayao
+ * @version 1.0.0
+ */
 public class PMap {
 
     private int map_id, map_index, width, height;

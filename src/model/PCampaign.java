@@ -16,7 +16,7 @@ public class PCampaign {
 
     /**
      * Initialize a campaign model of play
-     * @param json_campaign
+     * @param json_campaign Data of the campaign.
      */
     public PCampaign(JSONObject json_campaign) {
         mapio = new MapIO();
@@ -41,14 +41,27 @@ public class PCampaign {
         return this.maps;
     }
 
+    /**
+     * get current map id
+     * @param current_mapindex current map index.
+     * @return current map id
+     */
     public int getCurrentMapId(int current_mapindex) {
         return maps.get(current_mapindex).getId();
     }
 
+    /**
+     * get the current map.
+     * @return current map.
+     */
     public PMap getMap() {
         return maps.get(current_mapindex);
     }
 
+    /**
+     * read current map.
+     * @return JSON of the current map.
+     */
     public JSONObject readCurrentMap() {
         int map_id = getCurrentMapId(current_mapindex);
 
@@ -57,7 +70,7 @@ public class PCampaign {
 
     /**
      * Adapt the map to its level
-     * @param level
+     * @param level level of the player.
      */
     public void adaptMapToLevel(int level){
         PMap map = maps.get(current_mapindex);
@@ -66,20 +79,20 @@ public class PCampaign {
 
     /**
      * Set the current player
-     * @param player
+     * @param player the player.
      */
     public void setPlayer(PCharacter player) {
         maps.get(current_mapindex).setPlayer(player);
     }
 
     /**
-     * Set the specfic player of a cell
+     * Set the player on a cell
      *
-     * @param previous_x
-     * @param previous_y
-     * @param current_x
-     * @param current_y
-     * @param player
+     * @param previous_x x coordinate of the previous cell
+     * @param previous_y y coordinate of the previous cell
+     * @param current_x x coordinate of the current cell
+     * @param current_y y coordinate of the current cell
+     * @param player the player
      */
     public void setPlayer(int previous_x, int previous_y, int current_x, int current_y, PCharacter player) {
         maps.get(current_mapindex).setPlayer(previous_x, previous_y, current_x, current_y, player);
@@ -87,9 +100,9 @@ public class PCampaign {
 
     /**
      * Get the chest item of a specific cell
-     * @param x
-     * @param y
-     * @return
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return Item in the chest
      */
     public PItem getChestItem(int x, int y) {
         return maps.get(current_mapindex).getChestItem(x, y);
@@ -101,9 +114,9 @@ public class PCampaign {
 
     /**
      * Get the friend play of a specific cell
-     * @param x
-     * @param y
-     * @return
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return PCharacter
      */
     public PCharacter getFriend(int x, int y) {
         return maps.get(current_mapindex).getFriend(x,y);
@@ -111,9 +124,9 @@ public class PCampaign {
 
     /**
      * Get the enemy of a specific cell
-     * @param x
-     * @param y
-     * @return
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return PCharacter
      */
     public PCharacter getEnemy(int x, int y) {
         return maps.get(current_mapindex).getEnemy(x,y);
@@ -121,7 +134,7 @@ public class PCampaign {
 
     /**
      * Check whether the current map is full filled or not
-     * @return
+     * @return boolean
      */
     public boolean isFulfilled() {
         return maps.get(current_mapindex).isFulFilled();
@@ -129,7 +142,7 @@ public class PCampaign {
 
     /**
      * Check whether the campaign is finished or not
-     * @return
+     * @return boolean
      */
     public boolean exit() {
         current_mapindex++;
@@ -140,6 +153,10 @@ public class PCampaign {
             return false;
     }
 
+    /**
+     * Get maps of this campaign
+     * @return maps
+     */
     public List<PMap> getMaps() { return maps; }
 
 }

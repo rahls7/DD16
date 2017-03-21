@@ -10,7 +10,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by rahls7 on 18/03/17.
+ * Tests for exchanging items.
+ * @author Rahul
  */
 public class ExchangeItemTest {
 

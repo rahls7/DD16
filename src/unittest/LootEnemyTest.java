@@ -8,7 +8,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 /**
- * Created by rahls7 on 18/03/17.
+ * Test for looting enemy.
+ *
+ * @author Rahul
  */
 public class LootEnemyTest {
 

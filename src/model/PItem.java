@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * Item object.
+ *
+ * @author Jiayao
+ * @version 1.0.0
+ */
 public class PItem {
     private int id, attribute_value;
     private String type, attribute;

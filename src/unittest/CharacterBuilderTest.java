@@ -12,7 +12,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by mo on 2017-03-18.
+ * Tests for builder pattern.
+ *
+ * @author Mo Chen
  */
 public class CharacterBuilderTest {
 

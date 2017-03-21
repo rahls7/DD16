@@ -37,7 +37,7 @@ public class AdaptToLevelTest {
     }
     @Test
     /**
-     * Test the funciton of adapting to level
+     * Test the function of adapting to level
      */
     public void test(){
         for(int i=0;i<map.getWidth();i++) {

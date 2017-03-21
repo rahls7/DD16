@@ -3,7 +3,10 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Created by mo on 2017-03-08.
+ * Character object.
+ *
+ * @author Mo Chen
+ * @version 1.0.0
  */
 public class PCharacter extends PCellContent {
 
@@ -469,19 +472,35 @@ public class PCharacter extends PCellContent {
         setChanged();
         notifyObservers(this);
     }
+
+    /**
+     * Set category of the player.
+     * @param category Category of the player.
+     */
     public void setCategory(int category) {
         this.category = category;
     }
 
+    /**
+     * Add item to backpack.
+     * @param item Item to be added.
+     */
     public void addBackpack(PItem item) {
         this.backpack.add(item);
     }
 
+    /**
+     * Player levels up.
+     */
     public void levelUp() {
         this.level++;
         recalculateStats();
     }
 
+    /**
+     * Add item to backpack.
+     * @param item Item to be added.
+     */
     public void addToBackpack(PItem item) {this.backpack.add(item);}
 
   

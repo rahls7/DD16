@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.*;
 
 /**
- * This class is the Controller class for the MVC Model of Play.
+ * This class is the controller class.
+ *
+ * @author Jiayao
+ * @version 1.0.0
  */
 public class PlayController {
     private CampaignIO campaignio;
@@ -115,9 +118,9 @@ public class PlayController {
     }
 
     /**
-     * call the function character view to notify observer the observable gets changed
-     * @param x
-     * @param y
+     * Call the function character view to notify observer the observable gets changed
+     * @param x x coordinate
+     * @param y y coordinate
      */
     public void characterView(int x, int y) {
         PCharacter pCharacter = (PCharacter) cell[x][y].getContent();
@@ -125,21 +128,39 @@ public class PlayController {
         pCharacter.characterView();
     }
 
+    /**
+     * Notify observers.
+     */
     public void characterView()
     {
         player.characterView();
     }
 
+    /**
+     * Notify observers
+     * @param x
+     * @param y
+     */
     public void inventoryView(int x, int y) {
         PCharacter pCharacter = (PCharacter) cell[x][y].getContent();
         pCharacter.addObserver(pInventoryPanel);
         pCharacter.inventoryView();
     }
 
+    /**
+     * Notify observers.
+     */
     public void inventoryView(){
         player.inventoryView();
     }
 
+    /**
+     * Set player
+     * @param previous_x
+     * @param previous_y
+     * @param current_x
+     * @param current_y
+     */
     public void setPlayer(int previous_x, int previous_y, int current_x, int current_y) {
         campaign.setPlayer(previous_x, previous_y, current_x, current_y, player);
     }
@@ -153,7 +174,8 @@ public class PlayController {
     public void lootChest(int x, int y) {
         if(player.getBackpack().size() < 10){
             PItem item = campaign.getChestItem(x, y);
-            player.addBackpack(item);
+            if(item != null)
+                player.addBackpack(item);
         }
     }
 
@@ -191,16 +213,25 @@ public class PlayController {
         }
     }
 
-
-
+    /**
+     * Set the equipments of the player.
+     * @param pItems Items in the equipments.
+     */
     public void setEquipment(ArrayList<PItem> pItems){
         player.setEquipment(pItems);
     }
 
+    /**
+     * Set the items in backpack.
+     * @param pItems Items in the backpack.
+     */
     public void setBackpack(ArrayList<PItem> pItems){
         player.setBackpack(pItems);
     }
 
+    /**
+     * Recalculate stats of the player.
+     */
     public void recalculateStats(){
         player.recalculateStats();
     }

@@ -1,12 +1,18 @@
 package model;
 
+/**
+ * Chest object on the map.
+ *
+ * @author Jiayao
+ * @version 1.0.0
+ */
 public class PChest extends PCellContent {
     private int item_id, x, y;
     private PItem item;
     private ItemIO itemio;
 
     /**
-     * Initiallize a chest model of play
+     * Initialize a chest model of play
      * @param id
      */
     public PChest(String id) {

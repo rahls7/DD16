@@ -1,6 +1,11 @@
 package model;
 
-
+/**
+ * Cell object of the map.
+ *
+ * @author Jiayao
+ * @version 1.0.0
+ */
 public class PCell {
     private int x, y;
     private String type = "";
@@ -8,9 +13,9 @@ public class PCell {
 
     /**
      * Initialize a cell Object
-     * @param i
-     * @param j
-     * @param content
+     * @param i x coordinate of the cell
+     * @param j y coordinate of the cell
+     * @param content content of the cell
      */
     public PCell(int i, int j, String content) {
         x = i;
@@ -37,7 +42,7 @@ public class PCell {
 
     /**
      * Get the type
-     * @return
+     * @return type
      */
     public String getType() {
         return type;
@@ -64,8 +69,8 @@ public class PCell {
     }
 
     /**
-     * Get the object of a cell
-     * @return
+     * Get the content of a cell
+     * @return content of a cell
      */
     public PCellContent getContent() {
         return content;
