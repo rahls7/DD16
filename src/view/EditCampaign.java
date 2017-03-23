@@ -239,7 +239,7 @@ public class EditCampaign extends JPanel implements MouseListener {
     /**
      * Draw the maps of a campaign when loading
      *
-     * @param json_campaign
+     * @param json_campaign // Add Description for all the warnings.
      */
     public void drawMapList(JSONObject json_campaign) {
         map_panel = new ArrayList<MapPanel>();
