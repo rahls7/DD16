@@ -18,6 +18,9 @@ public class PCharacteristicPanel extends JPanel implements Observer {
     private JLabel strLabel, dexLabel, conLabel, intLabel, wisLabel, chaLabel;
     private JLabel strTextField, dexTextField, conTextField, intTextField, wisTextField, chaTextField;
 
+    /**
+     * constructor of characteristic panel
+     */
     public PCharacteristicPanel() {
         super();
         setLayout(null);
@@ -50,6 +53,10 @@ public class PCharacteristicPanel extends JPanel implements Observer {
     }
 
     @Override
+    /**
+     * override the update function of observer
+     * when the character get changed, update this observer
+     */
     public void update(Observable o, Object arg) {
         removeAll();
         pCharacter = (PCharacter) o;
@@ -101,11 +108,21 @@ public class PCharacteristicPanel extends JPanel implements Observer {
         repaint();
     }
 
+    /**
+     * clean the panel up
+     */
     public void clean() {
         removeAll();
         validate();
         repaint();
     }
+
+    /**
+     * Setter functions for Attributes.
+     * @param name
+     * @param x
+     * @return
+     */
 
     public JLabel setAttributesLabel(String name, int x) {
         JLabel label = new JLabel(name);

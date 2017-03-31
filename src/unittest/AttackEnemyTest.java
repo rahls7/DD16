@@ -2,18 +2,17 @@ package unittest;
 
 import controller.PlayController;
 import model.Campaign;
+import model.PCampaign;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-
 /**
- * Test the functions of looting chests
- *
- * @author Jiayao Zhou
+ * Created by rahls7 on 18/03/17.
  */
-public class LootChestTest {
+public class AttackEnemyTest {
     PlayController play_controller;
+    PCampaign campaign;
 
     @Before
     /**
@@ -21,15 +20,15 @@ public class LootChestTest {
      */
     public void before() {
         play_controller = new PlayController("999", 6);
+        campaign = play_controller.getCampaign();
     }
 
     @Test
     /**
-     * Test the function of looting a chest.
+     * Test the function of attacking a enemy.
      */
-    public void testLootChest() {
-        int backpackSize = play_controller.getPlayer().getBackpack().size();
-        play_controller.lootChest(3, 2);
-        assertEquals(backpackSize + 1, play_controller.getPlayer().getBackpack().size());
+    public void testAttackEnemy() {
+        campaign.getEnemy(4,4).setHitPoint(0);
+        assertEquals(0, campaign.getEnemy(4,4).getHitPoint());
     }
 }

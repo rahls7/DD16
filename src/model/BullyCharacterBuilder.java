@@ -5,6 +5,9 @@ package model;
  */
 public class BullyCharacterBuilder extends CharacterBuilder {
 
+    /**
+     * initiate the type of character
+     */
     public void initiate() {
         character.initiateStats("Bully");
     }

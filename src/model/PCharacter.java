@@ -3,7 +3,10 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Created by mo on 2017-03-08.
+ * Character object.
+ *
+ * @author Mo Chen
+ * @version 1.0.0
  */
 public class PCharacter extends PCellContent {
 
@@ -20,6 +23,11 @@ public class PCharacter extends PCellContent {
     private int basicLevel, basicHitPoint, basicArmorClass, basicAttackBonus, basicDamageBonus, basicMultipleAttacks;
     private int level, hitPoint, armorClass, attackBonus, damageBonus, multipleAttacks;
 
+    /**
+     * Constructor of PCharacter to construct the object
+     * @param id, character's id
+     * @param isHostile  if the character is the hostile, friend, or player
+     */
     public PCharacter(String id, String isHostile) {
         type = "PLAYER";
         CharacterIO characterIO = new CharacterIO();
@@ -166,6 +174,11 @@ public class PCharacter extends PCellContent {
         if (!weaponEquipped)
             damageBonus = 0;
     }
+
+    /**
+     * Setters and Getter Functons for Attributes.
+     * @return
+     */
 
     public String getId() {
         return id;
@@ -444,28 +457,50 @@ public class PCharacter extends PCellContent {
         return category;
     }
 
+    /**
+     * notify the character view that character is changed
+     */
     public void characterView() {
         setChanged();
         notifyObservers(this);
     }
 
+    /**
+     * notify the inventory view that chatacter is changed
+     */
     public void inventoryView() {
         setChanged();
         notifyObservers(this);
     }
+
+    /**
+     * Set category of the player.
+     * @param category Category of the player.
+     */
     public void setCategory(int category) {
         this.category = category;
     }
 
+    /**
+     * Add item to backpack.
+     * @param item Item to be added.
+     */
     public void addBackpack(PItem item) {
         this.backpack.add(item);
     }
 
+    /**
+     * Player levels up.
+     */
     public void levelUp() {
         this.level++;
         recalculateStats();
     }
 
+    /**
+     * Add item to backpack.
+     * @param item Item to be added.
+     */
     public void addToBackpack(PItem item) {this.backpack.add(item);}
 
   

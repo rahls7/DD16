@@ -11,6 +11,12 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * Panel for playing.
+ *
+ * @author Jiayao
+ * @version 1.0.0
+ */
 public class Play extends JPanel implements MouseListener {
     private JPanel map_panel, action_panel;
     private PInformationPanel information_panel;
@@ -19,9 +25,18 @@ public class Play extends JPanel implements MouseListener {
     private PCellPanel[][] cells;
     private PCellPanel current_cell, previous_cell;
     private PlayController play_controller;
+    private JPanel battleInfo_panel;
+    private static JTextArea battleInfo_area;
+    private JScrollPane scrollPane;
     private JSONObject json_map;
     private int width, height;
 
+    /**
+     * Initiate the play panel.
+     *
+     * @param character_id Id of the player.
+     * @param campaign_id Id of the campaign.
+     */
     public Play(String character_id, int campaign_id) {
         super(new GridLayout(1, 0));
 
@@ -55,15 +70,34 @@ public class Play extends JPanel implements MouseListener {
         play_controller.setCharacterObserver(characteristic_panel);
         inventory_panel.setPlayController(play_controller);
 
-        action_panel = new JPanel(new GridLayout(3, 0));
+        battleInfo_panel = new JPanel();
+        battleInfo_area = new JTextArea();
+        battleInfo_area.setEditable(false);
+        battleInfo_area.setText("Battle Information Display \n");
+        scrollPane = new JScrollPane(battleInfo_area);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        battleInfo_panel.add(scrollPane);
+        scrollPane.setPreferredSize(new Dimension(450,120));
+
+        action_panel = new JPanel(new GridLayout(4, 0));
         action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
         action_panel.add(information_panel);
+        action_panel.add(battleInfo_panel);
         action_panel.add(characteristic_panel);
         action_panel.add(inventory_panel);
 
         add(map_panel);
         add(action_panel);
 
+    }
+
+    /**
+     * Display the real-time battle information.
+     *
+     * @param infoToDisplay The information that is to be displayed during the battle.
+     */
+    public static void displayInfo(String infoToDisplay){
+        battleInfo_area.append(infoToDisplay+"\n");
     }
 
     /**
@@ -145,6 +179,8 @@ public class Play extends JPanel implements MouseListener {
                             map_panel.repaint();
                         } else {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Complete!");
+                            Main.mainFrame.setVisible(false);
+                            Main.mainFrame.dispose();
                             Main.mainFrame = new Main();
                         }
                     }
@@ -157,7 +193,6 @@ public class Play extends JPanel implements MouseListener {
         }
 
         // Character view
-
         if (current_cell != null) {
             if (current_cell.getContent().length() < 10) {
                 if (current_cell.getContent().equals("PLAYER"))
@@ -183,6 +218,13 @@ public class Play extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     * Check if the player is near the selected cell.
+     *
+     * @param x X coordinate of the selected cell.
+     * @param y Y coordinate of the selected cell.
+     * @return True if the player is near the selected cell, otherwise false.
+     */
     private boolean isAdjacent(int x, int y) {
         int player_x = -1;
         int player_y = -1;

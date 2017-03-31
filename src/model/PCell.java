@@ -1,11 +1,22 @@
 package model;
 
-
+/**
+ * Cell object of the map.
+ *
+ * @author Jiayao
+ * @version 1.0.0
+ */
 public class PCell {
     private int x, y;
     private String type = "";
     private PCellContent content;
 
+    /**
+     * Initialize a cell Object
+     * @param i x coordinate of the cell
+     * @param j y coordinate of the cell
+     * @param content content of the cell
+     */
     public PCell(int i, int j, String content) {
         x = i;
         y = j;
@@ -22,12 +33,25 @@ public class PCell {
                 this.content = new PConstant(type);
         }
     }
+
+    /**
+     * Set the type
+     * @param type
+     */
     public void setType(String type) { this.type = type; }
 
+    /**
+     * Get the type
+     * @return type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Set the player
+     * @param player
+     */
     public void setPlayer(PCharacter player) {
         if (type.equals("") || type.equals("ENTRY")) {
             content = player;
@@ -36,12 +60,18 @@ public class PCell {
     }
 
 
-
+    /**
+     * Remove a player
+     */
     public void removePlayer() {
         content = new PConstant("");
         type = "";
     }
 
+    /**
+     * Get the content of a cell
+     * @return content of a cell
+     */
     public PCellContent getContent() {
         return content;
     }

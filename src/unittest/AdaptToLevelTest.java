@@ -28,7 +28,7 @@ public class AdaptToLevelTest {
      * Initialize a play controller
      */
     public void before(){
-        pc=new PlayController("123456",4);
+        pc=new PlayController("999",6);
         campaign=pc.getCampaign();
         campaign.adaptMapToLevel(pc.getPlayer().getLevel());
         map=campaign.getMapsList().get(0);
@@ -37,7 +37,7 @@ public class AdaptToLevelTest {
     }
     @Test
     /**
-     * Test the funciton of adapting to level
+     * Test the function of adapting to level
      */
     public void test(){
         for(int i=0;i<map.getWidth();i++) {
