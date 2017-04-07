@@ -21,7 +21,11 @@ public class CreateItem extends JPanel {
     JComboBox<Integer> attribute_values;
     JButton button_create;
     ItemEditorController item_controller;
-
+    JCheckBox freezing;
+    JCheckBox burning;
+    JCheckBox slaying;
+    JCheckBox frightening;
+    JCheckBox pacifying;
     /**
      * Initiate the panel of item creation.
      */
@@ -43,48 +47,116 @@ public class CreateItem extends JPanel {
         items.addItem("Ring");
         items.addItem("Belt");
         items.addItem("Boots");
-        items.addItem("Weapon");
+        items.addItem("Ranged Weapon");
+        items.addItem("Melee Weapon");
+
+        freezing =  new JCheckBox("Freezing");
+        burning = new JCheckBox("Burning");
+        slaying = new JCheckBox("Slaying");
+        frightening = new JCheckBox("Frightening");
+        pacifying = new JCheckBox("Pacifying");
 
         ItemListener itemListener = new ItemListener() {
             public void itemStateChanged(ItemEvent itemEvent) {
                 String item = (String) items.getSelectedItem();
                 switch (item) {
                     case "Helmet":
+                        remove(freezing);
+                        remove(burning);
+                        remove(slaying);
+                        remove(frightening);
+                        remove(pacifying);
                         attributes.removeAllItems();
                         attributes.addItem("Intelligence");
                         attributes.addItem("Wisdom");
                         attributes.addItem("Armor Class");
+                        revalidate();
+                        repaint();
                         break;
                     case "Armor":
+                        remove(freezing);
+                        remove(burning);
+                        remove(slaying);
+                        remove(frightening);
+                        remove(pacifying);
                         attributes.removeAllItems();
                         attributes.addItem("Armor Class");
+                        revalidate();
+                        repaint();
                         break;
                     case "Shield":
+                        remove(freezing);
+                        remove(burning);
+                        remove(slaying);
+                        remove(frightening);
+                        remove(pacifying);
                         attributes.removeAllItems();
                         attributes.addItem("Armor Class");
+                        revalidate();
+                        repaint();
                         break;
                     case "Ring":
+                        remove(freezing);
+                        remove(burning);
+                        remove(slaying);
+                        remove(frightening);
+                        remove(pacifying);
                         attributes.removeAllItems();
                         attributes.addItem("Armor Class");
                         attributes.addItem("Strength");
                         attributes.addItem("Constitution");
                         attributes.addItem("Wisdom");
                         attributes.addItem("Charisma");
+                        revalidate();
+                        repaint();
                         break;
                     case "Belt":
+                        remove(freezing);
+                        remove(burning);
+                        remove(slaying);
+                        remove(frightening);
+                        remove(pacifying);
                         attributes.removeAllItems();
                         attributes.addItem("Constitution");
                         attributes.addItem("Strength");
+                        revalidate();
+                        repaint();
                         break;
                     case "Boots":
+                        remove(freezing);
+                        remove(burning);
+                        remove(slaying);
+                        remove(frightening);
+                        remove(pacifying);
                         attributes.removeAllItems();
                         attributes.addItem("Armor Class");
                         attributes.addItem("Dexterity");
+                        revalidate();
+                        repaint();
                         break;
-                    case "Weapon":
+                    case "Ranged Weapon":
+                        add(freezing);
+                        add(burning);
+                        add(slaying);
+                        add(frightening);
+                        add(pacifying);
                         attributes.removeAllItems();
                         attributes.addItem("Attack Bonus");
                         attributes.addItem("Damage Bonus");
+                        revalidate();
+                        repaint();
+                        break;
+                    case "Melee Weapon":
+                        add(freezing);
+                        add(burning);
+                        add(slaying);
+                        add(frightening);
+                        add(pacifying);
+                        attributes.removeAllItems();
+                        attributes.addItem("Attack Bonus");
+                        attributes.addItem("Damage Bonus");
+                        revalidate();
+                        repaint();
                         break;
                 }
             }
@@ -119,6 +191,26 @@ public class CreateItem extends JPanel {
             String item = (String) items.getSelectedItem();
             String attribute = (String) attributes.getSelectedItem();
             int attribute_value = (Integer) attribute_values.getSelectedItem();
+
+            if(item.equals("Ranged Weapon") || item.equals("Melee Weapon")) {
+                attribute += ",";
+                if(freezing.isSelected()){
+                    attribute += " " + "Freezing";
+                }
+                if(burning.isSelected()){
+                    attribute += " " + "Burning";
+                }
+                if(slaying.isSelected()){
+                    attribute += " " + "Slaying";
+                }
+                if(frightening.isSelected()){
+                    attribute += " " + "Frightening";
+                }
+                if(pacifying.isSelected()){
+                    attribute += " " + "Pacifying";
+                }
+            }
+
             boolean result = item_controller.saveItem(item, attribute, attribute_value);
             if (result)
                 JOptionPane.showMessageDialog(Main.mainFrame, "Success");

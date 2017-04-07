@@ -35,6 +35,8 @@ public class PlayController {
     private int damageRoll;
     private int damagePen;
 
+    private List<PCharacter> order;
+    private int player_index;
     /**
      * Initialize a play controller
      * @param character_id
@@ -51,6 +53,7 @@ public class PlayController {
 
         characters = new ArrayList<PCharacter>();
     }
+
 
     /**
      * Get the campaign model of player
@@ -109,17 +112,84 @@ public class PlayController {
     public void readCharacter() {
         PMap map = campaign.getMap();
         cell = map.getCells();
+        characters = new ArrayList<PCharacter>();
         for (int i = 0; i < map.getWidth(); i++)
             for (int j = 0; j < map.getHeight(); j++) {
+            System.out.println(cell[i][j].getType());
                 if (cell[i][j].getType().equals("CHARACTER") || cell[i][j].getType().equals("PLAYER")) {
                     PCharacter pCharacter = (PCharacter) cell[i][j].getContent();
                     pCharacter.addObserver(pCharacteristicPanel);
                     characters.add(pCharacter);
                 }
             }
-
+        generateOrder();
         player.addObserver(pCharacteristicPanel);
         player.addObserver(pInventoryPanel);
+    }
+
+    public void setPlayer() { campaign.setPlayer(player);}
+
+    public void beforePlayer(){
+        if(player_index==0){
+            System.out.println("Play is the first");
+        }else{
+            for(int i=0;i<player_index;i++){
+                System.out.println("NPC action");
+            }
+        }
+    }
+
+    public void backToPlayer(){
+        if(player_index==0){
+            for(int i=1;i<order.size();i++){
+                System.out.println("NPC action");
+            }
+        }else if(player_index==order.size()-1){
+            for(int i=0;i<player_index;i++){
+                System.out.println("NPC action");
+            }
+        }else{
+            for(int i=player_index+1;i<order.size();i++){
+                System.out.println("NPC action");
+            }
+            for(int i=0;i<player_index;i++){
+                System.out.println("NPC action");
+            }
+        }
+    }
+
+    private void generateOrder() {
+        order = new ArrayList<PCharacter>();
+        player_index=-1;
+        int[] index= new int[characters.size()];
+        int[] random=new int[characters.size()];
+        int temp1;
+        int temp2;
+        for(int i=0;i<characters.size();i++){
+            index[i]=i;
+            int num=1+(int)(Math.random()*20);
+            random[i]=num;
+        }
+        for(int i=0;i<characters.size()-1;i++){
+            for(int j=0;j<characters.size()-1-i;j++){
+                if(random[j+1]>random[j]){
+                    temp1=random[j];
+                    random[j]=random[j+1];
+                    random[j+1]=temp1;
+                    temp2=index[j];
+                    index[j]=index[j+1];
+                    index[j+1]=temp2;
+                }
+            }
+        }
+        for(int i=0;i<characters.size();i++) {
+            order.add(characters.get(index[i]));
+        }
+        for(int i=0;i<order.size();i++){
+            if(order.get(i).getCategory()==2){
+                player_index=i;
+            }
+        }
     }
 
     /**
@@ -316,7 +386,6 @@ public class PlayController {
      * @param y : Cell index for y cordinate of enemy in map
      * @return : Array List of Items in Enemy Backpack
      */
-
     public ArrayList<PItem> getEnemyItem(int x , int y) {
         PCharacter enemy = campaign.getEnemy(x,y);
         ArrayList<PItem> backEnemy = enemy.getBackpack();
@@ -339,8 +408,50 @@ public class PlayController {
     public boolean isFulfilled() {
         return campaign.isFulfilled();
     }
+
     public boolean exit() {
         player.levelUp();
         return campaign.exit();
+    }
+
+    public String getWeaponType() {
+        return player.getWeaponType();
+    }
+
+    public int getPlayerY() {
+        PMap map = campaign.getMap();
+        cell = map.getCells();
+        for (int i = 0; i < map.getWidth(); i++)
+            for (int j = 0; j < map.getHeight(); j++) {
+                if (cell[i][j].getType().equals("PLAYER")) {
+                    return j;
+                }
+            }
+        return -1;
+    }
+
+    public int getPlayerX() {
+        PMap map = campaign.getMap();
+        cell = map.getCells();
+        for (int i = 0; i < map.getWidth(); i++)
+            for (int j = 0; j < map.getHeight(); j++) {
+                if (cell[i][j].getType().equals("PLAYER")) {
+                    return i;
+                }
+            }
+        return -1;
+    }
+
+    public int getFriendHitPoint(int x, int y) {
+        PCharacter friend = campaign.getFriend(x,y);
+        return friend.getHitPoint();
+    }
+
+    public void attackFriend(int x, int y) {
+        PCharacter friend = campaign.getFriend(x,y);
+        if(friend != null) {
+            friend.setHitPoint(0);
+            characterView(x,y);
+        }
     }
 }
