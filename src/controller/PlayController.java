@@ -48,6 +48,7 @@ public class PlayController {
         characters = new ArrayList<PCharacter>();
     }
 
+
     /**
      * Get the campaign model of player
      * @return
@@ -108,6 +109,7 @@ public class PlayController {
         characters = new ArrayList<PCharacter>();
         for (int i = 0; i < map.getWidth(); i++)
             for (int j = 0; j < map.getHeight(); j++) {
+            System.out.println(cell[i][j].getType());
                 if (cell[i][j].getType().equals("CHARACTER") || cell[i][j].getType().equals("PLAYER")) {
                     PCharacter pCharacter = (PCharacter) cell[i][j].getContent();
                     pCharacter.addObserver(pCharacteristicPanel);
@@ -369,7 +371,6 @@ public class PlayController {
      * @param y : Cell index for y cordinate of enemy in map
      * @return : Array List of Items in Enemy Backpack
      */
-
     public ArrayList<PItem> getEnemyItem(int x , int y) {
         PCharacter enemy = campaign.getEnemy(x,y);
         ArrayList<PItem> backEnemy = enemy.getBackpack();
@@ -392,8 +393,50 @@ public class PlayController {
     public boolean isFulfilled() {
         return campaign.isFulfilled();
     }
+
     public boolean exit() {
         player.levelUp();
         return campaign.exit();
+    }
+
+    public String getWeaponType() {
+        return player.getWeaponType();
+    }
+
+    public int getPlayerY() {
+        PMap map = campaign.getMap();
+        cell = map.getCells();
+        for (int i = 0; i < map.getWidth(); i++)
+            for (int j = 0; j < map.getHeight(); j++) {
+                if (cell[i][j].getType().equals("PLAYER")) {
+                    return j;
+                }
+            }
+        return -1;
+    }
+
+    public int getPlayerX() {
+        PMap map = campaign.getMap();
+        cell = map.getCells();
+        for (int i = 0; i < map.getWidth(); i++)
+            for (int j = 0; j < map.getHeight(); j++) {
+                if (cell[i][j].getType().equals("PLAYER")) {
+                    return i;
+                }
+            }
+        return -1;
+    }
+
+    public int getFriendHitPoint(int x, int y) {
+        PCharacter friend = campaign.getFriend(x,y);
+        return friend.getHitPoint();
+    }
+
+    public void attackFriend(int x, int y) {
+        PCharacter friend = campaign.getFriend(x,y);
+        if(friend != null) {
+            friend.setHitPoint(0);
+            characterView(x,y);
+        }
     }
 }

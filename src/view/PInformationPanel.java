@@ -48,7 +48,7 @@ public class PInformationPanel extends JPanel {
      * @param cell The selected cell.
      * @param isAdjacent True if the player is near the cell, otherwise false.
      */
-    public void showInformation(PCellPanel cell, boolean isAdjacent) {
+    public void showInformation(PCellPanel cell, boolean isAdjacent, boolean isInRange) {
         this.cell = cell;
         removeAll();
         String[] info = cell.content.split(" ");
@@ -63,16 +63,21 @@ public class PInformationPanel extends JPanel {
                 Play.displayInfo("the chest is looted.");
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("0")) {
-                button_exchange = new JButton("Exchange Item");
-                button_exchange.addActionListener(new exchangeItem(cell.x, cell.y));
-                ArrayList<PItem> it = play_controller.getPlayerItem();
-                exchangeItBox = new JComboBox();
-                for(PItem item: it) {
-                    exchangeItBox.addItem(item.getType()+ " "+ item.getAttribute() + " " + item.getAttributeValue());
-                }
-                add(exchangeItBox);
-                add(button_exchange);
+                if(play_controller.getFriendHitPoint(cell.x, cell.y) != 0){
+                    button_exchange = new JButton("Exchange Item");
+                    button_exchange.addActionListener(new exchangeItem(cell.x, cell.y));
+                    ArrayList<PItem> it = play_controller.getPlayerItem();
+                    exchangeItBox = new JComboBox();
+                    for(PItem item: it) {
+                        exchangeItBox.addItem(item.getType()+ " "+ item.getAttribute() + " " + item.getAttributeValue());
+                    }
+                    add(exchangeItBox);
+                    add(button_exchange);
 
+                    button_attack = new JButton("Attack");
+                    button_attack.addActionListener(new attackFriend(cell.x,cell.y));
+                    add(button_attack);
+                }
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("1")) {
                 if(play_controller.getEnemyHitPoint(cell.x, cell.y)==0) {
@@ -92,19 +97,33 @@ public class PInformationPanel extends JPanel {
                         add(button_attack);
                     }
                 }
-
-
-            } else if (info[0].equals("WALL")) {
-
             }
-
-
-            else if(info[0].equals("EXIT")) {
-
-            } else if (info[0].equals("PLAYER")) {
-
+            else if (info[0].equals("WALL")) {}
+            else if(info[0].equals("EXIT")) {}
+            else if (info[0].equals("PLAYER")) {}
+        }
+        else if(isInRange) {
+            text = new JLabel(info[0]);
+            add(text);
+            if(info[0].equals("CHEST")) {
             }
-        } else {
+            else if(info[0].equals("CHARACTER") && info[2].equals("0")) {
+                if(play_controller.getFriendHitPoint(cell.x, cell.y) != 0){
+                    button_attack = new JButton("Attack");
+                    button_attack.addActionListener(new attackFriend(cell.x,cell.y));
+                    add(button_attack);
+                }
+            }
+            else if(info[0].equals("CHARACTER") && info[2].equals("1")) {
+                if(play_controller.getEnemyHitPoint(cell.x, cell.y) == 0) {}
+                else {
+                    button_attack = new JButton("Attack");
+                    button_attack.addActionListener(new attackEnemy(cell.x,cell.y));
+                    add(button_attack);
+                }
+            }
+        }
+        else {
             text = new JLabel(info[0]);
             add(text);
             if (info[0].equals("PLAYER")) {
@@ -161,7 +180,7 @@ public class PInformationPanel extends JPanel {
                 int index = exchangeItBox.getSelectedIndex();
                 play_controller.exchangeItem(x,y,index);
                 JOptionPane.showMessageDialog(button_exchange,"Item Exchanged Successfully");
-                showInformation(cell, true);
+                showInformation(cell, true, true);
                 revalidate();
                 repaint();
             }
@@ -182,7 +201,7 @@ public class PInformationPanel extends JPanel {
             play_controller.attackEnemy(x,y);
             attacked=true;
             JOptionPane.showMessageDialog(button_attack,"Enemy Dead");
-            showInformation(cell, true);
+            showInformation(cell, true, true);
             revalidate();
             repaint();
         //Friend attack
@@ -203,7 +222,22 @@ public class PInformationPanel extends JPanel {
             int selIndex = lootEnemyItemBox.getSelectedIndex();
             play_controller.lootEnemy(x,y,selIndex );
             JOptionPane.showMessageDialog(loot_enemy, "Enemy Looted");
-            showInformation(cell, true);
+            showInformation(cell, true, true);
+            revalidate();
+            repaint();
+        }
+    }
+
+    private class attackFriend implements ActionListener {
+        int x, y;
+        attackFriend(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        public void actionPerformed(ActionEvent event) {
+            play_controller.attackFriend(x,y);
+            showInformation(cell, true, true);
             revalidate();
             repaint();
         }
