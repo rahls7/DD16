@@ -26,6 +26,8 @@ public class PInformationPanel extends JPanel {
     private JButton button_loot;
     private JComboBox lootEnemyItemBox;
     private PCellPanel cell;
+    private JButton end_turn;
+    private boolean attacked;
 
     /**
      * Constructor to initiate the information panel.
@@ -37,6 +39,7 @@ public class PInformationPanel extends JPanel {
         this.play_controller = play_controller;
         text = new JLabel("Information");
         add(text);
+        attacked=false;
     }
 
     /**
@@ -83,9 +86,11 @@ public class PInformationPanel extends JPanel {
                     add(lootEnemyItemBox);
                     add(loot_enemy);
                 }else {
-                    button_attack = new JButton("Attack");
-                    button_attack.addActionListener(new attackEnemy(cell.x,cell.y));
-                    add(button_attack);
+                    if(attacked==false){
+                        button_attack = new JButton("Attack");
+                        button_attack.addActionListener(new attackEnemy(cell.x,cell.y));
+                        add(button_attack);
+                    }
                 }
 
 
@@ -102,12 +107,25 @@ public class PInformationPanel extends JPanel {
         } else {
             text = new JLabel(info[0]);
             add(text);
+            if (info[0].equals("PLAYER")) {
+                end_turn=new JButton("End Turn");
+                end_turn.addActionListener(new endTurn());
+                add(end_turn);
+            }
         }
         revalidate();
         repaint();
 
     }
 
+
+    class endTurn implements ActionListener{
+        public void actionPerformed(ActionEvent arg0) {
+            attacked=false;
+            Play.moved=false;
+            play_controller.backToPlayer();
+        }
+    }
 
     /**
      * Action listener for looting chest.
@@ -162,11 +180,12 @@ public class PInformationPanel extends JPanel {
         }
         public void actionPerformed(ActionEvent event) {
             play_controller.attackEnemy(x,y);
+            attacked=true;
             JOptionPane.showMessageDialog(button_attack,"Enemy Dead");
             showInformation(cell, true);
             revalidate();
             repaint();
-
+        //Friend attack
         }
     }
 
