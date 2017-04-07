@@ -25,8 +25,12 @@ public class Play extends JPanel implements MouseListener {
     private PCellPanel[][] cells;
     private PCellPanel current_cell, previous_cell;
     private PlayController play_controller;
+    private JPanel battleInfo_panel;
+    private static JTextArea battleInfo_area;
+    private JScrollPane scrollPane;
     private JSONObject json_map;
     private int width, height;
+    public static boolean moved;
 
     /**
      * Initiate the play panel.
@@ -68,15 +72,36 @@ public class Play extends JPanel implements MouseListener {
         inventory_panel.setPlayController(play_controller);
         inventory_panel.setCells(cells);
 
-        action_panel = new JPanel(new GridLayout(3, 0));
+        battleInfo_panel = new JPanel();
+        battleInfo_area = new JTextArea();
+        battleInfo_area.setEditable(false);
+        battleInfo_area.setText("Battle Information Display \n");
+        scrollPane = new JScrollPane(battleInfo_area);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        battleInfo_panel.add(scrollPane);
+        scrollPane.setPreferredSize(new Dimension(450,120));
+
+        action_panel = new JPanel(new GridLayout(4, 0));
         action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
         action_panel.add(information_panel);
+        action_panel.add(battleInfo_panel);
         action_panel.add(characteristic_panel);
         action_panel.add(inventory_panel);
 
         add(map_panel);
         add(action_panel);
 
+        play_controller.beforePlayer();
+        moved=false;
+    }
+
+    /**
+     * Display the real-time battle information.
+     *
+     * @param infoToDisplay The information that is to be displayed during the battle.
+     */
+    public static void displayInfo(String infoToDisplay){
+        battleInfo_area.append(infoToDisplay+"\n");
     }
 
     /**
@@ -124,17 +149,21 @@ public class Play extends JPanel implements MouseListener {
                 previous_cell.deselect();
                 removeAttackRange();
                 current_cell.select();
-                if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("")) {
+
+
+                if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("") && !moved && isMoveRange(previous_cell, current_cell)) {
                     previous_cell.removeContent();
                     showAttackRange(current_cell.x, current_cell.y);
                     current_cell.setContent("PLAYER");
                     play_controller.setPlayer(previous_cell.x, previous_cell.y, current_cell.x, current_cell.y);
                     current_cell.select();
+                    moved = true;
                 }
                 else if (!previous_cell.content.equals("PLAYER") && current_cell.content.equals("PLAYER")) {
                     showAttackRange(current_cell.x, current_cell.y);
                 }
-                else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT")) {
+
+                else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT") && !moved && isMoveRange(previous_cell, current_cell)) {
                     if (play_controller.isFulfilled()) {
                         if (play_controller.exit()) {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Level Up! Go to Next Map!");
@@ -168,6 +197,8 @@ public class Play extends JPanel implements MouseListener {
                             inventory_panel.setCells(cells);
                             map_panel.revalidate();
                             map_panel.repaint();
+                            play_controller.beforePlayer();
+                            moved = false;
                         } else {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Complete!");
                             Main.mainFrame.setVisible(false);
@@ -249,6 +280,13 @@ public class Play extends JPanel implements MouseListener {
         }
     }
 
+    public boolean isMoveRange(PCellPanel previous_cell, PCellPanel current_cell){
+        if(Math.abs(previous_cell.x-current_cell.x)+Math.abs(previous_cell.y-current_cell.y)<=3){
+            return true;
+        }else{
+            return false;
+        }
+    }
     /**
      * Check if the player is near the selected cell.
      *
