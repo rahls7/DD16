@@ -27,6 +27,7 @@ public class Play extends JPanel implements MouseListener {
     private PlayController play_controller;
     private JSONObject json_map;
     private int width, height;
+    public static boolean moved;
 
     /**
      * Initiate the play panel.
@@ -76,6 +77,8 @@ public class Play extends JPanel implements MouseListener {
         add(map_panel);
         add(action_panel);
 
+        play_controller.beforePlayer();
+        moved=false;
     }
 
     /**
@@ -119,11 +122,12 @@ public class Play extends JPanel implements MouseListener {
                 previous_cell.deselect();
                 current_cell.select();
 
-                if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("")) {
+                if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("") && !moved && isMoveRange(previous_cell, current_cell)) {
                     previous_cell.removeContent();
                     current_cell.setContent("PLAYER");
                     play_controller.setPlayer(previous_cell.x, previous_cell.y, current_cell.x, current_cell.y);
-                } else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT")) {
+                    moved=true;
+                } else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT") && !moved && isMoveRange(previous_cell, current_cell)) {
                     if (play_controller.isFulfilled()) {
                         if (play_controller.exit()) {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Level Up! Go to Next Map!");
@@ -150,11 +154,14 @@ public class Play extends JPanel implements MouseListener {
                             }
                             previous_cell = null;
                             current_cell = null;
+                            play_controller.setPlayer();
                             play_controller.readCharacter();
                             inventory_panel.clean();
                             characteristic_panel.clean();
                             map_panel.revalidate();
                             map_panel.repaint();
+                            play_controller.beforePlayer();
+                            moved = false;
                         } else {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Complete!");
                             Main.mainFrame.setVisible(false);
@@ -196,6 +203,13 @@ public class Play extends JPanel implements MouseListener {
         }
     }
 
+    public boolean isMoveRange(PCellPanel previous_cell, PCellPanel current_cell){
+        if(Math.abs(previous_cell.x-current_cell.x)+Math.abs(previous_cell.y-current_cell.y)<=3){
+            return true;
+        }else{
+            return false;
+        }
+    }
     /**
      * Check if the player is near the selected cell.
      *
