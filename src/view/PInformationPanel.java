@@ -57,6 +57,7 @@ public class PInformationPanel extends JPanel {
                 button_loot = new JButton("Loot Chest");
                 button_loot.addActionListener(new lootChest(cell.x, cell.y));
                 add(button_loot);
+                Play.displayInfo("the chest is looted.");
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("0")) {
                 button_exchange = new JButton("Exchange Item");

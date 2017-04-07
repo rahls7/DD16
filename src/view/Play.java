@@ -25,6 +25,9 @@ public class Play extends JPanel implements MouseListener {
     private PCellPanel[][] cells;
     private PCellPanel current_cell, previous_cell;
     private PlayController play_controller;
+    private JPanel battleInfo_panel;
+    private static JTextArea battleInfo_area;
+    private JScrollPane scrollPane;
     private JSONObject json_map;
     private int width, height;
 
@@ -67,15 +70,34 @@ public class Play extends JPanel implements MouseListener {
         play_controller.setCharacterObserver(characteristic_panel);
         inventory_panel.setPlayController(play_controller);
 
-        action_panel = new JPanel(new GridLayout(3, 0));
+        battleInfo_panel = new JPanel();
+        battleInfo_area = new JTextArea();
+        battleInfo_area.setEditable(false);
+        battleInfo_area.setText("Battle Information Display \n");
+        scrollPane = new JScrollPane(battleInfo_area);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        battleInfo_panel.add(scrollPane);
+        scrollPane.setPreferredSize(new Dimension(450,120));
+
+        action_panel = new JPanel(new GridLayout(4, 0));
         action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
         action_panel.add(information_panel);
+        action_panel.add(battleInfo_panel);
         action_panel.add(characteristic_panel);
         action_panel.add(inventory_panel);
 
         add(map_panel);
         add(action_panel);
 
+    }
+
+    /**
+     * Display the real-time battle information.
+     *
+     * @param infoToDisplay The information that is to be displayed during the battle.
+     */
+    public static void displayInfo(String infoToDisplay){
+        battleInfo_area.append(infoToDisplay+"\n");
     }
 
     /**
