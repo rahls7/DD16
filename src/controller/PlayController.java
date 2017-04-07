@@ -29,6 +29,11 @@ public class PlayController {
     private ArrayList<PCharacter> characters;
     private PCell[][] cell;
     private Random rgen = new Random();
+    private int attackRoll;
+    private int attackBon;
+    private int finalAttack;
+    private int damageRoll;
+    private int damagePen;
 
     /**
      * Initialize a play controller
@@ -246,9 +251,18 @@ public class PlayController {
     public void attackEnemy(int x, int y) {
         PCharacter enemy = campaign.getEnemy(x,y);
         if(enemy!=null) {
-            enemy.setHitPoint(0);
+            attackRoll = rgen.nextInt(20) + 1;
+            attackBon = player.getAttackBonus();
+            finalAttack = attackRoll + attackBon;
+            if(finalAttack >= enemy.getArmorClass()) {
+                damageRoll = rgen.nextInt(8) + 1;
+                damagePen = damageRoll + player.getDamageBonus();
+                int j = enemy.getHitPoint() - damagePen; // damage bonus
+                enemy.setHitPoint(j);
+            }
+                }
+
             characterView(x,y);
-        }
     }
 
     /**
