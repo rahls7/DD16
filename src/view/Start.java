@@ -33,11 +33,6 @@ public class Start extends JPanel {
         map_controller = new MapEditorController();
         start_panel = new JPanel();
 
-        /*
-        Making the panel transparent.
-         */
-        //start_panel.setBackground(new Color(0,0,0,0));
-
         JComboBox<Integer> campaign = getCampaignList();
         campaign.setPreferredSize(new Dimension(200,50));
         campaign.setBorder(BorderFactory.createTitledBorder("Campaign"));

@@ -29,6 +29,7 @@ public class PlayController {
     private ArrayList<PCharacter> characters;
     private PCell[][] cell;
     private Random rgen = new Random();
+    private PlayIO playIO;
 
     /**
      * Initialize a play controller
@@ -45,6 +46,8 @@ public class PlayController {
         campaign.setPlayer(player);
 
         characters = new ArrayList<PCharacter>();
+
+        playIO = new PlayIO();
     }
 
     /**
@@ -328,5 +331,9 @@ public class PlayController {
     public boolean exit() {
         player.levelUp();
         return campaign.exit();
+    }
+
+    public void savePlay(){
+        playIO.savePlayer(player);
     }
 }
