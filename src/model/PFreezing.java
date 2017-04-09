@@ -21,4 +21,8 @@ public class PFreezing extends PWeaponDecorator {
     }
 
     public String getType() { return super.getType();}
+
+    public int getAttributeValue() {
+        return super.getAttributeValue();
+    }
 }

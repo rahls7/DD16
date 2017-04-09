@@ -27,4 +27,6 @@ public class PMeleeWeapon extends PWeapon {
     }
 
     public String getType() { return type; }
+
+    public int getAttributeValue() { return attribute_value; }
 }

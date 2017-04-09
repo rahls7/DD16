@@ -23,6 +23,9 @@ public class PCharacter extends PCellContent {
     private int basicLevel, basicHitPoint, basicArmorClass, basicAttackBonus, basicDamageBonus, basicMultipleAttacks;
     private int level, hitPoint, armorClass, attackBonus, damageBonus, multipleAttacks;
     private PWeapon weapon;
+    private int freezeTurns;
+    private int burnTurns;
+    private int pacifyingTurns;
     /**
      * Constructor of PCharacter to construct the object
      * @param id, character's id
@@ -34,6 +37,9 @@ public class PCharacter extends PCellContent {
         Character character = characterIO.getCharacter(id);
         this.id = character.getId();
         this.name = character.getName();
+        this.freezeTurns = 0;
+        this.burnTurns = 0;
+        this.pacifyingTurns = 0;
 
         this.equipment = new ArrayList<PItem>();
         for (Item item : character.getEquipment()) {
@@ -86,7 +92,7 @@ public class PCharacter extends PCellContent {
         }
 
         this.backpack = new ArrayList<PItem>();
-        for (Item item : character.getBackpack()) {
+        for (Item item : character.getBackpack()) { System.out.println(character.getBackpack().size());
             PItem i = new PItem(item.getSaveId(), item.getType(), item.getAttribute(), item.getAttributeValue());
             this.backpack.add(i);
         }
@@ -618,5 +624,31 @@ public class PCharacter extends PCellContent {
             return weapon.getType();
         }
         return null;
+    }
+    public PWeapon getWeapon() {
+        return weapon;
+    }
+
+    public int getFreezeTurns() {
+        return freezeTurns;
+    }
+
+    public int getBurnTurns() {
+        return burnTurns;
+    }
+
+    public  int getPacifyingTurns() {
+        return pacifyingTurns;
+    }
+
+    public void setFreezeTurns(int penTurns) {
+        this.freezeTurns = penTurns;
+    }
+    public void setBurnTurns(int penTurns) {
+        this.burnTurns = penTurns;
+    }
+
+    public void setPacifyingTurns(int penTurns) {
+        this.pacifyingTurns = penTurns;
     }
 }

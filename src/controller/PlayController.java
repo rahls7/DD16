@@ -6,6 +6,7 @@ import model.*;
 import org.json.JSONObject;
 import view.PCharacteristicPanel;
 import view.PInventoryPanel;
+import view.Play;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -321,18 +322,36 @@ public class PlayController {
     public void attackEnemy(int x, int y) {
         PCharacter enemy = campaign.getEnemy(x,y);
         if(enemy!=null) {
-            attackRoll = rgen.nextInt(20) + 1;
-            attackBon = player.getAttackBonus();
-            finalAttack = attackRoll + attackBon;
-            if(finalAttack >= enemy.getArmorClass()) {
-                damageRoll = rgen.nextInt(8) + 1;
-                damagePen = damageRoll + player.getDamageBonus();
-                int j = enemy.getHitPoint() - damagePen; // damage bonus
-                enemy.setHitPoint(j);
-            }
-                }
+            if(enemy.getHitPoint()>0) {
+                attackRoll = rgen.nextInt(20) + 1;
+                attackBon = player.getAttackBonus();
+                finalAttack = attackRoll + attackBon;
+                Play.displayInfo("Your attack roll is " + attackRoll + " Your final Attack points including attackBonus " + attackBon + " is " + finalAttack);
+                Play.displayInfo("Enemy armour class is " + enemy.getArmorClass());
+                if(finalAttack >= enemy.getArmorClass()) {
+                    damageRoll = rgen.nextInt(8) + 1;
+                    damagePen = damageRoll + player.getDamageBonus();
+                    Play.displayInfo("Your damage roll is " + damageRoll + " Your final damage points including damageBonus " + player.getDamageBonus() + " is " + damagePen);
+                    int j = enemy.getHitPoint() - damagePen; // damage bonus
+                    Play.displayInfo("Hit points after deduction are " + j);
+                    enemy.setHitPoint(j);
+                    if(enemy.getHitPoint()>0) {
+                        for (String i : player.getWeapon().getEnchantments()) {
+                            if(i.equals("Slaying")) {
+                                enemy.setHitPoint(0);
+                            }else if(i.equals("Freezing")) {
+                                int enchBonus = player.getWeapon().getAttributeValue();
+                                enemy.setFreezeTurns(enchBonus);
 
+                            }else if(i.equals("Pacifying")) {
+                                //Do something
+                            }
+                        }
+                    }
+                }
+            }
             characterView(x,y);
+        }
     }
 
     /**
@@ -450,7 +469,22 @@ public class PlayController {
     public void attackFriend(int x, int y) {
         PCharacter friend = campaign.getFriend(x,y);
         if(friend != null) {
-            friend.setHitPoint(0);
+            if(friend.getHitPoint()>0) {
+                attackRoll = rgen.nextInt(20) + 1;
+                attackBon = player.getAttackBonus();
+                finalAttack = attackRoll + attackBon;
+                Play.displayInfo("Your attack roll is " + attackRoll + " Your final Attack points including attackBonus " + attackBon + " is " + finalAttack);
+                Play.displayInfo("Enemy armour class is " + friend.getArmorClass());
+                if(finalAttack >= friend.getArmorClass()) {
+                    damageRoll = rgen.nextInt(8) + 1;
+                    damagePen = damageRoll + player.getDamageBonus();
+                    Play.displayInfo("Your damage roll is " + damageRoll + " Your final damage points including damageBonus " + player.getDamageBonus() + " is " + damagePen);
+                    int j = friend.getHitPoint() - damagePen; // damage bonus
+                    Play.displayInfo("Hit points after deduction are " + j);
+                    friend.setHitPoint(j);
+                }
+            }
+
             characterView(x,y);
         }
     }
