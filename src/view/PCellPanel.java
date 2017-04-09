@@ -17,7 +17,7 @@ public class PCellPanel extends JPanel {
     private boolean isSelected = false;
     public String content = "";
     private Image img;
-
+    public boolean isAttackRang = false;
     /**
      * Initiate a cell panel.
      *
@@ -123,5 +123,15 @@ public class PCellPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
+    }
+
+    public void setAttackRange() {
+        this.setBorder(BorderFactory.createLineBorder(Color.green));
+        isAttackRang = true;
+    }
+
+    public void removeAttackRange() {
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
+        isAttackRang = false;
     }
 }

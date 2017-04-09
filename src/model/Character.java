@@ -109,15 +109,21 @@ public class Character {
      */
     public void recalculateStats() {
 
-        boolean weaponEquipped = false;
+        boolean rangedWeaponEquipped = false;
+        boolean meleeWeaponEquipped = false;
+
         for (int i = 0; i < 6; i++)
             for (int j = 0; j < 2; j++)
                 stats[i][j] = basicStats[i][j];
 
         // first loop
         for (Item item : equipment) {
-            if (item.getType().equals("Weapon"))
-                weaponEquipped = true;
+            if (item.getType().equals("Ranged Weapon"))
+                rangedWeaponEquipped = true;
+
+            if (item.getType().equals("Melee Weapon"))
+                meleeWeaponEquipped = true;
+
             switch (item.getAttribute()) {
                 case "Strength":
                     stats[0][1] = stats[0][1] + item.getAttributeValue();
@@ -145,7 +151,12 @@ public class Character {
         //armor class
         attributes[2] = 10 + stats[1][1];
         //attack bonus
-        attributes[3] = attributes[0] + stats[0][1] + stats[1][1];
+        if (rangedWeaponEquipped)
+            attributes[3] = attributes[0] + stats[1][1];
+        else if (meleeWeaponEquipped)
+            attributes[3] = attributes[0] + stats[0][1];
+        else
+            attributes[3] = attributes[0];
         //damage bonus
         attributes[4] = stats[0][1];
 
@@ -165,6 +176,18 @@ public class Character {
                     attributes[4] = attributes[4] + item.getAttributeValue();
                     break;
             }
+            if(item.getType().equals("Ranged Weapon") || item.getType().equals("Melee Weapon")) {
+                String[] parts = item.getAttribute().split(",");
+                String att = parts[0];
+                switch (att) {
+                    case "Attack Bonus":
+                        attributes[3] = attributes[3] + item.getAttributeValue();
+                        break;
+                    case "Damage Bonus":
+                        attributes[4] = attributes[4] + item.getAttributeValue();
+                        break;
+                }
+            }
         }
 
         //multiple attack
@@ -173,8 +196,9 @@ public class Character {
         else
             attributes[5] = 0;
 
-        if (!weaponEquipped)
+        if (!(rangedWeaponEquipped || meleeWeaponEquipped))
             attributes[4] = 0;
+
     }
 
     /**
@@ -238,7 +262,7 @@ public class Character {
     public void setEquipment(Item equipment) {
         String type = new String();
         for (Item item : this.equipment) {
-            if (item.getType().equals(equipment.getType())) {
+            if (item.getType().equals(equipment.getType()) || (item.getType().equals("Ranged Weapon") && equipment.getType().equals("Melee Weapon")) || (item.getType().equals("Melee Weapon") && equipment.getType().equals("Ranged Weapon"))) {
                 this.equipment.remove(item);
                 this.equipment.add(equipment);
                 this.backpack.add(item);
