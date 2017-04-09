@@ -13,6 +13,16 @@ public class MapPanel extends JPanel {
     private JLabel map_id_label;
     private int index;
 
+    public MapPanel(String map_id) {
+        this.map_id = map_id;
+        map_id_label = new JLabel(map_id);
+        Border blackline = BorderFactory.createLineBorder(Color.black);
+        setPreferredSize(new Dimension(50, 50));
+        setBorder(blackline);
+        add(map_id_label);
+        //repaint();
+    }
+
     public int getIndex() {
         return index;
     }
@@ -43,16 +53,6 @@ public class MapPanel extends JPanel {
         Border blackline = BorderFactory.createLineBorder(Color.black);
         this.setBorder(blackline);
         this.isSelected = false;
-    }
-
-    public MapPanel(String map_id) {
-        this.map_id = map_id;
-        map_id_label = new JLabel(map_id);
-        Border blackline = BorderFactory.createLineBorder(Color.black);
-        setPreferredSize(new Dimension(50, 50));
-        setBorder(blackline);
-        add(map_id_label);
-        //repaint();
     }
 
 }

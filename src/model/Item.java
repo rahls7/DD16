@@ -33,15 +33,6 @@ public class Item {
     }
 
     /**
-     * Set type of the item.
-     *
-     * @param type Type of the item.
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
      * Get type of the item.
      *
      * @return Type of the item.
@@ -52,12 +43,12 @@ public class Item {
     }
 
     /**
-     * Set attribute of the item.
+     * Set type of the item.
      *
-     * @param attribute Attribute of the item.
+     * @param type Type of the item.
      */
-    public void setAttribute(String attribute) {
-        this.attribute = attribute;
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**
@@ -71,12 +62,12 @@ public class Item {
     }
 
     /**
-     * Set value of the attribute.
+     * Set attribute of the item.
      *
-     * @param attribute_value Value of the attribute.
+     * @param attribute Attribute of the item.
      */
-    public void setAttributeValue(int attribute_value) {
-        this.attribute_value = attribute_value;
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
     }
 
     /**
@@ -90,12 +81,12 @@ public class Item {
     }
 
     /**
-     * Set the status showing if the item had been saved in the file.
+     * Set value of the attribute.
      *
-     * @param is_Saved True if the has been saved, otherwise false.
+     * @param attribute_value Value of the attribute.
      */
-    public void setIsSaved(boolean is_Saved) {
-        this.isSaved = is_Saved;
+    public void setAttributeValue(int attribute_value) {
+        this.attribute_value = attribute_value;
     }
 
     /**
@@ -109,12 +100,12 @@ public class Item {
     }
 
     /**
-     * Set id of the item if it's been saved.
+     * Set the status showing if the item had been saved in the file.
      *
-     * @param save_id Id of the item.
+     * @param is_Saved True if the has been saved, otherwise false.
      */
-    public void setSaveId(int save_id) {
-        this.save_id = save_id;
+    public void setIsSaved(boolean is_Saved) {
+        this.isSaved = is_Saved;
     }
 
     /**
@@ -125,5 +116,14 @@ public class Item {
     public int getSaveId() {
         int save_id = this.save_id;
         return save_id;
+    }
+
+    /**
+     * Set id of the item if it's been saved.
+     *
+     * @param save_id Id of the item.
+     */
+    public void setSaveId(int save_id) {
+        this.save_id = save_id;
     }
 }

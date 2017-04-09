@@ -2,8 +2,8 @@ package view;
 
 import controller.CharacterEditorController;
 import controller.PlayController;
-import model.*;
-import model.Item;
+import model.PCharacter;
+import model.PItem;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,14 +17,22 @@ import java.util.Observer;
  */
 public class PInventoryPanel extends JPanel implements Observer {
 
-    private PCharacter pCharacter;
-    private PlayController playController;
-    private CharacterEditorController characterEditorController;
     JButton showButton;
     JButton takeoffButton, putonButton;
     int flag = 0;
     JComboBox equipmentComboBox, backpackJComboBox;
     JLabel equipmentLabel, backpackLabel;
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+    private PCharacter pCharacter;
+    private PlayController playController;
+    private CharacterEditorController characterEditorController;
+=======
+    private PCellPanel[][] cells;
+>>>>>>> Stashed changes
+=======
+    private PCellPanel[][] cells;
+>>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
 
     /**
      * constructor of inventory panel
@@ -65,17 +73,15 @@ public class PInventoryPanel extends JPanel implements Observer {
         characterEditorController.setpCharacter(pCharacter);
         equipmentComboBox.setModel(new DefaultComboBoxModel(itemToString(pCharacter.getEquipment()).toArray()));
         backpackJComboBox.setModel(new DefaultComboBoxModel(itemToString(pCharacter.getBackpack()).toArray()));
-        if (flag==0) {
+        if (flag == 0) {
             add(showButton);
-        }else
-        {
+        } else {
             add(showButton);
             add(equipmentLabel);
             add(equipmentComboBox);
             add(backpackLabel);
             add(backpackJComboBox);
-            if (pCharacter.getCategory()==2)
-            {
+            if (pCharacter.getCategory() == 2) {
                 add(takeoffButton);
                 add(putonButton);
             }
@@ -86,6 +92,7 @@ public class PInventoryPanel extends JPanel implements Observer {
 
     /**
      * transform the items to be strings
+     *
      * @param items
      * @return
      */
@@ -111,10 +118,52 @@ public class PInventoryPanel extends JPanel implements Observer {
 
     /**
      * set the play controller
+     *
      * @param playController
      */
-    public void setPlayController(PlayController playController){
+    public void setPlayController(PlayController playController) {
         this.playController = playController;
+    }
+
+    public void setCells(PCellPanel[][] cells) { this.cells = cells; }
+
+    private void removeAttackRange() {
+        for(int i = 0; i < cells.length; i++)
+            for(int j = 0; j < cells[i].length; j++) {
+                if(cells[i][j].isAttackRang == true) {
+                    cells[i][j].removeAttackRange();
+                }
+            }
+    }
+
+    private void showAttackRange(int x, int y) {
+        int[] ranged_x = {x-2, x, x, x+2, x-1, x, x, x+1, x-1, x+1, x-1, x+1};
+        int[] ranged_y = {y, y-2, y+2, y, y, y-1, y+1, y, y-1, y+1, y+1, y-1};
+
+        int[] melee_x = {x-1, x, x, x+1};
+        int[] melee_y = {y, y-1, y+1, y};
+
+        String weapon_type = playController.getWeaponType();
+        if(weapon_type != null && weapon_type.equals("Ranged Weapon")) {
+            for(int i = 0; i < ranged_x.length; i++){
+                int cell_x = ranged_x[i];
+                int cell_y = ranged_y[i];
+
+                if(cell_x >= 0 && cell_y >= 0 && cell_x < cells.length && cell_y < cells[0].length){
+                    cells[cell_x][cell_y].setAttackRange();
+                }
+            }
+        }
+        else {
+            for(int i = 0; i < melee_x.length; i++){
+                int cell_x = melee_x[i];
+                int cell_y = melee_y[i];
+
+                if(cell_x >= 0 && cell_y >= 0 && cell_x < cells.length && cell_y < cells[0].length){
+                    cells[cell_x][cell_y].setAttackRange();
+                }
+            }
+        }
     }
 
     /**
@@ -129,8 +178,7 @@ public class PInventoryPanel extends JPanel implements Observer {
                     add(equipmentComboBox);
                     add(backpackLabel);
                     add(backpackJComboBox);
-                    if (pCharacter.getCategory()==2)
-                    {
+                    if (pCharacter.getCategory() == 2) {
                         add(takeoffButton);
                         add(putonButton);
                     }
@@ -144,7 +192,7 @@ public class PInventoryPanel extends JPanel implements Observer {
                     validate();
                     repaint();
                 }
-            } else if (event.getSource() == takeoffButton){
+            } else if (event.getSource() == takeoffButton) {
                 int i = equipmentComboBox.getSelectedIndex();
                 ArrayList<PItem> equipment = playController.getPlayer().getEquipment();
                 PItem pItem = equipment.get(i);
@@ -156,13 +204,25 @@ public class PInventoryPanel extends JPanel implements Observer {
                 playController.recalculateStats();
                 playController.inventoryView();
                 playController.characterView();
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+            } else if (event.getSource() == putonButton) {
+=======
+=======
+>>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
+                if(pItem.getType().equals("Ranged Weapon")) {
+
+                    removeAttackRange();
+                    showAttackRange(playController.getPlayerX(), playController.getPlayerY());
+                }
             } else if (event.getSource() == putonButton){
+>>>>>>> Stashed changes
                 int i = backpackJComboBox.getSelectedIndex();
                 ArrayList<PItem> backpack = playController.getPlayer().getBackpack();
                 ArrayList<PItem> equipment = playController.getPlayer().getEquipment();
                 PItem pItem = backpack.get(i);
                 for (PItem item : equipment) {
-                    if (item.getType().equals(pItem.getType())) {
+                    if (item.getType().equals(pItem.getType()) || (item.getType().equals("Ranged Weapon") && pItem.getType().equals("Melee Weapon")) || (item.getType().equals("Melee Weapon") && pItem.getType().equals("Ranged Weapon"))) {
                         equipment.remove(item);
                         backpack.add(item);
                         break;
@@ -175,6 +235,8 @@ public class PInventoryPanel extends JPanel implements Observer {
                 playController.recalculateStats();
                 playController.inventoryView();
                 playController.characterView();
+                removeAttackRange();
+                showAttackRange(playController.getPlayerX(), playController.getPlayerY());
             }
         }
     }

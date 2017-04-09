@@ -1,9 +1,8 @@
 package view;
 
-import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.border.Border;
+import java.awt.*;
 
 /**
  * Records and manipulate properties of the panel of a cell for playing.
@@ -14,10 +13,10 @@ import javax.swing.border.Border;
 public class PCellPanel extends JPanel {
     public int x;
     public int y;
-    private boolean isSelected = false;
     public String content = "";
+    private boolean isSelected = false;
     private Image img;
-
+    public boolean isAttackRang = false;
     /**
      * Initiate a cell panel.
      *
@@ -62,6 +61,15 @@ public class PCellPanel extends JPanel {
     }
 
     /**
+     * Return content of the cell.
+     *
+     * @return Content of the cell.
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
      * Set the content of the cell panel.
      *
      * @param content The content of the cell panel.
@@ -98,14 +106,6 @@ public class PCellPanel extends JPanel {
     }
 
     /**
-     * Return content of the cell.
-     * @return Content of the cell.
-     */
-    public String getContent() {
-        return content;
-    }
-
-    /**
      * Remove the content of the cell panel.
      */
     public void removeContent() {
@@ -117,11 +117,22 @@ public class PCellPanel extends JPanel {
 
     /**
      * Paint the component on the panel.
+     *
      * @param g The graphic that will be painted on the panel.
      */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
+    }
+
+    public void setAttackRange() {
+        this.setBorder(BorderFactory.createLineBorder(Color.green));
+        isAttackRang = true;
+    }
+
+    public void removeAttackRange() {
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
+        isAttackRang = false;
     }
 }
