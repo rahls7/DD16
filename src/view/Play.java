@@ -90,8 +90,8 @@ public class Play extends JPanel implements MouseListener {
         add(map_panel);
         add(action_panel);
 
-
         play_controller.setCellPanel(cells);
+
 
         play_controller.beforePlayer();
         moved=false;
@@ -104,7 +104,6 @@ public class Play extends JPanel implements MouseListener {
      */
     public static void displayInfo(String infoToDisplay){
         battleInfo_area.append(infoToDisplay+"\n");
-
     }
 
     /**
@@ -200,31 +199,13 @@ public class Play extends JPanel implements MouseListener {
                 previous_cell.deselect();
                 removeAttackRange();
                 current_cell.select();
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-                if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("")) {
-=======
-
 
                 if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("") && !moved && isMoveRange(previous_cell, current_cell)) {
->>>>>>> Stashed changes
-=======
-
-
-                if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("") && !moved && isMoveRange(previous_cell, current_cell)) {
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
                     previous_cell.removeContent();
                     showAttackRange(current_cell.x, current_cell.y);
                     current_cell.setContent("PLAYER");
                     play_controller.setPlayer(previous_cell.x, previous_cell.y, current_cell.x, current_cell.y);
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-
                     play_controller.turn();
-                } else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT")) {
-=======
-=======
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
                     current_cell.select();
                     moved = true;
                 }
@@ -233,10 +214,7 @@ public class Play extends JPanel implements MouseListener {
                 }
 
                 else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT") && !moved && isMoveRange(previous_cell, current_cell)) {
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
+
                     if (play_controller.isFulfilled()) {
                         if (play_controller.exit()) {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Level Up! Go to Next Map!");
@@ -267,15 +245,8 @@ public class Play extends JPanel implements MouseListener {
                             play_controller.readCharacter();
                             inventory_panel.clean();
                             characteristic_panel.clean();
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 
-=======
                             inventory_panel.setCells(cells);
->>>>>>> Stashed changes
-=======
-                            inventory_panel.setCells(cells);
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
                             map_panel.revalidate();
                             map_panel.repaint();
                             play_controller.beforePlayer();

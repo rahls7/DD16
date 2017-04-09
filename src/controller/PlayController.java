@@ -9,6 +9,7 @@ import view.PInventoryPanel;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.List;
 
 /**
  * This class is the controller class.
@@ -26,14 +27,10 @@ public class PlayController {
     private PCell[][] cell;
     private PCellPanel[][] cellPanels;
     private Random rgen = new Random();
-<<<<<<< HEAD
-<<<<<<< Updated upstream
+
     private ArrayList<PCharacter> enemys;
     private ArrayList<PCharacter> friends;
 
-=======
-=======
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
     private int attackRoll;
     private int attackBon;
     private int finalAttack;
@@ -42,10 +39,7 @@ public class PlayController {
 
     private List<PCharacter> order;
     private int player_index;
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
+
     /**
      * Initialize a play controller
      *
@@ -66,17 +60,10 @@ public class PlayController {
         friends = new ArrayList<PCharacter>();
     }
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
+
     public void setCellPanel(PCellPanel[][] pCellPanel){
         cellPanels = pCellPanel;
     }
-=======
-
->>>>>>> Stashed changes
-=======
-
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
     /**
      * Get the campaign model of player
      *
@@ -166,7 +153,6 @@ public class PlayController {
             }
     }
 
-    public void setPlayer() { campaign.setPlayer(player);}
 
     public void beforePlayer(){
         if(player_index==0){
@@ -178,24 +164,7 @@ public class PlayController {
         }
     }
 
-    public void backToPlayer(){
-        if(player_index==0){
-            for(int i=1;i<order.size();i++){
-                System.out.println("NPC action");
-            }
-        }else if(player_index==order.size()-1){
-            for(int i=0;i<player_index;i++){
-                System.out.println("NPC action");
-            }
-        }else{
-            for(int i=player_index+1;i<order.size();i++){
-                System.out.println("NPC action");
-            }
-            for(int i=0;i<player_index;i++){
-                System.out.println("NPC action");
-            }
-        }
-    }
+
 
     private void generateOrder() {
         order = new ArrayList<PCharacter>();
@@ -231,17 +200,12 @@ public class PlayController {
         }
     }
 
+
+
+
     public void setPlayer() { campaign.setPlayer(player);}
 
-    public void beforePlayer(){
-        if(player_index==0){
-            System.out.println("Play is the first");
-        }else{
-            for(int i=0;i<player_index;i++){
-                System.out.println("NPC action");
-            }
-        }
-    }
+
 
     public void backToPlayer(){
         if(player_index==0){
@@ -262,46 +226,11 @@ public class PlayController {
         }
     }
 
-    private void generateOrder() {
-        order = new ArrayList<PCharacter>();
-        player_index=-1;
-        int[] index= new int[characters.size()];
-        int[] random=new int[characters.size()];
-        int temp1;
-        int temp2;
-        for(int i=0;i<characters.size();i++){
-            index[i]=i;
-            int num=1+(int)(Math.random()*20);
-            random[i]=num;
-        }
-        for(int i=0;i<characters.size()-1;i++){
-            for(int j=0;j<characters.size()-1-i;j++){
-                if(random[j+1]>random[j]){
-                    temp1=random[j];
-                    random[j]=random[j+1];
-                    random[j+1]=temp1;
-                    temp2=index[j];
-                    index[j]=index[j+1];
-                    index[j+1]=temp2;
-                }
-            }
-        }
-        for(int i=0;i<characters.size();i++) {
-            order.add(characters.get(index[i]));
-        }
-        for(int i=0;i<order.size();i++){
-            if(order.get(i).getCategory()==2){
-                player_index=i;
-            }
-        }
-    }
 
     /**
      * Call the function character view to notify observer the observable gets changed
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
+
      * @param x x coordinate
      * @param y y coordinate
      */
@@ -314,21 +243,15 @@ public class PlayController {
     /**
      * Notify observers.
      */
-<<<<<<< Updated upstream
-    public void characterView() {
-=======
+
     public void characterView()
     {
->>>>>>> Stashed changes
         player.characterView();
     }
 
     /**
      * Notify observers
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
      * @param x
      * @param y
      */
@@ -341,20 +264,14 @@ public class PlayController {
     /**
      * Notify observers.
      */
-<<<<<<< Updated upstream
-    public void inventoryView() {
-=======
+
     public void inventoryView(){
->>>>>>> Stashed changes
         player.inventoryView();
     }
 
     /**
      * Set player
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
      * @param previous_x
      * @param previous_y
      * @param current_x
@@ -374,11 +291,7 @@ public class PlayController {
     public void lootChest(int x, int y) {
         if (player.getBackpack().size() < 10) {
             PItem item = campaign.getChestItem(x, y);
-<<<<<<< Updated upstream
-            if (item != null)
-=======
             if(item != null)
->>>>>>> Stashed changes
                 player.addBackpack(item);
         }
     }
@@ -420,42 +333,29 @@ public class PlayController {
 
     /**
      * Set the equipments of the player.
-<<<<<<< Updated upstream
      *
      * @param pItems Items in the equipments.
      */
-    public void setEquipment(ArrayList<PItem> pItems) {
-=======
-     * @param pItems Items in the equipments.
-     */
+
     public void setEquipment(ArrayList<PItem> pItems){
->>>>>>> Stashed changes
         player.setEquipment(pItems);
     }
 
     /**
      * Set the items in backpack.
-<<<<<<< Updated upstream
      *
      * @param pItems Items in the backpack.
      */
-    public void setBackpack(ArrayList<PItem> pItems) {
-=======
-     * @param pItems Items in the backpack.
-     */
+
     public void setBackpack(ArrayList<PItem> pItems){
->>>>>>> Stashed changes
         player.setBackpack(pItems);
     }
 
     /**
      * Recalculate stats of the player.
      */
-<<<<<<< Updated upstream
-    public void recalculateStats() {
-=======
+
     public void recalculateStats(){
->>>>>>> Stashed changes
         player.recalculateStats();
     }
 
@@ -468,13 +368,6 @@ public class PlayController {
      */
 
     public void attackEnemy(int x, int y) {
-<<<<<<< Updated upstream
-        PCharacter enemy = campaign.getEnemy(x, y);
-        if (enemy != null) {
-            enemy.setHitPoint(0);
-            characterView(x, y);
-        }
-=======
         PCharacter enemy = campaign.getEnemy(x,y);
         if(enemy!=null) {
             attackRoll = rgen.nextInt(20) + 1;
@@ -489,10 +382,7 @@ public class PlayController {
                 }
 
             characterView(x,y);
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
+
     }
 
     /**
@@ -548,17 +438,9 @@ public class PlayController {
      * @param y : Cell index for y cordinate of enemy in map
      * @return : Array List of Items in Enemy Backpack
      */
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 
-    public ArrayList<PItem> getEnemyItem(int x, int y) {
-        PCharacter enemy = campaign.getEnemy(x, y);
-=======
-=======
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
     public ArrayList<PItem> getEnemyItem(int x , int y) {
         PCharacter enemy = campaign.getEnemy(x,y);
->>>>>>> Stashed changes
         ArrayList<PItem> backEnemy = enemy.getBackpack();
         ArrayList<PItem> equipEnemy = enemy.getEquipment();
         ArrayList<PItem> backEquipEnemy = new ArrayList<PItem>();
@@ -586,7 +468,6 @@ public class PlayController {
         return campaign.exit();
     }
 
-<<<<<<< HEAD
 
     public void turn() {
         // get the coordinate of player
@@ -646,7 +527,7 @@ public class PlayController {
             cellPanels[x][y].removeContent();
             int[] coordinate = new int[2];
             coordinate = pCharacter.executeStrategy(x, y, x_player, y_player, 1, campaign);
-            cellPanels[coordinate[0]][coordinate[1]].setContent("CHARACTER "+ pCharacter.getId()+" "+ pCharacter.getCategory());
+            cellPanels[coordinate[0]][coordinate[1]].setContent("CHARACTER " + pCharacter.getId() + " " + pCharacter.getCategory());
         }
 
         for (PCharacter pCharacter : enemys) {
@@ -670,10 +551,10 @@ public class PlayController {
             cellPanels[x][y].removeContent();
             int[] coordinate = new int[2];
             coordinate = pCharacter.executeStrategy(x, y, x_player, y_player, 1, campaign);
-            cellPanels[coordinate[0]][coordinate[1]].setContent("CHARACTER "+ pCharacter.getId()+" "+ pCharacter.getCategory());
+            cellPanels[coordinate[0]][coordinate[1]].setContent("CHARACTER " + pCharacter.getId() + " " + pCharacter.getCategory());
 
-=======
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
+        }
+    }
     public String getWeaponType() {
         return player.getWeaponType();
     }

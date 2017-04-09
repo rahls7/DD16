@@ -64,100 +64,6 @@ public class EditCampaign extends JPanel implements MouseListener {
         add(setting_panel);
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        previous_map_panel = current_map_panel;
-        current_map_panel = (MapPanel) e.getSource();
-        if (previous_map_panel == null) {
-            current_map_panel.select();
-        } else {
-            previous_map_panel.deselect();
-            current_map_panel.select();
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    /**
-     * Update the map panel list
-     *
-     * @param list
-     */
-    public void updateMapList(ArrayList<MapPanel> list) {
-        campaign_panel.removeAll();
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setIndex(i);
-            if (list.get(i) != null) {
-                campaign_panel.add(list.get(i));
-            }
-            if (i != list.size() - 1) {
-                JLabel arrow = new JLabel("==>");
-                campaign_panel.add(arrow);
-            }
-        }
-    }
-
-    /**
-     * Get all the existing maps
-     *
-     * @return
-     */
-    private JComboBox<Integer> getMapList() {
-
-        JSONArray json_maps = campaign_controller.getMapList();
-        JComboBox<Integer> maps = new JComboBox<Integer>();
-
-        for (int i = 0; i < json_maps.length(); i++) {
-            int map_id = json_maps.getJSONObject(i).getInt("id");
-            maps.addItem(map_id);
-        }
-        return maps;
-    }
-
-    /**
-     * Draw the maps of a campaign when loading
-     *
-     * @param json_campaign // Add Description for all the warnings.
-     */
-    public void drawMapList(JSONObject json_campaign) {
-        map_panel = new ArrayList<MapPanel>();
-        JSONArray maps = json_campaign.getJSONArray("maps");
-        for (int i = 0; i < maps.length(); i++) {
-            int map_id = maps.getJSONObject(i).getInt("id");
-            MapPanel m = new MapPanel(Integer.toString(map_id));
-            m.setIndex(i);
-            map_panel.add(m);
-        }
-        for (int i = 0; i < map_panel.size(); i++) {
-            map_panel.get(i).addMouseListener(this);
-            if (map_panel.get(i) != null) {
-                campaign_panel.add(map_panel.get(i));
-            }
-            if (i != map_panel.size() - 1) {
-                JLabel arrow = new JLabel("==>");
-                campaign_panel.add(arrow);
-            }
-        }
-    }
-
     /**
      * Remove a map from a campaign
      */
@@ -189,6 +95,38 @@ public class EditCampaign extends JPanel implements MouseListener {
         public void actionPerformed(ActionEvent arg0) {
             campaign_controller.saveCompaign();
         }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        previous_map_panel = current_map_panel;
+        current_map_panel = (MapPanel) e.getSource();
+        if (previous_map_panel == null) {
+            current_map_panel.select();
+        } else {
+            previous_map_panel.deselect();
+            current_map_panel.select();
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 
     /**
@@ -261,8 +199,6 @@ public class EditCampaign extends JPanel implements MouseListener {
             }
         }
     }
-<<<<<<< Updated upstream
-=======
 
     /**
      * Update the map panel list
@@ -325,5 +261,4 @@ public class EditCampaign extends JPanel implements MouseListener {
             }
         }
     }
->>>>>>> Stashed changes
 }

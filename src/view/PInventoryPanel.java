@@ -22,17 +22,12 @@ public class PInventoryPanel extends JPanel implements Observer {
     int flag = 0;
     JComboBox equipmentComboBox, backpackJComboBox;
     JLabel equipmentLabel, backpackLabel;
-<<<<<<< HEAD
-<<<<<<< Updated upstream
+
     private PCharacter pCharacter;
     private PlayController playController;
     private CharacterEditorController characterEditorController;
-=======
+
     private PCellPanel[][] cells;
->>>>>>> Stashed changes
-=======
-    private PCellPanel[][] cells;
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
 
     /**
      * constructor of inventory panel
@@ -204,19 +199,12 @@ public class PInventoryPanel extends JPanel implements Observer {
                 playController.recalculateStats();
                 playController.inventoryView();
                 playController.characterView();
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-            } else if (event.getSource() == putonButton) {
-=======
-=======
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
                 if(pItem.getType().equals("Ranged Weapon")) {
 
                     removeAttackRange();
                     showAttackRange(playController.getPlayerX(), playController.getPlayerY());
                 }
             } else if (event.getSource() == putonButton){
->>>>>>> Stashed changes
                 int i = backpackJComboBox.getSelectedIndex();
                 ArrayList<PItem> backpack = playController.getPlayer().getBackpack();
                 ArrayList<PItem> equipment = playController.getPlayer().getEquipment();

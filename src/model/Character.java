@@ -198,7 +198,6 @@ public class Character {
         if (!(rangedWeaponEquipped || meleeWeaponEquipped))
             attributes[4] = 0;
 
-<<<<<<< HEAD
     }
 
     /**
@@ -208,8 +207,7 @@ public class Character {
      */
     public boolean getIsSaved() {
         return this.isSaved;
-=======
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
+
     }
 
     /**

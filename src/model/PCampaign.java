@@ -15,10 +15,7 @@ public class PCampaign {
 
     /**
      * Initialize a campaign model of play
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
      * @param json_campaign Data of the campaign.
      */
     public PCampaign(JSONObject json_campaign) {
@@ -47,10 +44,8 @@ public class PCampaign {
 
     /**
      * get current map id
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
+
      * @param current_mapindex current map index.
      * @return current map id
      */
@@ -60,10 +55,8 @@ public class PCampaign {
 
     /**
      * get the current map.
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
+
      * @return current map.
      */
     public PMap getMap() {
@@ -72,10 +65,7 @@ public class PCampaign {
 
     /**
      * read current map.
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
      * @return JSON of the current map.
      */
     public JSONObject readCurrentMap() {
@@ -86,10 +76,7 @@ public class PCampaign {
 
     /**
      * Adapt the map to its level
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
      * @param level level of the player.
      */
     public void adaptMapToLevel(int level) {
@@ -99,10 +86,7 @@ public class PCampaign {
 
     /**
      * Set the current player
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
      * @param player the player.
      */
     public void setPlayer(PCharacter player) {
@@ -114,15 +98,10 @@ public class PCampaign {
      *
      * @param previous_x x coordinate of the previous cell
      * @param previous_y y coordinate of the previous cell
-<<<<<<< Updated upstream
      * @param current_x  x coordinate of the current cell
      * @param current_y  y coordinate of the current cell
      * @param player     the player
-=======
-     * @param current_x x coordinate of the current cell
-     * @param current_y y coordinate of the current cell
-     * @param player the player
->>>>>>> Stashed changes
+
      */
     public void setPlayer(int previous_x, int previous_y, int current_x, int current_y, PCharacter player) {
         maps.get(current_mapindex).setPlayer(previous_x, previous_y, current_x, current_y, player);
@@ -138,10 +117,7 @@ public class PCampaign {
 
     /**
      * Get the chest item of a specific cell
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
      * @param x x coordinate
      * @param y y coordinate
      * @return Item in the chest
@@ -159,10 +135,7 @@ public class PCampaign {
     }
     /**
      * Get the friend play of a specific cell
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
      * @param x x coordinate
      * @param y y coordinate
      * @return PCharacter
@@ -173,10 +146,7 @@ public class PCampaign {
 
     /**
      * Get the enemy of a specific cell
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
      * @param x x coordinate
      * @param y y coordinate
      * @return PCharacter
@@ -187,10 +157,7 @@ public class PCampaign {
 
     /**
      * Check whether the current map is full filled or not
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
      * @return boolean
      */
     public boolean isFulfilled() {
@@ -199,10 +166,7 @@ public class PCampaign {
 
     /**
      * Check whether the campaign is finished or not
-<<<<<<< Updated upstream
      *
-=======
->>>>>>> Stashed changes
      * @return boolean
      */
     public boolean exit() {
@@ -216,17 +180,10 @@ public class PCampaign {
 
     /**
      * Get maps of this campaign
-<<<<<<< Updated upstream
      *
      * @return maps
      */
-    public List<PMap> getMaps() {
-        return maps;
-    }
-=======
-     * @return maps
-     */
+
     public List<PMap> getMaps() { return maps; }
->>>>>>> Stashed changes
 
 }

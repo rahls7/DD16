@@ -22,16 +22,12 @@ public class PCharacter extends PCellContent {
             charismModifier;
     private int basicLevel, basicHitPoint, basicArmorClass, basicAttackBonus, basicDamageBonus, basicMultipleAttacks;
     private int level, hitPoint, armorClass, attackBonus, damageBonus, multipleAttacks;
-<<<<<<< HEAD
-<<<<<<< Updated upstream
+
     private Strategy strategy;
 
-=======
+
     private PWeapon weapon;
->>>>>>> Stashed changes
-=======
-    private PWeapon weapon;
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
+
     /**
      * Constructor of PCharacter to construct the object
      *
@@ -609,24 +605,10 @@ public class PCharacter extends PCellContent {
         setChanged();
         notifyObservers(this);
     }
-<<<<<<< Updated upstream
+
 
     /**
      * Add item to backpack.
-     *
-=======
-
-    /**
-     * Set category of the player.
-     * @param category Category of the player.
-     */
-    public void setCategory(int category) {
-        this.category = category;
-    }
-
-    /**
-     * Add item to backpack.
->>>>>>> Stashed changes
      * @param item Item to be added.
      */
     public void addBackpack(PItem item) {
@@ -643,18 +625,10 @@ public class PCharacter extends PCellContent {
 
     /**
      * Add item to backpack.
-<<<<<<< Updated upstream
      *
      * @param item Item to be added.
      */
-    public void addToBackpack(PItem item) {
-        this.backpack.add(item);
-    }
 
-
-=======
-     * @param item Item to be added.
-     */
     public void addToBackpack(PItem item) {this.backpack.add(item);}
 
 
@@ -664,8 +638,5 @@ public class PCharacter extends PCellContent {
         }
         return null;
     }
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> d99dc5ba5e2e5d15e778e244e4f348d625824789
+
 }
