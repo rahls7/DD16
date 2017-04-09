@@ -22,14 +22,20 @@ public class PCharacter extends PCellContent {
             charismModifier;
     private int basicLevel, basicHitPoint, basicArmorClass, basicAttackBonus, basicDamageBonus, basicMultipleAttacks;
     private int level, hitPoint, armorClass, attackBonus, damageBonus, multipleAttacks;
+
+    private Strategy strategy;
+
+
     private PWeapon weapon;
     private int freezeTurns;
     private int burnTurns;
     private int pacifyingTurns;
+
     /**
      * Constructor of PCharacter to construct the object
-     * @param id, character's id
-     * @param isHostile  if the character is the hostile, friend, or player
+     *
+     * @param id,       character's id
+     * @param isHostile if the character is the hostile, friend, or player
      */
     public PCharacter(String id, String isHostile) {
         type = "PLAYER";
@@ -292,6 +298,7 @@ public class PCharacter extends PCellContent {
 
     /**
      * Setters and Getter Functons for Attributes.
+     *
      * @return
      */
 
@@ -567,9 +574,26 @@ public class PCharacter extends PCellContent {
         this.multipleAttacks = multipleAttacks;
     }
 
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
 
-    public int getCategory(){
+    public int[] executeStrategy(int x, int y, int x_player, int y_player, int weapon_bonus, PCampaign pCampaign) {
+        return strategy.execute(x, y, x_player, y_player, weapon_bonus, pCampaign, this);
+    }
+
+
+    public int getCategory() {
         return category;
+    }
+
+    /**
+     * Set category of the player.
+     *
+     * @param category Category of the player.
+     */
+    public void setCategory(int category) {
+        this.category = category;
     }
 
     /**
@@ -588,13 +612,6 @@ public class PCharacter extends PCellContent {
         notifyObservers(this);
     }
 
-    /**
-     * Set category of the player.
-     * @param category Category of the player.
-     */
-    public void setCategory(int category) {
-        this.category = category;
-    }
 
     /**
      * Add item to backpack.
@@ -614,8 +631,10 @@ public class PCharacter extends PCellContent {
 
     /**
      * Add item to backpack.
+     *
      * @param item Item to be added.
      */
+
     public void addToBackpack(PItem item) {this.backpack.add(item);}
 
 
@@ -651,4 +670,5 @@ public class PCharacter extends PCellContent {
     public void setPacifyingTurns(int penTurns) {
         this.pacifyingTurns = penTurns;
     }
+
 }

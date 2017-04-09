@@ -3,7 +3,6 @@ package view;
 
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,22 +14,14 @@ import java.awt.event.ActionListener;
  */
 
 public class Main extends JFrame {
+    public static Main mainFrame;
     private About about_panel;
     private Map map_panel;
     private Item item_panel;
     private Character character_panel;
     private Campaign campaign_panel;
     private Start start_panel;
-    public static Main mainFrame;
 
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                mainFrame = new Main();
-            }
-        });
-    }
 
     /**
      * Constructor for Main class. Creates an instance of Main, should be called whenever there is a need to display the
@@ -44,6 +35,14 @@ public class Main extends JFrame {
         setJMenuBar(createMenuBar("Main Menu"));
         pack();
         setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                mainFrame = new Main();
+            }
+        });
     }
 
     /**

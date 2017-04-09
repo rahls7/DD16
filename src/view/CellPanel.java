@@ -1,9 +1,8 @@
 package view;
 
-import java.awt.*;
-
 import javax.swing.*;
 import javax.swing.border.Border;
+import java.awt.*;
 
 /**
  * Records and manipulate properties of the panel of a cell.
@@ -14,8 +13,8 @@ import javax.swing.border.Border;
 public class CellPanel extends JPanel {
     public int x;
     public int y;
-    private boolean isSelected = false;
     public String content = "";
+    private boolean isSelected = false;
     private Image img;
 
     /**

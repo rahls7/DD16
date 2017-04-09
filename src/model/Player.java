@@ -11,6 +11,7 @@ public class Player {
 
     /**
      * set character builder
+     *
      * @param newCharacterBuilder
      */
     public void setCharacterBuilder(CharacterBuilder newCharacterBuilder) {
@@ -19,6 +20,7 @@ public class Player {
 
     /**
      * build the character
+     *
      * @param id
      */
     public void constructCharacter(String id) {
@@ -28,6 +30,7 @@ public class Player {
 
     /**
      * get character that is built
+     *
      * @return
      */
     public Character getCharacter() {

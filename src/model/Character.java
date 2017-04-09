@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -11,13 +10,13 @@ import java.util.Random;
  * Store the information of a character
  */
 public class Character {
+    public int[][] basicStats;
+    public int[] basicAttributes;
     private String id;
     private String name;
     private String type;
     private ArrayList<Item> equipment;
     private ArrayList<Item> backpack;
-    public int[][] basicStats;
-    public int[] basicAttributes;
     private boolean isSaved;
     private int[][] stats;
     private int[] attributes;
@@ -202,21 +201,22 @@ public class Character {
     }
 
     /**
-     * set the character is saved
-     *
-     * @param flag
-     */
-    public void setIsSaved(boolean flag) {
-        this.isSaved = flag;
-    }
-
-    /**
      * get the state of character that if he is saved
      *
      * @return
      */
     public boolean getIsSaved() {
         return this.isSaved;
+
+    }
+
+    /**
+     * set the character is saved
+     *
+     * @param flag
+     */
+    public void setIsSaved(boolean flag) {
+        this.isSaved = flag;
     }
 
     /**
@@ -229,15 +229,6 @@ public class Character {
     }
 
     /**
-     * modify character's name
-     *
-     * @param name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * get character's name
      *
      * @return character's name
@@ -246,12 +237,30 @@ public class Character {
         return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    /**
+     * modify character's name
+     *
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
         return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * get all equipment dressed
+     *
+     * @return equipment in arraylist
+     */
+    public ArrayList<Item> getEquipment() {
+        return this.equipment;
     }
 
     /**
@@ -273,30 +282,12 @@ public class Character {
     }
 
     /**
-     * get all equipment dressed
-     *
-     * @return equipment in arraylist
-     */
-    public ArrayList<Item> getEquipment() {
-        return this.equipment;
-    }
-
-    /**
      * take off the quipment
      *
      * @param equipment
      */
     public void deleteEquipment(Item equipment) {
         this.equipment.remove(equipment);
-    }
-
-    /**
-     * take item from database to backpack
-     *
-     * @param backpack item to be added to backpack
-     */
-    public void setBackpack(Item backpack) {
-        this.backpack.add(backpack);
     }
 
     /**
@@ -309,12 +300,25 @@ public class Character {
     }
 
     /**
+     * take item from database to backpack
+     *
+     * @param backpack item to be added to backpack
+     */
+    public void setBackpack(Item backpack) {
+        this.backpack.add(backpack);
+    }
+
+    /**
      * remove item from backpack
      *
      * @param backpack all items in backpack
      */
     public void removeBackpack(Item backpack) {
         this.backpack.remove(backpack);
+    }
+
+    public int[][] getStats() {
+        return stats;
     }
 
     /**
@@ -328,20 +332,24 @@ public class Character {
                 this.stats[i][j] = stats[i][j];
     }
 
+    public int[][] getBasicStats() {
+        return basicStats;
+    }
+
     public void setBasicStats(int[][] basicStats) {
         for (int i = 0; i < 6; i++)
             for (int j = 0; j < 2; j++)
                 this.basicStats[i][j] = basicStats[i][j];
     }
 
-    public int[][] getStats() {
-        return stats;
+    /**
+     * get the attributes of character
+     *
+     * @return attributes
+     */
+    public int[] getAttributes() {
+        return attributes;
     }
-
-    public int[][] getBasicStats() {
-        return basicStats;
-    }
-
 
     /**
      * give character new attributes
@@ -351,6 +359,10 @@ public class Character {
     public void setAttributes(int[] attributes) {
         for (int i = 0; i < 6; i++)
             this.attributes[i] = attributes[i];
+    }
+
+    public int[] getBasicAttributes() {
+        return basicAttributes;
     }
 
     /**
@@ -363,16 +375,4 @@ public class Character {
             this.basicAttributes[i] = basicAttributes[i];
     }
 
-    /**
-     * get the attributes of character
-     *
-     * @return attributes
-     */
-    public int[] getAttributes() {
-        return attributes;
-    }
-
-    public int[] getBasicAttributes() {
-        return basicAttributes;
-    }
 }

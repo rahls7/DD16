@@ -1,11 +1,5 @@
 package model;
 
-import java.awt.Color;
-
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-
 /**
  * Record information of a cell in a map. Change properties of a cell according to messages from MapEditorController
  *
@@ -15,8 +9,8 @@ import javax.swing.border.Border;
 public class Cell {
     public int x;
     public int y;
-    private boolean isSelected = false;
     public String content = "";
+    private boolean isSelected = false;
 
     public Cell(int x, int y) {
         this.x = x;

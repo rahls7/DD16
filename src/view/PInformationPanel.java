@@ -203,7 +203,7 @@ public class PInformationPanel extends JPanel {
             showInformation(cell, true, true);
             revalidate();
             repaint();
-        //Friend attack
+            //Friend attack
         }
     }
 

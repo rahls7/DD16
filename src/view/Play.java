@@ -1,7 +1,6 @@
 package view;
 
 import controller.PlayController;
-import model.PCharacter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,7 +35,7 @@ public class Play extends JPanel implements MouseListener {
      * Initiate the play panel.
      *
      * @param character_id Id of the player.
-     * @param campaign_id Id of the campaign.
+     * @param campaign_id  Id of the campaign.
      */
     public Play(String character_id, int campaign_id) {
         super(new GridLayout(1, 0));
@@ -91,6 +90,9 @@ public class Play extends JPanel implements MouseListener {
         add(map_panel);
         add(action_panel);
 
+        play_controller.setCellPanel(cells);
+
+
         play_controller.beforePlayer();
         moved=false;
     }
@@ -123,6 +125,54 @@ public class Play extends JPanel implements MouseListener {
         return null;
     }
 
+
+    /**
+     *
+     */
+    public void aggresiveNPC() {
+
+        int[] coordinateNPC = new int[2];
+        coordinateNPC = getCoordinate("AGGRESSIVE");
+//         *    1. get the player's coordinate
+        int[] coordinatePLAYER = new int[2];
+        coordinatePLAYER = getCoordinate("PLAYER");
+//         *    LOOP for THREE TIMES:{
+        System.out.println(coordinateNPC[0] + " " + coordinateNPC[1] + " " + coordinatePLAYER[0] + " " + coordinatePLAYER[1]);
+        for (int i = 0; i < 3; i++) {
+
+        }
+//         *       2. compare the x coordinate and move. if x equals. compare the y coordinate and move on.
+//         *       3. if a character is in attack range, attack the character
+//         *       4. if he's near a chest, loot the chest
+//         *    }
+
+    }
+
+    public void friendlyNPC() {
+
+    }
+
+    public int[] getCoordinate(String s) {
+        int[] coordinate = new int[2];
+        coordinate[0] = -1;
+        coordinate[1] = -1;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (cells[i][j].content.equals(s)) {
+                    coordinate[0] = i;
+                    coordinate[1] = j;
+                    break;
+                }
+                if ((s.equals("FRIENDLY") || s.equals("AGGRESSIVE")) && cells[i][j].content.length() > 9 && cells[i][j].content.substring(0, 9).equals("CHARACTER")) {
+                    coordinate[0] = i;
+                    coordinate[1] = j;
+                    break;
+                }
+            }
+        }
+        return coordinate;
+    }
+
     /**
      * The action when the mouse is clicked.
      *
@@ -150,12 +200,12 @@ public class Play extends JPanel implements MouseListener {
                 removeAttackRange();
                 current_cell.select();
 
-
                 if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("") && !moved && isMoveRange(previous_cell, current_cell)) {
                     previous_cell.removeContent();
                     showAttackRange(current_cell.x, current_cell.y);
                     current_cell.setContent("PLAYER");
                     play_controller.setPlayer(previous_cell.x, previous_cell.y, current_cell.x, current_cell.y);
+                    play_controller.turn();
                     current_cell.select();
                     moved = true;
                 }
@@ -164,6 +214,7 @@ public class Play extends JPanel implements MouseListener {
                 }
 
                 else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT") && !moved && isMoveRange(previous_cell, current_cell)) {
+
                     if (play_controller.isFulfilled()) {
                         if (play_controller.exit()) {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Level Up! Go to Next Map!");
@@ -194,6 +245,7 @@ public class Play extends JPanel implements MouseListener {
                             play_controller.readCharacter();
                             inventory_panel.clean();
                             characteristic_panel.clean();
+
                             inventory_panel.setCells(cells);
                             map_panel.revalidate();
                             map_panel.repaint();

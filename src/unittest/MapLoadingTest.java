@@ -41,11 +41,11 @@ public class MapLoadingTest {
         int x = -1;
         int y = -1;
 
-        for(int i = 0; i < map.getWidth(); i++)
-            for(int j = 0; j < map.getHeight(); j++)
-                if(cells[i][j].getType().equals("CHARACTER")) {
+        for (int i = 0; i < map.getWidth(); i++)
+            for (int j = 0; j < map.getHeight(); j++)
+                if (cells[i][j].getType().equals("CHARACTER")) {
                     PCharacter c = (PCharacter) cells[i][j].getContent();
-                    if(c.getCategory() == 0) {
+                    if (c.getCategory() == 0) {
                         x = i;
                         y = j;
                         break;
@@ -65,9 +65,9 @@ public class MapLoadingTest {
         int x = -1;
         int y = -1;
 
-        for(int i = 0; i < map.getWidth(); i++)
-            for(int j = 0; j < map.getHeight(); j++)
-                if(cells[i][j].getType().equals("CHEST")) {
+        for (int i = 0; i < map.getWidth(); i++)
+            for (int j = 0; j < map.getHeight(); j++)
+                if (cells[i][j].getType().equals("CHEST")) {
                     x = i;
                     y = j;
                     break;
