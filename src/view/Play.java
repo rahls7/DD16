@@ -125,54 +125,6 @@ public class Play extends JPanel implements MouseListener {
         return null;
     }
 
-
-    /**
-     *
-     */
-    public void aggresiveNPC() {
-
-        int[] coordinateNPC = new int[2];
-        coordinateNPC = getCoordinate("AGGRESSIVE");
-//         *    1. get the player's coordinate
-        int[] coordinatePLAYER = new int[2];
-        coordinatePLAYER = getCoordinate("PLAYER");
-//         *    LOOP for THREE TIMES:{
-        System.out.println(coordinateNPC[0] + " " + coordinateNPC[1] + " " + coordinatePLAYER[0] + " " + coordinatePLAYER[1]);
-        for (int i = 0; i < 3; i++) {
-
-        }
-//         *       2. compare the x coordinate and move. if x equals. compare the y coordinate and move on.
-//         *       3. if a character is in attack range, attack the character
-//         *       4. if he's near a chest, loot the chest
-//         *    }
-
-    }
-
-    public void friendlyNPC() {
-
-    }
-
-    public int[] getCoordinate(String s) {
-        int[] coordinate = new int[2];
-        coordinate[0] = -1;
-        coordinate[1] = -1;
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (cells[i][j].content.equals(s)) {
-                    coordinate[0] = i;
-                    coordinate[1] = j;
-                    break;
-                }
-                if ((s.equals("FRIENDLY") || s.equals("AGGRESSIVE")) && cells[i][j].content.length() > 9 && cells[i][j].content.substring(0, 9).equals("CHARACTER")) {
-                    coordinate[0] = i;
-                    coordinate[1] = j;
-                    break;
-                }
-            }
-        }
-        return coordinate;
-    }
-
     /**
      * The action when the mouse is clicked.
      *
