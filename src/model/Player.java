@@ -1,13 +1,17 @@
 package model;
 
 /**
- * Created by mo on 2017-03-11.
+ * Player object.
+ *
+ * @author Jiayao
+ * @version 1.0.0
  */
 public class Player {
     private CharacterBuilder characterBuilder;
 
     /**
      * set character builder
+     *
      * @param newCharacterBuilder
      */
     public void setCharacterBuilder(CharacterBuilder newCharacterBuilder) {
@@ -16,6 +20,7 @@ public class Player {
 
     /**
      * build the character
+     *
      * @param id
      */
     public void constructCharacter(String id) {
@@ -25,6 +30,7 @@ public class Player {
 
     /**
      * get character that is built
+     *
      * @return
      */
     public Character getCharacter() {

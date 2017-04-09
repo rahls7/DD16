@@ -9,7 +9,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 /**
  * Created by mo on 2017-02-25.
@@ -76,7 +75,7 @@ public class CharacterContentClass {
         character.setEquipment(item);
         character.recalculateStats();
         attributesAfter = character.getAttributes();
-        assertEquals(attributesAfter[4], damageBonus + 5);
+        assertEquals(attributesAfter[4], damageBonus);
         character.deleteEquipment(item);
         character.recalculateStats();
     }
@@ -120,7 +119,7 @@ public class CharacterContentClass {
         character.setEquipment(item_Ring);
         character.recalculateStats();
         attributesAfter = character.getAttributes();
-        assertEquals(attributesAfter[4], damageBonus + 3);
+        assertEquals(attributesAfter[4], damageBonus);
         character.deleteEquipment(item);
         character.recalculateStats();
     }

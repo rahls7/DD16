@@ -1,14 +1,16 @@
 package unittest;
 
 import controller.PlayController;
-import model.Campaign;
 import model.PCampaign;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+
 /**
- * Created by rahls7 on 18/03/17.
+ * Test for looting enemy.
+ *
+ * @author Rahul
  */
 public class LootEnemyTest {
 
@@ -29,8 +31,8 @@ public class LootEnemyTest {
      * Test the function of looting a enemy.
      */
     public void testLootEnemy() {
-        int enemyBackpackSize = campaign.getEnemy(4,4).getBackpack().size();
-        campaign.getEnemy(4,4).getBackpack().remove(0);
-        assertEquals(enemyBackpackSize-1 , campaign.getEnemy(4,4).getBackpack().size());
+        int enemyBackpackSize = campaign.getEnemy(4, 4).getBackpack().size();
+        campaign.getEnemy(4, 4).getBackpack().remove(0);
+        assertEquals(enemyBackpackSize - 1, campaign.getEnemy(4, 4).getBackpack().size());
     }
 }

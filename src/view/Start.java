@@ -1,8 +1,6 @@
 package view;
 
-import com.sun.javafx.font.FontFactory;
 import controller.CampaignEditController;
-import controller.CharacterEditorController;
 import controller.MapEditorController;
 import org.json.JSONArray;
 
@@ -16,18 +14,19 @@ import java.awt.event.ActionListener;
  *
  * @author Wenyu Gu
  * @version 1.0.0
- *
- * Created by Fish on 2017/3/11.
+ *          <p>
+ *          Created by Fish on 2017/3/11.
  */
 public class Start extends JPanel {
     private JPanel start_panel;
     private CampaignEditController campaign_controller;
     private MapEditorController map_controller;
+
     /**
      * Create a start panel. The panel includes campaign options, character options and start game button.
      */
 
-    public Start (){
+    public Start() {
         super(new GridLayout(1, 3));
         campaign_controller = new CampaignEditController();
         map_controller = new MapEditorController();
@@ -39,7 +38,7 @@ public class Start extends JPanel {
         //start_panel.setBackground(new Color(0,0,0,0));
 
         JComboBox<Integer> campaign = getCampaignList();
-        campaign.setPreferredSize(new Dimension(200,50));
+        campaign.setPreferredSize(new Dimension(200, 50));
         campaign.setBorder(BorderFactory.createTitledBorder("Campaign"));
         start_panel.add(campaign);
 
@@ -69,11 +68,11 @@ public class Start extends JPanel {
     }
 
     /**
-     *Get the existing campaign list from the file.
+     * Get the existing campaign list from the file.
      *
      * @return List of the campaigns.
      */
-    public JComboBox<Integer> getCampaignList(){
+    public JComboBox<Integer> getCampaignList() {
         JComboBox<Integer> campaigns = new JComboBox<Integer>();
         JSONArray json_campaigns = campaign_controller.getCompaignList();
         for (int i = 0; i < json_campaigns.length(); i++) {

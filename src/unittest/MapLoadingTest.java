@@ -25,7 +25,7 @@ public class MapLoadingTest {
      * Initialize the test.
      */
     public void before() {
-        play_controller = new PlayController("123456", 4);
+        play_controller = new PlayController("999", 6);
         player = play_controller.getPlayer();
         map = play_controller.getCampaign().getMaps().get(0);
         cells = map.getCells();
@@ -41,18 +41,18 @@ public class MapLoadingTest {
         int x = -1;
         int y = -1;
 
-        for(int i = 0; i < map.getWidth(); i++)
-            for(int j = 0; j < map.getHeight(); j++)
-                if(cells[i][j].getType().equals("CHARACTER")) {
+        for (int i = 0; i < map.getWidth(); i++)
+            for (int j = 0; j < map.getHeight(); j++)
+                if (cells[i][j].getType().equals("CHARACTER")) {
                     PCharacter c = (PCharacter) cells[i][j].getContent();
-                    if(c.getCategory() == 0) {
+                    if (c.getCategory() == 0) {
                         x = i;
                         y = j;
                         break;
                     }
                 }
-        assertEquals(1, x);
-        assertEquals(2, y);
+        assertEquals(2, x);
+        assertEquals(6, y);
     }
 
 
@@ -65,14 +65,14 @@ public class MapLoadingTest {
         int x = -1;
         int y = -1;
 
-        for(int i = 0; i < map.getWidth(); i++)
-            for(int j = 0; j < map.getHeight(); j++)
-                if(cells[i][j].getType().equals("CHEST")) {
+        for (int i = 0; i < map.getWidth(); i++)
+            for (int j = 0; j < map.getHeight(); j++)
+                if (cells[i][j].getType().equals("CHEST")) {
                     x = i;
                     y = j;
                     break;
                 }
         assertEquals(3, x);
-        assertEquals(3, y);
+        assertEquals(2, y);
     }
 }

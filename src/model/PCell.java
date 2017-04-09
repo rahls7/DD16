@@ -1,6 +1,11 @@
 package model;
 
-
+/**
+ * Cell object of the map.
+ *
+ * @author Jiayao
+ * @version 1.0.0
+ */
 public class PCell {
     private int x, y;
     private String type = "";
@@ -8,9 +13,15 @@ public class PCell {
 
     /**
      * Initialize a cell Object
-     * @param i
-     * @param j
-     * @param content
+<<<<<<< Updated upstream
+     *
+     * @param i       x coordinate of the cell
+     * @param j       y coordinate of the cell
+=======
+     * @param i x coordinate of the cell
+     * @param j y coordinate of the cell
+>>>>>>> Stashed changes
+     * @param content content of the cell
      */
     public PCell(int i, int j, String content) {
         x = i;
@@ -30,21 +41,29 @@ public class PCell {
     }
 
     /**
-     * Set the type
-     * @param type
-     */
-    public void setType(String type) { this.type = type; }
-
-    /**
      * Get the type
-     * @return
+<<<<<<< Updated upstream
+     *
+=======
+>>>>>>> Stashed changes
+     * @return type
      */
     public String getType() {
         return type;
     }
 
     /**
+     * Set the type
+     *
+     * @param type
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
      * Set the player
+     *
      * @param player
      */
     public void setPlayer(PCharacter player) {
@@ -54,7 +73,6 @@ public class PCell {
         }
     }
 
-
     /**
      * Remove a player
      */
@@ -63,9 +81,25 @@ public class PCell {
         type = "";
     }
 
+    public void setCharacter(PCharacter pCharacter) {
+        if (type.equals("")) {
+            content = pCharacter;
+            type = "CHARACTER";
+        }
+    }
+
+    public void removeCharacter() {
+        content = new PConstant("");
+        type = "";
+    }
+
     /**
-     * Get the object of a cell
-     * @return
+     * Get the content of a cell
+<<<<<<< Updated upstream
+     *
+=======
+>>>>>>> Stashed changes
+     * @return content of a cell
      */
     public PCellContent getContent() {
         return content;

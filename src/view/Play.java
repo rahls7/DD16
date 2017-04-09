@@ -1,7 +1,6 @@
 package view;
 
 import controller.PlayController;
-import model.PCharacter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,14 +24,18 @@ public class Play extends JPanel implements MouseListener {
     private PCellPanel[][] cells;
     private PCellPanel current_cell, previous_cell;
     private PlayController play_controller;
+    private JPanel battleInfo_panel;
+    private static JTextArea battleInfo_area;
+    private JScrollPane scrollPane;
     private JSONObject json_map;
     private int width, height;
+    public static boolean moved;
 
     /**
      * Initiate the play panel.
      *
      * @param character_id Id of the player.
-     * @param campaign_id Id of the campaign.
+     * @param campaign_id  Id of the campaign.
      */
     public Play(String character_id, int campaign_id) {
         super(new GridLayout(1, 0));
@@ -66,16 +69,41 @@ public class Play extends JPanel implements MouseListener {
         play_controller.setInventoryObserver(inventory_panel);
         play_controller.setCharacterObserver(characteristic_panel);
         inventory_panel.setPlayController(play_controller);
+        inventory_panel.setCells(cells);
 
-        action_panel = new JPanel(new GridLayout(3, 0));
+        battleInfo_panel = new JPanel();
+        battleInfo_area = new JTextArea();
+        battleInfo_area.setEditable(false);
+        battleInfo_area.setText("Battle Information Display \n");
+        scrollPane = new JScrollPane(battleInfo_area);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        battleInfo_panel.add(scrollPane);
+        scrollPane.setPreferredSize(new Dimension(450,120));
+
+        action_panel = new JPanel(new GridLayout(4, 0));
         action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
         action_panel.add(information_panel);
+        action_panel.add(battleInfo_panel);
         action_panel.add(characteristic_panel);
         action_panel.add(inventory_panel);
 
         add(map_panel);
         add(action_panel);
 
+        play_controller.setCellPanel(cells);
+
+
+        play_controller.beforePlayer();
+        moved=false;
+    }
+
+    /**
+     * Display the real-time battle information.
+     *
+     * @param infoToDisplay The information that is to be displayed during the battle.
+     */
+    public static void displayInfo(String infoToDisplay){
+        battleInfo_area.append(infoToDisplay+"\n");
     }
 
     /**
@@ -97,6 +125,54 @@ public class Play extends JPanel implements MouseListener {
         return null;
     }
 
+
+    /**
+     *
+     */
+    public void aggresiveNPC() {
+
+        int[] coordinateNPC = new int[2];
+        coordinateNPC = getCoordinate("AGGRESSIVE");
+//         *    1. get the player's coordinate
+        int[] coordinatePLAYER = new int[2];
+        coordinatePLAYER = getCoordinate("PLAYER");
+//         *    LOOP for THREE TIMES:{
+        System.out.println(coordinateNPC[0] + " " + coordinateNPC[1] + " " + coordinatePLAYER[0] + " " + coordinatePLAYER[1]);
+        for (int i = 0; i < 3; i++) {
+
+        }
+//         *       2. compare the x coordinate and move. if x equals. compare the y coordinate and move on.
+//         *       3. if a character is in attack range, attack the character
+//         *       4. if he's near a chest, loot the chest
+//         *    }
+
+    }
+
+    public void friendlyNPC() {
+
+    }
+
+    public int[] getCoordinate(String s) {
+        int[] coordinate = new int[2];
+        coordinate[0] = -1;
+        coordinate[1] = -1;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (cells[i][j].content.equals(s)) {
+                    coordinate[0] = i;
+                    coordinate[1] = j;
+                    break;
+                }
+                if ((s.equals("FRIENDLY") || s.equals("AGGRESSIVE")) && cells[i][j].content.length() > 9 && cells[i][j].content.substring(0, 9).equals("CHARACTER")) {
+                    coordinate[0] = i;
+                    coordinate[1] = j;
+                    break;
+                }
+            }
+        }
+        return coordinate;
+    }
+
     /**
      * The action when the mouse is clicked.
      *
@@ -109,21 +185,36 @@ public class Play extends JPanel implements MouseListener {
         if (previous_cell == null) {
             current_cell.select();
             previous_cell = current_cell;
-            information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y));
+            information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y),false);
+            if(current_cell.content.equals("PLAYER")) {
+                showAttackRange(current_cell.x, current_cell.y);
+            }
         } else {
             if (current_cell.x == previous_cell.x && current_cell.y == previous_cell.y) {
                 current_cell.deselect();
+                removeAttackRange();
                 previous_cell = null;
             } else {
                 inventory_panel.clean();
                 previous_cell.deselect();
+                removeAttackRange();
                 current_cell.select();
 
-                if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("")) {
+                if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("") && !moved && isMoveRange(previous_cell, current_cell)) {
                     previous_cell.removeContent();
+                    showAttackRange(current_cell.x, current_cell.y);
                     current_cell.setContent("PLAYER");
                     play_controller.setPlayer(previous_cell.x, previous_cell.y, current_cell.x, current_cell.y);
-                } else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT")) {
+                    play_controller.turn();
+                    current_cell.select();
+                    moved = true;
+                }
+                else if (!previous_cell.content.equals("PLAYER") && current_cell.content.equals("PLAYER")) {
+                    showAttackRange(current_cell.x, current_cell.y);
+                }
+
+                else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT") && !moved && isMoveRange(previous_cell, current_cell)) {
+
                     if (play_controller.isFulfilled()) {
                         if (play_controller.exit()) {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Level Up! Go to Next Map!");
@@ -150,26 +241,32 @@ public class Play extends JPanel implements MouseListener {
                             }
                             previous_cell = null;
                             current_cell = null;
+                            play_controller.setPlayer();
                             play_controller.readCharacter();
                             inventory_panel.clean();
                             characteristic_panel.clean();
+
+                            inventory_panel.setCells(cells);
                             map_panel.revalidate();
                             map_panel.repaint();
+                            play_controller.beforePlayer();
+                            moved = false;
                         } else {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Complete!");
+                            Main.mainFrame.setVisible(false);
+                            Main.mainFrame.dispose();
                             Main.mainFrame = new Main();
                         }
                     }
                 }
                 if (current_cell != null) {
                     previous_cell = current_cell;
-                    information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y));
+                    information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y), isInRange(previous_cell.x, previous_cell.y));
                 }
             }
         }
 
         // Character view
-
         if (current_cell != null) {
             if (current_cell.getContent().length() < 10) {
                 if (current_cell.getContent().equals("PLAYER"))
@@ -195,6 +292,53 @@ public class Play extends JPanel implements MouseListener {
         }
     }
 
+    private void removeAttackRange() {
+        for(int i = 0; i < width; i++)
+            for(int j = 0; j < height; j++) {
+                if(cells[i][j].isAttackRang == true) {
+                    cells[i][j].removeAttackRange();
+                }
+            }
+    }
+
+    private void showAttackRange(int x, int y) {
+        int[] ranged_x = {x-2, x, x, x+2, x-1, x, x, x+1, x-1, x+1, x-1, x+1};
+        int[] ranged_y = {y, y-2, y+2, y, y, y-1, y+1, y, y-1, y+1, y+1, y-1};
+
+        int[] melee_x = {x-1, x, x, x+1};
+        int[] melee_y = {y, y-1, y+1, y};
+
+        String weapon_type = play_controller.getWeaponType();
+
+        if(weapon_type != null && weapon_type.equals("Ranged Weapon")) {
+            for(int i = 0; i < ranged_x.length; i++){
+                int cell_x = ranged_x[i];
+                int cell_y = ranged_y[i];
+
+                if(cell_x >= 0 && cell_y >= 0 && cell_x < cells.length && cell_y < cells[0].length){
+                    cells[cell_x][cell_y].setAttackRange();
+                }
+            }
+        }
+        else {
+            for(int i = 0; i < melee_x.length; i++){
+                int cell_x = melee_x[i];
+                int cell_y = melee_y[i];
+
+                if(cell_x >= 0 && cell_y >= 0 && cell_x < cells.length && cell_y < cells[0].length){
+                    cells[cell_x][cell_y].setAttackRange();
+                }
+            }
+        }
+    }
+
+    public boolean isMoveRange(PCellPanel previous_cell, PCellPanel current_cell){
+        if(Math.abs(previous_cell.x-current_cell.x)+Math.abs(previous_cell.y-current_cell.y)<=3){
+            return true;
+        }else{
+            return false;
+        }
+    }
     /**
      * Check if the player is near the selected cell.
      *
@@ -222,6 +366,41 @@ public class Play extends JPanel implements MouseListener {
             return true;
         else if (player_x == x && player_y == y + 1)
             return true;
+        return false;
+    }
+
+    private boolean isInRange(int check_x, int check_y) {
+        int x = -1;
+        int y = -1;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (cells[i][j].content.equals("PLAYER")) {
+                    x = i;
+                    y = j;
+                    break;
+                }
+            }
+        }
+        int[] ranged_x = {x-2, x, x, x+2, x-1, x, x, x+1, x-1, x+1, x-1, x+1};
+        int[] ranged_y = {y, y-2, y+2, y, y, y-1, y+1, y, y-1, y+1, y+1, y-1};
+
+        int[] melee_x = {x-1, x, x, x+1};
+        int[] melee_y = {y, y-1, y+1, y};
+
+        String weapon_type = play_controller.getWeaponType();
+
+        if(weapon_type != null && weapon_type.equals("Ranged Weapon")) {
+            for(int i = 0; i < ranged_x.length; i++) {
+                if(ranged_x[i] == check_x && ranged_y[i] == check_y)
+                    return true;
+            }
+        }
+        else {
+            for(int i = 0; i < melee_x.length; i++) {
+                if(melee_x[i] == check_x && melee_y[i] == check_y)
+                    return true;
+            }
+        }
         return false;
     }
 

@@ -1,10 +1,7 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Gives information about the Game. To be updated after the final build
