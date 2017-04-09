@@ -8,4 +8,5 @@ import java.util.List;
 public abstract class PWeapon {
     public abstract List<String> getEnchantments();
     public abstract String getType();
+    public abstract int getAttributeValue();
 }

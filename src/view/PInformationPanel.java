@@ -80,7 +80,7 @@ public class PInformationPanel extends JPanel {
                 }
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("1")) {
-                if(play_controller.getEnemyHitPoint(cell.x, cell.y)==0) {
+                if(play_controller.getEnemyHitPoint(cell.x, cell.y)<=0) {
                     loot_enemy = new JButton("Loot Enemy");
                     loot_enemy.addActionListener(new lootEnemy(cell.x,cell.y));
                     ArrayList<PItem> enemyItem = play_controller.getEnemyItem(cell.x, cell.y);
@@ -200,7 +200,6 @@ public class PInformationPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             play_controller.attackEnemy(x,y);
             attacked=true;
-            JOptionPane.showMessageDialog(button_attack,"Enemy Dead");
             showInformation(cell, true, true);
             revalidate();
             repaint();
@@ -237,6 +236,7 @@ public class PInformationPanel extends JPanel {
 
         public void actionPerformed(ActionEvent event) {
             play_controller.attackFriend(x,y);
+
             showInformation(cell, true, true);
             revalidate();
             repaint();
