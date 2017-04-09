@@ -50,7 +50,7 @@ public class PlayController {
 
     /**
      * Get the campaign model of player
-     * @return
+     * @return PCampaign
      */
     public PCampaign getCampaign(){
         return this.campaign;
@@ -58,7 +58,7 @@ public class PlayController {
 
     /**
      * Get the player
-     * @return
+     * @return PCharacter
      */
     public PCharacter getPlayer(){
         return this.player;
@@ -67,7 +67,7 @@ public class PlayController {
     /**
      * Get the campaign json based on the campaign id
      * @param campaign_id
-     * @return
+     * @return JSON Object of a campaign
      */
     private JSONObject readCampaign(int campaign_id) {
         return campaignio.readCampaign(campaign_id);
@@ -75,7 +75,7 @@ public class PlayController {
 
     /**
      * Get the json of current map
-     * @return
+     * @return JSON Object of a Map
      */
     public JSONObject readCurrentMap(){
         campaign.adaptMapToLevel(player.getLevel());
@@ -119,11 +119,14 @@ public class PlayController {
         player.addObserver(pInventoryPanel);
     }
 
+    /**
+     * Set the play of a campaign
+     */
     public void setPlayer() { campaign.setPlayer(player);}
 
     public void beforePlayer(){
         if(player_index==0){
-            System.out.println("Play is the first");
+            System.out.println("Player is the first");
         }else{
             for(int i=0;i<player_index;i++){
                 System.out.println("NPC action");
@@ -131,6 +134,9 @@ public class PlayController {
         }
     }
 
+    /**
+     * After play's action, the rest NPC do actions by order.
+     */
     public void backToPlayer(){
         if(player_index==0){
             for(int i=1;i<order.size();i++){
@@ -150,6 +156,9 @@ public class PlayController {
         }
     }
 
+    /**
+     * Generate the action order of the player and all the NPCs
+     */
     private void generateOrder() {
         order = new ArrayList<PCharacter>();
         player_index=-1;
@@ -387,7 +396,7 @@ public class PlayController {
 
     /**
      * This function checks if every map requirement is fulfilled.
-     * @return
+     * @return boolean
      */
     public boolean isFulfilled() {
         return campaign.isFulfilled();
