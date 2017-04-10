@@ -14,7 +14,7 @@ public class Computer implements Strategy{
             if (coordinate[1]==y_player && (Math.abs(coordinate[0]-x_player) <= 1))
                 break;
             coordinate = move(coordinate[0], coordinate[1], x_player, y_player, pCampaign);
-            attack();
+            attack(coordinate[0], coordinate[1], pCampaign, pCharacter);
             loot(coordinate[0], coordinate[1], pCampaign, pCharacter);
         }
         return coordinate;
@@ -83,7 +83,7 @@ public class Computer implements Strategy{
         return coordinate;
     }
 
-    public void attack() {
+    public void attack(int x, int y, PCampaign pCampaign, PCharacter pCharacter) {
 
     }
 

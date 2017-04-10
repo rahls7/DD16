@@ -12,9 +12,9 @@ public class Friendly implements Strategy {
         coordinate[1] = y;
         for (int i=0; i<3; i++) {
             coordinate = move(coordinate[0], coordinate[1], x_player, y_player, pCampaign);
-            attack();
-            loot(coordinate[0], coordinate[1], pCampaign, pCharacter);
+//            attack();
         }
+            loot(coordinate[0], coordinate[1], pCampaign, pCharacter);
         return coordinate;
     }
 
@@ -55,7 +55,7 @@ public class Friendly implements Strategy {
         return coordinate;
     }
 
-    public void attack(){
+    public void attack(int x, int y, PCampaign pCampaign, PCharacter pCharacter){
 
     }
 

@@ -9,7 +9,7 @@ interface Strategy {
 
     int[] move(int x, int y, int x_player, int y_player, PCampaign pCampaign);
 
-    void attack();
+    void attack(int x, int y, PCampaign pCampaign, PCharacter pCharacter);
 
     void loot(int x, int y, PCampaign pCampaign, PCharacter pCharacter);
 }
