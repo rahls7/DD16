@@ -115,6 +115,9 @@ public class PCampaign {
         return maps.get(current_mapindex).getcell(x, y);
     }
 
+    public int[] getExit(){
+        return maps.get(current_mapindex).getExit();
+    }
     /**
      * Get the chest item of a specific cell
      *

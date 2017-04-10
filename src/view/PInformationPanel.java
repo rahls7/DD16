@@ -1,6 +1,7 @@
 package view;
 
 import controller.PlayController;
+import model.Computer;
 import model.PCharacter;
 import model.PItem;
 
@@ -26,7 +27,7 @@ public class PInformationPanel extends JPanel {
     private JButton button_loot;
     private JComboBox lootEnemyItemBox;
     private PCellPanel cell;
-    private JButton end_turn;
+    private JButton end_turn, computer;
     private boolean attacked;
 
     /**
@@ -130,6 +131,10 @@ public class PInformationPanel extends JPanel {
                 end_turn=new JButton("End Turn");
                 end_turn.addActionListener(new endTurn());
                 add(end_turn);
+
+                computer = new JButton("Computer");
+                computer.addActionListener(new Computer());
+                add(computer);
             }
         }
         revalidate();
@@ -146,6 +151,11 @@ public class PInformationPanel extends JPanel {
         }
     }
 
+    class Computer implements ActionListener{
+        public void actionPerformed(ActionEvent arg0){
+            play_controller.execute_player();
+        }
+    }
     /**
      * Action listener for looting chest.
      */
