@@ -29,7 +29,8 @@ public class PCharacter extends PCellContent {
     private PWeapon weapon;
     private int freezeTurns;
     private int burnTurns;
-    private int pacifyingTurns;
+    private int frighteningTurns;
+    private int burnDamage;
 
     /**
      * Constructor of PCharacter to construct the object
@@ -45,7 +46,8 @@ public class PCharacter extends PCellContent {
         this.name = character.getName();
         this.freezeTurns = 0;
         this.burnTurns = 0;
-        this.pacifyingTurns = 0;
+        this.frighteningTurns = 0;
+        this.burnDamage = 0;
 
         this.equipment = new ArrayList<PItem>();
         for (Item item : character.getEquipment()) {
@@ -579,6 +581,17 @@ public class PCharacter extends PCellContent {
     }
 
     public int[] executeStrategy(int x, int y, int x_player, int y_player, int weapon_bonus, PCampaign pCampaign) {
+
+        if (category==1 && frighteningTurns==0 && freezeTurns==0)
+            setStrategy(new Aggressive());
+        if (frighteningTurns >0) {
+            setStrategy(new Frightening());
+            frighteningTurns--;
+        }
+        if (freezeTurns > 0) {
+            setStrategy(new Freezing());
+            freezeTurns--;
+        }
         return strategy.execute(x, y, x_player, y_player, weapon_bonus, pCampaign, this);
     }
 
@@ -656,8 +669,8 @@ public class PCharacter extends PCellContent {
         return burnTurns;
     }
 
-    public  int getPacifyingTurns() {
-        return pacifyingTurns;
+    public  int getFrighteningTurns() {
+        return frighteningTurns;
     }
 
     public void setFreezeTurns(int penTurns) {
@@ -667,8 +680,20 @@ public class PCharacter extends PCellContent {
         this.burnTurns = penTurns;
     }
 
-    public void setPacifyingTurns(int penTurns) {
-        this.pacifyingTurns = penTurns;
+    public void setFrighteningTurns(int penTurns) {
+        this.frighteningTurns = penTurns;
+    }
+    public void setBurnDamage(int enchBonus) {
+        this.burnDamage = enchBonus;
+    }
+
+    public void burningDamage() {
+        if(burnTurns>0) {
+            burnTurns --;
+            int hitPoint = getHitPoint() - burnDamage;
+            setHitPoint(hitPoint);
+        }
+
     }
 
 }
