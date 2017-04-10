@@ -19,15 +19,19 @@ import java.util.List;
  * @version 1.0.0
  */
 public class PlayController {
-    PCharacteristicPanel pCharacteristicPanel;
-    PInventoryPanel pInventoryPanel;
     private CampaignIO campaignio;
     private PCampaign campaign;
     private PCharacter player;
+    private PMap pMap;
+    private int campaign_id, current_mapindex;
+    PCharacteristicPanel pCharacteristicPanel;
+    PInventoryPanel pInventoryPanel;
+
     private ArrayList<PCharacter> characters;
     private PCell[][] cell;
     private PCellPanel[][] cellPanels;
     private Random rgen = new Random();
+    private PlayIO playIO;
 
     private ArrayList<PCharacter> enemys;
     private ArrayList<PCharacter> friends;
@@ -57,6 +61,9 @@ public class PlayController {
         campaign.setPlayer(player);
 
         characters = new ArrayList<PCharacter>();
+
+
+        playIO = new PlayIO();
         enemys = new ArrayList<PCharacter>();
         friends = new ArrayList<PCharacter>();
     }
@@ -511,6 +518,14 @@ public class PlayController {
     public boolean exit() {
         player.levelUp();
         return campaign.exit();
+    }
+
+    public void savePlay(){
+        pMap = campaign.getMap();
+        campaign_id = campaign.getCampaign_id();
+        current_mapindex = campaign.getCurrent_mapindex();
+
+        playIO.savePlay(pMap, campaign_id, current_mapindex);
     }
 
     public void execute_player(){

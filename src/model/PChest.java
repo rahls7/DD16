@@ -41,4 +41,12 @@ public class PChest extends PCellContent {
     public void removeItem() {
         item = null;
     }
+
+    /**
+     * Get the item_id
+     * @return the ID of the item
+     */
+    public int getItem_id() {
+        return item_id;
+    }
 }

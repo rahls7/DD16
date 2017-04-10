@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -27,6 +29,7 @@ public class Play extends JPanel implements MouseListener {
     private JPanel battleInfo_panel;
     private static JTextArea battleInfo_area;
     private JScrollPane scrollPane;
+    private JButton save_play;
     private JSONObject json_map;
     private int width, height;
     public static boolean moved;
@@ -72,13 +75,19 @@ public class Play extends JPanel implements MouseListener {
         inventory_panel.setCells(cells);
 
         battleInfo_panel = new JPanel();
+        battleInfo_panel.setLayout(null);
         battleInfo_area = new JTextArea();
         battleInfo_area.setEditable(false);
         battleInfo_area.setText("Battle Information Display \n");
         scrollPane = new JScrollPane(battleInfo_area);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBounds(20,20,450, 120);
+        save_play = new JButton("Save Game");
+        save_play.setBounds(500, 60, 100, 30);
+        save_play.addActionListener(new savePlay());
         battleInfo_panel.add(scrollPane);
-        scrollPane.setPreferredSize(new Dimension(450,120));
+        battleInfo_panel.add(save_play);
+
 
         action_panel = new JPanel(new GridLayout(4, 0));
         action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
@@ -400,5 +409,12 @@ public class Play extends JPanel implements MouseListener {
         // TODO Auto-generated method stub
 
     }
-
+    class savePlay implements ActionListener {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+                play_controller.savePlay();
+                JOptionPane.showMessageDialog(Main.mainFrame, "Success");
+        }
+    }
 }

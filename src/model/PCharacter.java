@@ -22,6 +22,8 @@ public class PCharacter extends PCellContent {
             charismModifier;
     private int basicLevel, basicHitPoint, basicArmorClass, basicAttackBonus, basicDamageBonus, basicMultipleAttacks;
     private int level, hitPoint, armorClass, attackBonus, damageBonus, multipleAttacks;
+    private int stats[][], basicStats[][], attributes[], basicAttributes[];
+    private boolean isSaved;
 
     private Strategy strategy;
 
@@ -105,7 +107,9 @@ public class PCharacter extends PCellContent {
             this.backpack.add(i);
         }
 
-        int stats[][] = new int[6][2];
+        // Fish modified on 2017.4.8 for getting data. Declarations are moved out of the Constructor
+
+        // int stats[][] = new int[6][2];
         stats = character.getStats();
         strength = stats[0][0];
         ;
@@ -122,7 +126,7 @@ public class PCharacter extends PCellContent {
         wisdomModifier = stats[4][1];
         charismModifier = stats[5][1];
 
-        int basicStats[][] = new int[6][2];
+        // int basicStats[][] = new int[6][2];
         basicStats = character.getBasicStats();
         basicStrengthModifier = basicStats[0][1];
         basicDexterityModifier = basicStats[1][1];
@@ -131,7 +135,7 @@ public class PCharacter extends PCellContent {
         basicWisdomModifier = basicStats[4][1];
         basicCharismaModifier = basicStats[5][1];
 
-        int attributes[] = new int[6];
+        // int attributes[] = new int[6];
         attributes = character.getAttributes();
         level = attributes[0];
         hitPoint = attributes[1];
@@ -140,7 +144,7 @@ public class PCharacter extends PCellContent {
         damageBonus = attributes[4];
         multipleAttacks = attributes[5];
 
-        int basicAttributes[] = new int[6];
+        // int basicAttributes[] = new int[6];
         basicAttributes = character.getBasicAttributes();
         basicLevel = basicAttributes[0];
         basicHitPoint = basicAttributes[1];
@@ -149,12 +153,18 @@ public class PCharacter extends PCellContent {
         basicDamageBonus = basicAttributes[4];
         basicMultipleAttacks = basicAttributes[5];
 
-        if (isHostile.equals("1"))
+        if (isHostile.equals("1")) {
             this.category = 1;
-        else if (isHostile.equals("0"))
+            this.type = "ENEMY";
+        }
+        else if (isHostile.equals("0")) {
             this.category = 0;
-        else
+            this.type = "FRIEND";
+        }
+        else {
             this.category = 2;
+            this.type = "PLAYER";
+        }
     }
 
     /**
@@ -598,6 +608,27 @@ public class PCharacter extends PCellContent {
 
     public int getCategory() {
         return category;
+    }
+
+    //Fish added these 4 getters on 2017.4.8 for saving PCharacter.:)
+    public int[][] getStats() {
+        return stats;
+    }
+
+    public int[][] getBasicStats() {
+        return basicStats;
+    }
+
+    public int[] getAttributes() {
+        return attributes;
+    }
+
+    public int[] getBasicAttributes() {
+        return basicAttributes;
+    }
+
+    public boolean isSaved() {
+        return isSaved;
     }
 
     /**
