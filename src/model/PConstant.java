@@ -7,7 +7,7 @@ package model;
  * @author Jiayao
  * @version 1.0.0
  */
-public class PConstant extends PCellContent{
+public class PConstant extends PCellContent {
 
     /**
      * Constructor to initiate the Object.

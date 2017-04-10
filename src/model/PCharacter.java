@@ -25,10 +25,20 @@ public class PCharacter extends PCellContent {
     private int stats[][], basicStats[][], attributes[], basicAttributes[];
     private boolean isSaved;
 
+    private Strategy strategy;
+
+
+    private PWeapon weapon;
+    private int freezeTurns;
+    private int burnTurns;
+    private int frighteningTurns;
+    private int burnDamage;
+
     /**
      * Constructor of PCharacter to construct the object
-     * @param id, character's id
-     * @param isHostile  if the character is the hostile, friend, or player
+     *
+     * @param id,       character's id
+     * @param isHostile if the character is the hostile, friend, or player
      */
     public PCharacter(String id, String isHostile) {
         type = "PLAYER";
@@ -36,15 +46,63 @@ public class PCharacter extends PCellContent {
         Character character = characterIO.getCharacter(id);
         this.id = character.getId();
         this.name = character.getName();
+        this.freezeTurns = 0;
+        this.burnTurns = 0;
+        this.frighteningTurns = 0;
+        this.burnDamage = 0;
 
         this.equipment = new ArrayList<PItem>();
         for (Item item : character.getEquipment()) {
             PItem i = new PItem(item.getSaveId(), item.getType(), item.getAttribute(), item.getAttributeValue());
             this.equipment.add(i);
+            if(item.getType().equals("Ranged Weapon")) {
+                String[] parts = item.getAttribute().split(",");
+                String[] atts = parts[1].split(" ");
+                weapon = new PRangedWeapon(i);
+                for(int j = 1; j < atts.length; j++){
+                    if(atts[j].equals("Freezing")) {
+                        weapon = new PFreezing(weapon);
+                    }
+                    else if(atts[j].equals("Burning")) {
+                        weapon = new PBurning(weapon);
+                    }
+                    else if(atts[j].equals("Slaying")) {
+                        weapon = new PSlaying(weapon);
+                    }
+                    else if(atts[j].equals("Frightening")) {
+                        weapon = new PFrightening(weapon);
+                    }
+                    else if(atts[j].equals("Pacifying")) {
+                        weapon = new PPacifying(weapon);
+                    }
+                }
+            }
+            if(item.getType().equals("Melee Weapon")) {
+                String[] parts = item.getAttribute().split(",");
+                String[] atts = parts[1].split(" ");
+                weapon = new PMeleeWeapon(i);
+                for(int j = 1; j < atts.length; j++){
+                    if(atts[j].equals("Freezing")) {
+                        weapon = new PFreezing(weapon);
+                    }
+                    else if(atts[j].equals("Burning")) {
+                        weapon = new PBurning(weapon);
+                    }
+                    else if(atts[j].equals("Slaying")) {
+                        weapon = new PSlaying(weapon);
+                    }
+                    else if(atts[j].equals("Frightening")) {
+                        weapon = new PFrightening(weapon);
+                    }
+                    else if(atts[j].equals("Pacifying")) {
+                        weapon = new PPacifying(weapon);
+                    }
+                }
+            }
         }
 
         this.backpack = new ArrayList<PItem>();
-        for (Item item : character.getBackpack()) {
+        for (Item item : character.getBackpack()) { System.out.println(character.getBackpack().size());
             PItem i = new PItem(item.getSaveId(), item.getType(), item.getAttribute(), item.getAttributeValue());
             this.backpack.add(i);
         }
@@ -114,18 +172,66 @@ public class PCharacter extends PCellContent {
      */
     public void recalculateStats() {
 
-        boolean weaponEquipped = false;
+        boolean rangedWeaponEquipped = false;
+        boolean meleeWeaponEquipped = false;
+
         strengthModifier = basicStrengthModifier;
         dexterityModifier = basicDexterityModifier;
         constitutionModifier = basicConstitutionModifier;
         intelligenceModifier = basicIntelligenceModifier;
         wisdomModifier = basicWisdomModifier;
         charismModifier = basicCharismaModifier;
-
+        weapon = null;
         // first loop
         for (PItem item : equipment) {
-            if (item.getType().equals("Weapon"))
-                weaponEquipped = true;
+
+            if(item.getType().equals("Ranged Weapon")) {
+                rangedWeaponEquipped = true;
+                String[] parts = item.getAttribute().split(",");
+                String[] atts = parts[1].split(" ");
+                weapon = new PRangedWeapon(item);
+                for(int j = 1; j < atts.length; j++){
+                    if(atts[j].equals("Freezing")) {
+                        weapon = new PFreezing(weapon);
+                    }
+                    else if(atts[j].equals("Burning")) {
+                        weapon = new PBurning(weapon);
+                    }
+                    else if(atts[j].equals("Slaying")) {
+                        weapon = new PSlaying(weapon);
+                    }
+                    else if(atts[j].equals("Frightening")) {
+                        weapon = new PFrightening(weapon);
+                    }
+                    else if(atts[j].equals("Pacifying")) {
+                        weapon = new PPacifying(weapon);
+                    }
+                }
+            }
+            if(item.getType().equals("Melee Weapon")) {
+                meleeWeaponEquipped = true;
+                String[] parts = item.getAttribute().split(",");
+                String[] atts = parts[1].split(" ");
+                weapon = new PMeleeWeapon(item);
+                for(int j = 1; j < atts.length; j++){
+                    if(atts[j].equals("Freezing")) {
+                        weapon = new PFreezing(weapon);
+                    }
+                    else if(atts[j].equals("Burning")) {
+                        weapon = new PBurning(weapon);
+                    }
+                    else if(atts[j].equals("Slaying")) {
+                        weapon = new PSlaying(weapon);
+                    }
+                    else if(atts[j].equals("Frightening")) {
+                        weapon = new PFrightening(weapon);
+                    }
+                    else if(atts[j].equals("Pacifying")) {
+                        weapon = new PPacifying(weapon);
+                    }
+                }
+            }
+
             switch (item.getAttribute()) {
                 case "Strength":
                     strengthModifier = strengthModifier + item.getAttributeValue();
@@ -153,7 +259,12 @@ public class PCharacter extends PCellContent {
         //armor class
         armorClass = 10 + dexterityModifier;
         //attack bonus
-        attackBonus = level + dexterityModifier + strengthModifier;
+        if (rangedWeaponEquipped)
+            attackBonus = level + dexterityModifier;
+        else if (meleeWeaponEquipped)
+            attackBonus = level + strengthModifier;
+        else
+            attackBonus = level;
         //damage bonus
         damageBonus = strengthModifier;
 
@@ -173,20 +284,33 @@ public class PCharacter extends PCellContent {
                     damageBonus = damageBonus + item.getAttributeValue();
                     break;
             }
+            if(item.getType().equals("Ranged Weapon") || item.getType().equals("Melee Weapon")) {
+                String[] parts = item.getAttribute().split(",");
+                String att = parts[0];
+                switch (att) {
+                    case "Attack Bonus":
+                        attackBonus = attackBonus + item.getAttributeValue();
+                        break;
+                    case "Damage Bonus":
+                        damageBonus = damageBonus + item.getAttributeValue();
+                        break;
+                }
+            }
         }
 
         //multiple attack
         if (attackBonus > 6)
             multipleAttacks = 1;
         else
-            attackBonus = 0;
+            multipleAttacks = 0;
 
-        if (!weaponEquipped)
+        if (!(rangedWeaponEquipped || meleeWeaponEquipped))
             damageBonus = 0;
     }
 
     /**
      * Setters and Getter Functons for Attributes.
+     *
      * @return
      */
 
@@ -462,8 +586,27 @@ public class PCharacter extends PCellContent {
         this.multipleAttacks = multipleAttacks;
     }
 
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
 
-    public int getCategory(){
+    public int[] executeStrategy(int x, int y, int x_player, int y_player, int weapon_bonus, PCampaign pCampaign) {
+
+        if (category==1 && frighteningTurns==0 && freezeTurns==0)
+            setStrategy(new Aggressive());
+        if (frighteningTurns >0) {
+            setStrategy(new Frightening());
+            frighteningTurns--;
+        }
+        if (freezeTurns > 0) {
+            setStrategy(new Freezing());
+            freezeTurns--;
+        }
+        return strategy.execute(x, y, x_player, y_player, weapon_bonus, pCampaign, this);
+    }
+
+
+    public int getCategory() {
         return category;
     }
 
@@ -489,6 +632,15 @@ public class PCharacter extends PCellContent {
     }
 
     /**
+     * Set category of the player.
+     *
+     * @param category Category of the player.
+     */
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
+    /**
      * notify the character view that character is changed
      */
     public void characterView() {
@@ -504,13 +656,6 @@ public class PCharacter extends PCellContent {
         notifyObservers(this);
     }
 
-    /**
-     * Set category of the player.
-     * @param category Category of the player.
-     */
-    public void setCategory(int category) {
-        this.category = category;
-    }
 
     /**
      * Add item to backpack.
@@ -530,9 +675,56 @@ public class PCharacter extends PCellContent {
 
     /**
      * Add item to backpack.
+     *
      * @param item Item to be added.
      */
+
     public void addToBackpack(PItem item) {this.backpack.add(item);}
 
-  
+
+    public String getWeaponType() {
+        if(weapon != null){
+            return weapon.getType();
+        }
+        return null;
+    }
+    public PWeapon getWeapon() {
+        return weapon;
+    }
+
+    public int getFreezeTurns() {
+        return freezeTurns;
+    }
+
+    public int getBurnTurns() {
+        return burnTurns;
+    }
+
+    public  int getFrighteningTurns() {
+        return frighteningTurns;
+    }
+
+    public void setFreezeTurns(int penTurns) {
+        this.freezeTurns = penTurns;
+    }
+    public void setBurnTurns(int penTurns) {
+        this.burnTurns = penTurns;
+    }
+
+    public void setFrighteningTurns(int penTurns) {
+        this.frighteningTurns = penTurns;
+    }
+    public void setBurnDamage(int enchBonus) {
+        this.burnDamage = enchBonus;
+    }
+
+    public void burningDamage() {
+        if(burnTurns>0) {
+            burnTurns --;
+            int hitPoint = getHitPoint() - burnDamage;
+            setHitPoint(hitPoint);
+        }
+
+    }
+
 }

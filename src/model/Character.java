@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -11,13 +10,13 @@ import java.util.Random;
  * Store the information of a character
  */
 public class Character {
+    public int[][] basicStats;
+    public int[] basicAttributes;
     private String id;
     private String name;
     private String type;
     private ArrayList<Item> equipment;
     private ArrayList<Item> backpack;
-    public int[][] basicStats;
-    public int[] basicAttributes;
     private boolean isSaved;
     private int[][] stats;
     private int[] attributes;
@@ -109,15 +108,21 @@ public class Character {
      */
     public void recalculateStats() {
 
-        boolean weaponEquipped = false;
+        boolean rangedWeaponEquipped = false;
+        boolean meleeWeaponEquipped = false;
+
         for (int i = 0; i < 6; i++)
             for (int j = 0; j < 2; j++)
                 stats[i][j] = basicStats[i][j];
 
         // first loop
         for (Item item : equipment) {
-            if (item.getType().equals("Weapon"))
-                weaponEquipped = true;
+            if (item.getType().equals("Ranged Weapon"))
+                rangedWeaponEquipped = true;
+
+            if (item.getType().equals("Melee Weapon"))
+                meleeWeaponEquipped = true;
+
             switch (item.getAttribute()) {
                 case "Strength":
                     stats[0][1] = stats[0][1] + item.getAttributeValue();
@@ -145,7 +150,12 @@ public class Character {
         //armor class
         attributes[2] = 10 + stats[1][1];
         //attack bonus
-        attributes[3] = attributes[0] + stats[0][1] + stats[1][1];
+        if (rangedWeaponEquipped)
+            attributes[3] = attributes[0] + stats[1][1];
+        else if (meleeWeaponEquipped)
+            attributes[3] = attributes[0] + stats[0][1];
+        else
+            attributes[3] = attributes[0];
         //damage bonus
         attributes[4] = stats[0][1];
 
@@ -165,6 +175,18 @@ public class Character {
                     attributes[4] = attributes[4] + item.getAttributeValue();
                     break;
             }
+            if(item.getType().equals("Ranged Weapon") || item.getType().equals("Melee Weapon")) {
+                String[] parts = item.getAttribute().split(",");
+                String att = parts[0];
+                switch (att) {
+                    case "Attack Bonus":
+                        attributes[3] = attributes[3] + item.getAttributeValue();
+                        break;
+                    case "Damage Bonus":
+                        attributes[4] = attributes[4] + item.getAttributeValue();
+                        break;
+                }
+            }
         }
 
         //multiple attack
@@ -173,8 +195,19 @@ public class Character {
         else
             attributes[5] = 0;
 
-        if (!weaponEquipped)
+        if (!(rangedWeaponEquipped || meleeWeaponEquipped))
             attributes[4] = 0;
+
+    }
+
+    /**
+     * get the state of character that if he is saved
+     *
+     * @return
+     */
+    public boolean getIsSaved() {
+        return this.isSaved;
+
     }
 
     /**
@@ -187,30 +220,12 @@ public class Character {
     }
 
     /**
-     * get the state of character that if he is saved
-     *
-     * @return
-     */
-    public boolean getIsSaved() {
-        return this.isSaved;
-    }
-
-    /**
      * get the id of character
      *
      * @return
      */
     public String getId() {
         return this.id;
-    }
-
-    /**
-     * modify character's name
-     *
-     * @param name
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -222,30 +237,21 @@ public class Character {
         return name;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    /**
+     * modify character's name
+     *
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
         return this.type;
     }
 
-    /**
-     * character put on euipment
-     *
-     * @param equipment
-     */
-    public void setEquipment(Item equipment) {
-        String type = new String();
-        for (Item item : this.equipment) {
-            if (item.getType().equals(equipment.getType())) {
-                this.equipment.remove(item);
-                this.equipment.add(equipment);
-                this.backpack.add(item);
-                return;
-            }
-        }
-        this.equipment.add(equipment);
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**
@@ -258,21 +264,30 @@ public class Character {
     }
 
     /**
+     * character put on euipment
+     *
+     * @param equipment
+     */
+    public void setEquipment(Item equipment) {
+        String type = new String();
+        for (Item item : this.equipment) {
+            if (item.getType().equals(equipment.getType()) || (item.getType().equals("Ranged Weapon") && equipment.getType().equals("Melee Weapon")) || (item.getType().equals("Melee Weapon") && equipment.getType().equals("Ranged Weapon"))) {
+                this.equipment.remove(item);
+                this.equipment.add(equipment);
+                this.backpack.add(item);
+                return;
+            }
+        }
+        this.equipment.add(equipment);
+    }
+
+    /**
      * take off the quipment
      *
      * @param equipment
      */
     public void deleteEquipment(Item equipment) {
         this.equipment.remove(equipment);
-    }
-
-    /**
-     * take item from database to backpack
-     *
-     * @param backpack item to be added to backpack
-     */
-    public void setBackpack(Item backpack) {
-        this.backpack.add(backpack);
     }
 
     /**
@@ -285,12 +300,25 @@ public class Character {
     }
 
     /**
+     * take item from database to backpack
+     *
+     * @param backpack item to be added to backpack
+     */
+    public void setBackpack(Item backpack) {
+        this.backpack.add(backpack);
+    }
+
+    /**
      * remove item from backpack
      *
      * @param backpack all items in backpack
      */
     public void removeBackpack(Item backpack) {
         this.backpack.remove(backpack);
+    }
+
+    public int[][] getStats() {
+        return stats;
     }
 
     /**
@@ -304,20 +332,24 @@ public class Character {
                 this.stats[i][j] = stats[i][j];
     }
 
+    public int[][] getBasicStats() {
+        return basicStats;
+    }
+
     public void setBasicStats(int[][] basicStats) {
         for (int i = 0; i < 6; i++)
             for (int j = 0; j < 2; j++)
                 this.basicStats[i][j] = basicStats[i][j];
     }
 
-    public int[][] getStats() {
-        return stats;
+    /**
+     * get the attributes of character
+     *
+     * @return attributes
+     */
+    public int[] getAttributes() {
+        return attributes;
     }
-
-    public int[][] getBasicStats() {
-        return basicStats;
-    }
-
 
     /**
      * give character new attributes
@@ -327,6 +359,10 @@ public class Character {
     public void setAttributes(int[] attributes) {
         for (int i = 0; i < 6; i++)
             this.attributes[i] = attributes[i];
+    }
+
+    public int[] getBasicAttributes() {
+        return basicAttributes;
     }
 
     /**
@@ -339,16 +375,4 @@ public class Character {
             this.basicAttributes[i] = basicAttributes[i];
     }
 
-    /**
-     * get the attributes of character
-     *
-     * @return attributes
-     */
-    public int[] getAttributes() {
-        return attributes;
-    }
-
-    public int[] getBasicAttributes() {
-        return basicAttributes;
-    }
 }

@@ -3,7 +3,6 @@ package view;
 import model.PCharacter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -119,6 +118,7 @@ public class PCharacteristicPanel extends JPanel implements Observer {
 
     /**
      * Setter functions for Attributes.
+     *
      * @param name
      * @param x
      * @return

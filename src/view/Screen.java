@@ -6,8 +6,8 @@ package view;
  */
 public class Screen {
 
-    private int width, height;
     public int[] pixels;
+    private int width, height;
 
     public Screen(int width, int height) {
         this.width = width;

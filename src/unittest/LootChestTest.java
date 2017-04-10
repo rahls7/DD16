@@ -1,7 +1,6 @@
 package unittest;
 
 import controller.PlayController;
-import model.Campaign;
 import org.junit.Before;
 import org.junit.Test;
 
