@@ -161,10 +161,10 @@ public class PlayController {
 //            System.out.println("Play is the first");
         } else {
             for (int i = 0; i < player_index; i++) {
+                if (order.get(i).getHitPoint()> 0)
+                    order.get(i).burningDamage();
                 if (order.get(i).getHitPoint() > 0)
                     execute(order, i);
-                if (order.get(i).getHitPoint() <= 0)
-                    order.remove(i);
             }
         }
     }
@@ -216,29 +216,29 @@ public class PlayController {
         if (player_index == 0) {
             for (int i = 1; i < order.size(); i++) {
                 if (order.get(i).getHitPoint()> 0)
-                execute(order, i);
-                if (order.get(i).getHitPoint() <= 0)
-                    order.remove(i);
+                    order.get(i).burningDamage();
+                if (order.get(i).getHitPoint()> 0)
+                    execute(order, i);
             }
         } else if (player_index == order.size() - 1) {
             for (int i = 0; i < player_index; i++) {
+                if (order.get(i).getHitPoint()> 0)
+                    order.get(i).burningDamage();
                 if (order.get(i).getHitPoint() > 0)
                     execute(order, i);
-                if (order.get(i).getHitPoint() <= 0)
-                    order.remove(i);
             }
         } else {
             for (int i = player_index + 1; i < order.size(); i++) {
+                if (order.get(i).getHitPoint()> 0)
+                    order.get(i).burningDamage();
                 if (order.get(i).getHitPoint() > 0)
                     execute(order, i);
-                if (order.get(i).getHitPoint() <= 0)
-                    order.remove(i);
             }
             for (int i = 0; i < player_index; i++) {
+                if (order.get(i).getHitPoint()> 0)
+                    order.get(i).burningDamage();
                 if (order.get(i).getHitPoint() > 0)
                   execute(order, i);
-                if (order.get(i).getHitPoint() <= 0)
-                    order.remove(i);
             }
         }
     }
