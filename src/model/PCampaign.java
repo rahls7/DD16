@@ -155,6 +155,10 @@ public class PCampaign {
         return maps.get(current_mapindex).getEnemy(x, y);
     }
 
+    public PCharacter getCharacter(int x, int y){
+        return maps.get(current_mapindex).getCharacter(x, y);
+    }
+
     /**
      * Check whether the current map is full filled or not
      *

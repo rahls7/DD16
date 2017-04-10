@@ -279,6 +279,14 @@ public class PMap {
         return null;
     }
 
+    public PCharacter getCharacter(int x, int y){
+        if (cells[x][y].getType().equals("CHARACTER")) {
+            PCharacter pCharacter = (PCharacter) cells[x][y].getContent();
+            return pCharacter;
+        }
+        return null;
+    }
+
     /**
      * Check whether all the enemies are killed
      *
@@ -290,7 +298,7 @@ public class PMap {
                 if (cells[i][j].getType().equals("CHARACTER")) {
                     PCharacter c = (PCharacter) cells[i][j].getContent();
                     if (c.getCategory() == 1) {
-                        if (c.getHitPoint() != 0) {
+                        if (c.getHitPoint() > 0) {
                             return false;
                         }
                     }

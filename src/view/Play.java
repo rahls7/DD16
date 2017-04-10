@@ -95,6 +95,7 @@ public class Play extends JPanel implements MouseListener {
 
         play_controller.beforePlayer();
         moved=false;
+
     }
 
     /**
@@ -157,7 +158,6 @@ public class Play extends JPanel implements MouseListener {
                     showAttackRange(current_cell.x, current_cell.y);
                     current_cell.setContent("PLAYER");
                     play_controller.setPlayer(previous_cell.x, previous_cell.y, current_cell.x, current_cell.y);
-                    play_controller.turn();
                     current_cell.select();
                     moved = true;
                 }
@@ -166,7 +166,7 @@ public class Play extends JPanel implements MouseListener {
                 }
 
                 else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT") && !moved && isMoveRange(previous_cell, current_cell)) {
-
+                    System.out.println("!!!!!" + play_controller.isFulfilled());
                     if (play_controller.isFulfilled()) {
                         if (play_controller.exit()) {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Level Up! Go to Next Map!");
@@ -201,7 +201,8 @@ public class Play extends JPanel implements MouseListener {
                             inventory_panel.setCells(cells);
                             map_panel.revalidate();
                             map_panel.repaint();
-                            play_controller.beforePlayer();
+                            play_controller.setCellPanel(cells);
+                           play_controller.beforePlayer();
                             moved = false;
                         } else {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Complete!");

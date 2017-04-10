@@ -157,10 +157,14 @@ public class PlayController {
 
     public void beforePlayer(){
         if(player_index==0){
-            System.out.println("Play is the first");
+//            System.out.println("Play is the first");
         }else{
             for(int i=0;i<player_index;i++){
-                System.out.println("NPC action");
+                if (order.get(i).getHitPoint()<=0)
+                    order.remove(i);
+                execute(order, i);
+                if (order.get(i).getHitPoint()<=0)
+                    order.remove(i);
             }
         }
     }
@@ -209,20 +213,38 @@ public class PlayController {
 
 
     public void backToPlayer(){
+
+
         if(player_index==0){
-            for(int i=1;i<order.size();i++){
-                System.out.println("NPC action");
+            for(int i=1; i<order.size(); i++){
+                if (order.get(i).getHitPoint()<=0)
+                    order.remove(i);
+                execute(order, i);
+                if (order.get(i).getHitPoint()<=0)
+                    order.remove(i);
             }
         }else if(player_index==order.size()-1){
             for(int i=0;i<player_index;i++){
-                System.out.println("NPC action");
+                if (order.get(i).getHitPoint()<=0)
+                    order.remove(i);
+                execute(order, i);
+                if (order.get(i).getHitPoint()<=0)
+                    order.remove(i);
             }
         }else{
             for(int i=player_index+1;i<order.size();i++){
-                System.out.println("NPC action");
+                if (order.get(i).getHitPoint()<=0)
+                    order.remove(i);
+                execute(order, i);
+                if (order.get(i).getHitPoint()<=0)
+                    order.remove(i);
             }
             for(int i=0;i<player_index;i++){
-                System.out.println("NPC action");
+                if (order.get(i).getHitPoint()<=0)
+                    order.remove(i);
+                execute(order, i);
+                if (order.get(i).getHitPoint()<=0)
+                    order.remove(i);
             }
         }
     }
@@ -487,6 +509,48 @@ public class PlayController {
     }
 
 
+    public void execute(List<PCharacter> order, int i){
+        int x_player = -1;
+        int y_player = -1;
+        PMap map = campaign.getMap();
+        for (int k = 0; k < map.getWidth(); k++)
+            for (int j = 0; j < map.getHeight(); j++) {
+                if (cell[k][j].getType().equals("PLAYER")) {
+                    PCharacter character = (PCharacter) cell[k][j].getContent();
+                    x_player = k;
+                    y_player = j;
+                }
+            }
+
+        PCharacter pCharacter = order.get(i);
+        if (pCharacter.getCategory() == 0)
+            pCharacter.setStrategy(new Friendly());
+        else if (pCharacter.getCategory() == 1)
+            pCharacter.setStrategy(new Aggressive());
+        map = campaign.getMap();
+        cell = map.getCells();
+        int x = -1;
+        int y = -1;
+        for (int k = 0; k < map.getWidth(); k++)
+            for (int j = 0; j < map.getHeight(); j++) {
+                if (cell[k][j].getType().equals("CHARACTER")) {
+                    PCharacter character = (PCharacter) cell[k][j].getContent();
+                    if (character== pCharacter) {
+                        x = k;
+                        y = j;
+                    }
+                }
+            }
+
+        cellPanels[x][y].removeContent();
+        int[] coordinate = new int[2];
+        coordinate = pCharacter.executeStrategy(x, y, x_player, y_player, 1, campaign);
+        cellPanels[coordinate[0]][coordinate[1]].setContent("CHARACTER " + pCharacter.getId() + " " + pCharacter.getCategory());
+        characterView(x_player, y_player);
+        inventoryView(x_player, y_player);
+    }
+
+
     public void turn() {
         // get the coordinate of player
         int x_player = -1;
@@ -535,7 +599,7 @@ public class PlayController {
                 for (int j = 0; j < map.getHeight(); j++) {
                     if (cell[i][j].getType().equals("CHARACTER")) {
                         PCharacter character = (PCharacter) cell[i][j].getContent();
-                        if (character.getId() == pCharacter.getId()) {
+                        if (character== pCharacter) {
                             x = i;
                             y = j;
                         }
@@ -559,7 +623,7 @@ public class PlayController {
                 for (int j = 0; j < map.getHeight(); j++) {
                     if (cell[i][j].getType().equals("CHARACTER")) {
                         PCharacter character = (PCharacter) cell[i][j].getContent();
-                        if (character.getId() == pCharacter.getId()) {
+                        if (character.equals(pCharacter)) {
                             x = i;
                             y = j;
                         }
