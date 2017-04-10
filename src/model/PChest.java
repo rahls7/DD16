@@ -24,7 +24,7 @@ public class PChest extends PCellContent {
 
     /**
      * Get the item of a chest
-     * @return
+     * @return PItem
      */
     public PItem getItem() {
         return item;

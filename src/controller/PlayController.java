@@ -6,6 +6,7 @@ import model.*;
 import org.json.JSONObject;
 import view.PCharacteristicPanel;
 import view.PInventoryPanel;
+import view.Play;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -122,7 +123,8 @@ public class PlayController {
                     characters.add(pCharacter);
                 }
             }
-        generateOrder();
+        String displayDice= generateOrder();
+        Play.displayInfo(displayDice);
         player.addObserver(pCharacteristicPanel);
         player.addObserver(pInventoryPanel);
     }
@@ -138,6 +140,7 @@ public class PlayController {
         }else{
             for(int i=0;i<player_index;i++){
                 System.out.println("NPC action");
+                //Play.displayInfo("NPC action.");
             }
         }
     }
@@ -167,7 +170,7 @@ public class PlayController {
     /**
      * Generate the action order of the player and all the NPCs
      */
-    private void generateOrder() {
+    public String generateOrder() {
         order = new ArrayList<PCharacter>();
         player_index=-1;
         int[] index= new int[characters.size()];
@@ -199,8 +202,26 @@ public class PlayController {
                 player_index=i;
             }
         }
+        String display="The order is: \n";
+        for(int i=0;i<characters.size();i++){
+            if(order.get(i).getCategory()==0){
+                display=display+"Friend, "+random[i]+"\n";
+            }else if(order.get(i).getCategory()==1){
+                display=display+"Enemy, "+random[i]+"\n";
+            }else if(order.get(i).getCategory()==2){
+                display=display+"Player, "+random[i]+"\n";
+            }
+        }
+
+        return display;
     }
 
+    public ArrayList<PCharacter> getCharacters(){
+        return this.characters;
+    }
+    public List<PCharacter> getOrder(){
+        return this.order;
+    }
     /**
      * Call the function character view to notify observer the observable gets changed
      * @param x x coordinate

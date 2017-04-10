@@ -7,6 +7,9 @@ import view.MapPanel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Campaign class for play mode
+ */
 public class PCampaign {
 
     private MapIO mapio;

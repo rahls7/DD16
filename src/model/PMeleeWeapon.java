@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Alleria on 2017/3/31.
+ * Melee Weapon class
+ * @author Jiayao, Ruijia
  */
 public class PMeleeWeapon extends PWeapon {
     private String type;
@@ -12,6 +13,10 @@ public class PMeleeWeapon extends PWeapon {
     private List<String> enchantments;
     private int attribute_value;
 
+    /**
+     * Initialize a Melee Weapon
+     * @param item
+     */
     public PMeleeWeapon(PItem item) {
         type = item.getType();
         attribute_value = item.getAttributeValue();
@@ -21,10 +26,18 @@ public class PMeleeWeapon extends PWeapon {
         attribute = parts[0];
     }
 
+    /**
+     * Get enchantments
+     * @return enchantments
+     */
     public List<String> getEnchantments(){
         enchantments = new ArrayList<String>();
         return enchantments;
     }
 
+    /**
+     * Get type
+     * @return type
+     */
     public String getType() { return type; }
 }

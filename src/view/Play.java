@@ -64,13 +64,6 @@ public class Play extends JPanel implements MouseListener {
                 map_panel.add(cells[i][j]);
             }
         }
-        inventory_panel = new PInventoryPanel();
-        information_panel = new PInformationPanel(play_controller);
-        characteristic_panel = new PCharacteristicPanel();
-        play_controller.setInventoryObserver(inventory_panel);
-        play_controller.setCharacterObserver(characteristic_panel);
-        inventory_panel.setPlayController(play_controller);
-        inventory_panel.setCells(cells);
 
         battleInfo_panel = new JPanel();
         battleInfo_area = new JTextArea();
@@ -80,6 +73,16 @@ public class Play extends JPanel implements MouseListener {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         battleInfo_panel.add(scrollPane);
         scrollPane.setPreferredSize(new Dimension(450,120));
+
+        inventory_panel = new PInventoryPanel();
+        information_panel = new PInformationPanel(play_controller);
+        characteristic_panel = new PCharacteristicPanel();
+        play_controller.setInventoryObserver(inventory_panel);
+        play_controller.setCharacterObserver(characteristic_panel);
+        inventory_panel.setPlayController(play_controller);
+        inventory_panel.setCells(cells);
+
+
 
         action_panel = new JPanel(new GridLayout(4, 0));
         action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
