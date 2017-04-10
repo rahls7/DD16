@@ -62,9 +62,10 @@ public class PlayController {
     }
 
 
-    public void setCellPanel(PCellPanel[][] pCellPanel){
+    public void setCellPanel(PCellPanel[][] pCellPanel) {
         cellPanels = pCellPanel;
     }
+
     /**
      * Get the campaign model of player
      *
@@ -131,7 +132,7 @@ public class PlayController {
         characters = new ArrayList<PCharacter>();
         for (int i = 0; i < map.getWidth(); i++)
             for (int j = 0; j < map.getHeight(); j++) {
-            System.out.println(cell[i][j].getType());
+                System.out.println(cell[i][j].getType());
                 if (cell[i][j].getType().equals("CHARACTER") || cell[i][j].getType().equals("PLAYER")) {
                     PCharacter pCharacter = (PCharacter) cell[i][j].getContent();
                     pCharacter.addObserver(pCharacteristicPanel);
@@ -155,96 +156,89 @@ public class PlayController {
     }
 
 
-    public void beforePlayer(){
-        if(player_index==0){
+    public void beforePlayer() {
+        if (player_index == 0) {
 //            System.out.println("Play is the first");
-        }else{
-            for(int i=0;i<player_index;i++){
-                if (order.get(i).getHitPoint()<=0)
-                    order.remove(i);
-                execute(order, i);
-                if (order.get(i).getHitPoint()<=0)
-                    order.remove(i);
+        } else {
+            for (int i = 0; i < player_index; i++) {
+                if (order.get(i).getHitPoint()> 0)
+                    order.get(i).burningDamage();
+                if (order.get(i).getHitPoint() > 0)
+                    execute(order, i);
             }
         }
     }
-
 
 
     private void generateOrder() {
         order = new ArrayList<PCharacter>();
-        player_index=-1;
-        int[] index= new int[characters.size()];
-        int[] random=new int[characters.size()];
+        player_index = -1;
+        int[] index = new int[characters.size()];
+        int[] random = new int[characters.size()];
         int temp1;
         int temp2;
-        for(int i=0;i<characters.size();i++){
-            index[i]=i;
-            int num=1+(int)(Math.random()*20);
-            random[i]=num;
+        for (int i = 0; i < characters.size(); i++) {
+            index[i] = i;
+            int num = 1 + (int) (Math.random() * 20);
+            random[i] = num;
         }
-        for(int i=0;i<characters.size()-1;i++){
-            for(int j=0;j<characters.size()-1-i;j++){
-                if(random[j+1]>random[j]){
-                    temp1=random[j];
-                    random[j]=random[j+1];
-                    random[j+1]=temp1;
-                    temp2=index[j];
-                    index[j]=index[j+1];
-                    index[j+1]=temp2;
+        for (int i = 0; i < characters.size() - 1; i++) {
+            for (int j = 0; j < characters.size() - 1 - i; j++) {
+                if (random[j + 1] > random[j]) {
+                    temp1 = random[j];
+                    random[j] = random[j + 1];
+                    random[j + 1] = temp1;
+                    temp2 = index[j];
+                    index[j] = index[j + 1];
+                    index[j + 1] = temp2;
                 }
             }
         }
-        for(int i=0;i<characters.size();i++) {
+        for (int i = 0; i < characters.size(); i++) {
             order.add(characters.get(index[i]));
         }
-        for(int i=0;i<order.size();i++){
-            if(order.get(i).getCategory()==2){
-                player_index=i;
+        for (int i = 0; i < order.size(); i++) {
+            if (order.get(i).getCategory() == 2) {
+                player_index = i;
             }
         }
     }
 
 
+    public void setPlayer() {
+        campaign.setPlayer(player);
+    }
 
 
-    public void setPlayer() { campaign.setPlayer(player);}
+    public void backToPlayer() {
 
 
-
-    public void backToPlayer(){
-
-
-        if(player_index==0){
-            for(int i=1; i<order.size(); i++){
-                if (order.get(i).getHitPoint()<=0)
-                    order.remove(i);
-                execute(order, i);
-                if (order.get(i).getHitPoint()<=0)
-                    order.remove(i);
+        if (player_index == 0) {
+            for (int i = 1; i < order.size(); i++) {
+                if (order.get(i).getHitPoint()> 0)
+                    order.get(i).burningDamage();
+                if (order.get(i).getHitPoint()> 0)
+                    execute(order, i);
             }
-        }else if(player_index==order.size()-1){
-            for(int i=0;i<player_index;i++){
-                if (order.get(i).getHitPoint()<=0)
-                    order.remove(i);
-                execute(order, i);
-                if (order.get(i).getHitPoint()<=0)
-                    order.remove(i);
+        } else if (player_index == order.size() - 1) {
+            for (int i = 0; i < player_index; i++) {
+                if (order.get(i).getHitPoint()> 0)
+                    order.get(i).burningDamage();
+                if (order.get(i).getHitPoint() > 0)
+                    execute(order, i);
             }
-        }else{
-            for(int i=player_index+1;i<order.size();i++){
-                if (order.get(i).getHitPoint()<=0)
-                    order.remove(i);
-                execute(order, i);
-                if (order.get(i).getHitPoint()<=0)
-                    order.remove(i);
+        } else {
+            for (int i = player_index + 1; i < order.size(); i++) {
+                if (order.get(i).getHitPoint()> 0)
+                    order.get(i).burningDamage();
+                if (order.get(i).getHitPoint() > 0)
+                    execute(order, i);
             }
-            for(int i=0;i<player_index;i++){
-                if (order.get(i).getHitPoint()<=0)
-                    order.remove(i);
-                execute(order, i);
-                if (order.get(i).getHitPoint()<=0)
-                    order.remove(i);
+            for (int i = 0; i < player_index; i++) {
+                if (order.get(i).getHitPoint()> 0)
+                    order.get(i).burningDamage();
+                if (order.get(i).getHitPoint() > 0)
+                  execute(order, i);
             }
         }
     }
@@ -253,7 +247,6 @@ public class PlayController {
     /**
      * Call the function character view to notify observer the observable gets changed
      *
-
      * @param x x coordinate
      * @param y y coordinate
      */
@@ -267,8 +260,7 @@ public class PlayController {
      * Notify observers.
      */
 
-    public void characterView()
-    {
+    public void characterView() {
         player.characterView();
     }
 
@@ -288,7 +280,7 @@ public class PlayController {
      * Notify observers.
      */
 
-    public void inventoryView(){
+    public void inventoryView() {
         player.inventoryView();
     }
 
@@ -314,7 +306,7 @@ public class PlayController {
     public void lootChest(int x, int y) {
         if (player.getBackpack().size() < 10) {
             PItem item = campaign.getChestItem(x, y);
-            if(item != null)
+            if (item != null)
                 player.addBackpack(item);
         }
     }
@@ -360,7 +352,7 @@ public class PlayController {
      * @param pItems Items in the equipments.
      */
 
-    public void setEquipment(ArrayList<PItem> pItems){
+    public void setEquipment(ArrayList<PItem> pItems) {
         player.setEquipment(pItems);
     }
 
@@ -370,7 +362,7 @@ public class PlayController {
      * @param pItems Items in the backpack.
      */
 
-    public void setBackpack(ArrayList<PItem> pItems){
+    public void setBackpack(ArrayList<PItem> pItems) {
         player.setBackpack(pItems);
     }
 
@@ -378,7 +370,7 @@ public class PlayController {
      * Recalculate stats of the player.
      */
 
-    public void recalculateStats(){
+    public void recalculateStats() {
         player.recalculateStats();
     }
 
@@ -391,37 +383,50 @@ public class PlayController {
      */
 
     public void attackEnemy(int x, int y) {
-        PCharacter enemy = campaign.getEnemy(x,y);
-        if(enemy!=null) {
-            if(enemy.getHitPoint()>0) {
+        PCharacter enemy = campaign.getEnemy(x, y);
+        if (enemy != null) {
+            if (enemy.getHitPoint() > 0) {
                 attackRoll = rgen.nextInt(20) + 1;
                 attackBon = player.getAttackBonus();
                 finalAttack = attackRoll + attackBon;
                 Play.displayInfo("Your attack roll is " + attackRoll + " Your final Attack points including attackBonus " + attackBon + " is " + finalAttack);
                 Play.displayInfo("Enemy armour class is " + enemy.getArmorClass());
-                if(finalAttack >= enemy.getArmorClass()) {
+                if (finalAttack >= enemy.getArmorClass()) {
                     damageRoll = rgen.nextInt(8) + 1;
                     damagePen = damageRoll + player.getDamageBonus();
                     Play.displayInfo("Your damage roll is " + damageRoll + " Your final damage points including damageBonus " + player.getDamageBonus() + " is " + damagePen);
                     int j = enemy.getHitPoint() - damagePen; // damage bonus
                     Play.displayInfo("Hit points after deduction are " + j);
                     enemy.setHitPoint(j);
-                    if(enemy.getHitPoint()>0) {
+                    if (enemy.getHitPoint() > 0) {
                         for (String i : player.getWeapon().getEnchantments()) {
-                            if(i.equals("Slaying")) {
+                            if (i.equals("Slaying")) {
                                 enemy.setHitPoint(0);
-                            }else if(i.equals("Freezing")) {
+                                Play.displayInfo("Enemy Slayed");
+                            } else if (i.equals("Freezing")) {
                                 int enchBonus = player.getWeapon().getAttributeValue();
                                 enemy.setFreezeTurns(enchBonus);
-
-                            }else if(i.equals("Pacifying")) {
+                                Play.displayInfo("Enemy frozen");
+                            } else if (i.equals("Pacifying")) {
                                 //Do something
+                                enemy.setCategory(0);
+                                enemy.setStrategy(new Friendly());
+                                Play.displayInfo("Enemy Pacified");
+                            } else if (i.equals("Frightening")) {
+                                int enchBonus = player.getWeapon().getAttributeValue();
+                                enemy.setFrighteningTurns(enchBonus);
+                                Play.displayInfo("Enemy frightened");
+                            } else if (i.equals("Burning")) {
+                                int enchBonus = player.getWeapon().getAttributeValue() * 5;
+                                enemy.setBurnTurns(3);
+                                enemy.setBurnDamage(enchBonus);
+                                Play.displayInfo("Enemy Burning");
                             }
                         }
                     }
                 }
             }
-            characterView(x,y);
+            characterView(x, y);
         }
     }
 
@@ -479,8 +484,8 @@ public class PlayController {
      * @return : Array List of Items in Enemy Backpack
      */
 
-    public ArrayList<PItem> getEnemyItem(int x , int y) {
-        PCharacter enemy = campaign.getEnemy(x,y);
+    public ArrayList<PItem> getEnemyItem(int x, int y) {
+        PCharacter enemy = campaign.getEnemy(x, y);
         ArrayList<PItem> backEnemy = enemy.getBackpack();
         ArrayList<PItem> equipEnemy = enemy.getEquipment();
         ArrayList<PItem> backEquipEnemy = new ArrayList<PItem>();
@@ -549,7 +554,7 @@ public class PlayController {
         cellPanels[coordinate[0]][coordinate[1]].setContent("PLAYER");
     }
 
-    public void execute(List<PCharacter> order, int i){
+    public void execute(List<PCharacter> order, int i) {
         int x_player = -1;
         int y_player = -1;
         PMap map = campaign.getMap();
@@ -575,7 +580,7 @@ public class PlayController {
             for (int j = 0; j < map.getHeight(); j++) {
                 if (cell[k][j].getType().equals("CHARACTER")) {
                     PCharacter character = (PCharacter) cell[k][j].getContent();
-                    if (character== pCharacter) {
+                    if (character == pCharacter) {
                         x = k;
                         y = j;
                     }
@@ -639,7 +644,7 @@ public class PlayController {
                 for (int j = 0; j < map.getHeight(); j++) {
                     if (cell[i][j].getType().equals("CHARACTER")) {
                         PCharacter character = (PCharacter) cell[i][j].getContent();
-                        if (character== pCharacter) {
+                        if (character == pCharacter) {
                             x = i;
                             y = j;
                         }
@@ -677,6 +682,7 @@ public class PlayController {
 
         }
     }
+
     public String getWeaponType() {
         return player.getWeaponType();
     }
@@ -706,20 +712,20 @@ public class PlayController {
     }
 
     public int getFriendHitPoint(int x, int y) {
-        PCharacter friend = campaign.getFriend(x,y);
+        PCharacter friend = campaign.getFriend(x, y);
         return friend.getHitPoint();
     }
 
     public void attackFriend(int x, int y) {
-        PCharacter friend = campaign.getFriend(x,y);
-        if(friend != null) {
-            if(friend.getHitPoint()>0) {
+        PCharacter friend = campaign.getFriend(x, y);
+        if (friend != null) {
+            if (friend.getHitPoint() > 0) {
                 attackRoll = rgen.nextInt(20) + 1;
                 attackBon = player.getAttackBonus();
                 finalAttack = attackRoll + attackBon;
                 Play.displayInfo("Your attack roll is " + attackRoll + " Your final Attack points including attackBonus " + attackBon + " is " + finalAttack);
                 Play.displayInfo("Enemy armour class is " + friend.getArmorClass());
-                if(finalAttack >= friend.getArmorClass()) {
+                if (finalAttack >= friend.getArmorClass()) {
                     damageRoll = rgen.nextInt(8) + 1;
                     damagePen = damageRoll + player.getDamageBonus();
                     Play.displayInfo("Your damage roll is " + damageRoll + " Your final damage points including damageBonus " + player.getDamageBonus() + " is " + damagePen);
@@ -729,9 +735,35 @@ public class PlayController {
                     friend.setStrategy(new Aggressive());
                     friend.setCategory(1);
                 }
-            }
+                if (friend.getHitPoint() > 0) {
+                    for (String i : player.getWeapon().getEnchantments()) {
+                        if (i.equals("Slaying")) {
+                            friend.setHitPoint(0);
+                            Play.displayInfo("Friend Slayed");
+                        } else if (i.equals("Freezing")) {
+                            int enchBonus = player.getWeapon().getAttributeValue();
+                            friend.setFreezeTurns(enchBonus);
+                            Play.displayInfo("Friend Frozen");
+                        } else if (i.equals("Pacifying")) {
+                            //Do something
+                            friend.setCategory(0);
+                            friend.setStrategy(new Friendly());
 
-            characterView(x,y);
+                        } else if (i.equals("Frightening")) {
+                            int enchBonus = player.getWeapon().getAttributeValue();
+                            friend.setFrighteningTurns(enchBonus);
+                            Play.displayInfo("Friend Frightened");
+                        } else if (i.equals("Burning")) {
+                            int enchBonus = player.getWeapon().getAttributeValue() * 5;
+                            friend.setBurnTurns(3);
+                            friend.setBurnDamage(enchBonus);
+                            Play.displayInfo("Friend Burning");
+                        }
+                    }
+                }
+
+                characterView(x, y);
+            }
         }
     }
 }
