@@ -287,6 +287,22 @@ public class PMap {
         return null;
     }
 
+    public int[] getExit(){
+        int[] coordinate = new int[2];
+        coordinate[0] = -1;
+        coordinate[1] = -1;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (cells[i][j].getType().equals("EXIT")) {
+                    coordinate[0] = i;
+                    coordinate[1] = j;
+                    return coordinate;
+                }
+            }
+        }
+        return coordinate;
+    }
+
     /**
      * Check whether all the enemies are killed
      *

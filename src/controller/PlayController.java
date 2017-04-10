@@ -508,6 +508,46 @@ public class PlayController {
         return campaign.exit();
     }
 
+    public void execute_player(){
+        int x_player = -1;
+        int y_player = -1;
+        player.setStrategy(new Computer());
+        PMap map = campaign.getMap();
+        for (int k = 0; k < map.getWidth(); k++)
+            for (int j = 0; j < map.getHeight(); j++) {
+                if (cell[k][j].getType().equals("PLAYER")) {
+                    PCharacter character = (PCharacter) cell[k][j].getContent();
+                    x_player = k;
+                    y_player = j;
+                }
+            }
+
+        int enemy_exist = 0;
+        int x = -1;
+        int y = -1;
+        for (PCharacter pCharacter : enemys) {
+            if (pCharacter.getHitPoint() > 0) {
+                cell = map.getCells();
+                for (int i = 0; i < map.getWidth(); i++)
+                    for (int j = 0; j < map.getHeight(); j++) {
+                        if (cell[i][j].getType().equals("CHARACTER")) {
+                            PCharacter character = (PCharacter) cell[i][j].getContent();
+                            if (character.equals(pCharacter)) {
+                                x = i;
+                                y = j;
+                                enemy_exist = 1;
+                                break;
+                            }
+                        }
+                    }
+            }
+        }
+
+        cellPanels[x_player][y_player].removeContent();
+        int[] coordinate = new int[2];
+        coordinate = player.executeStrategy(x_player, y_player, x, y, enemy_exist, campaign);
+        cellPanels[coordinate[0]][coordinate[1]].setContent("PLAYER");
+    }
 
     public void execute(List<PCharacter> order, int i){
         int x_player = -1;
@@ -686,6 +726,8 @@ public class PlayController {
                     int j = friend.getHitPoint() - damagePen; // damage bonus
                     Play.displayInfo("Hit points after deduction are " + j);
                     friend.setHitPoint(j);
+                    friend.setStrategy(new Aggressive());
+                    friend.setCategory(1);
                 }
             }
 
