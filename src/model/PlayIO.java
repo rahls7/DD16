@@ -14,6 +14,13 @@ import java.util.ArrayList;
  */
 public class PlayIO {
 
+    /**
+     * Save the current map
+     *
+     * @param pMap the map to be saved
+     * @param campaign_id the id of the campaign
+     * @param current_mapindex the index of the current map
+     */
     public void savePlay(PMap pMap, int campaign_id, int current_mapindex) {
 
         String content = readPlayFile();
@@ -25,13 +32,13 @@ public class PlayIO {
     }
 
     /**
-     * Generate JSON for a player.
+     * Generate JSON for the current map.
      *
      * @param pMap Current map.
      * @param campaign_id Current campaign ID.
      * @param current_mapindex Current map index.
      *
-     * @return JSON of the item.
+     * @return JSON of the map.
      */
     private JSONObject generateJSON(PMap pMap, int campaign_id, int current_mapindex) {
 
@@ -44,15 +51,17 @@ public class PlayIO {
                 JSONObject json_cell = new JSONObject();
                 json_cell.put("cell_x", i);
                 json_cell.put("cell_y", j);
+
                 String type = cells[i][j].getContent().getType();
-                json_cell.put("cell_content", type);
                 if(type.equals("FRIEND")||type.equals("ENEMY")||type.equals("PLAYER")){
-                    PCharacter c = (PCharacter) cells[i][j].getContent();
-                    saveCharacter(c, i, j);
+                    saveCharacter((PCharacter) cells[i][j].getContent(), i, j);
                 }
-//                else if(type.equals("CHEST")){
-//                    PChest c = (PChest) cells[i][j].getContent();
-//                }
+                else if(type.equals("CHEST")){
+                    PChest c = (PChest) cells[i][j].getContent();
+                    type = type + " " + c.getItem_id();
+                }
+                json_cell.put("cell_content", type);
+
                 json_cells.put(json_cell);
             }
         }
@@ -65,6 +74,13 @@ public class PlayIO {
         return jsonObject;
     }
 
+    /**
+     * Save all the characters in the current map
+     *
+     * @param character the character to be saved
+     * @param x the x index of the character
+     * @param y the y index of the character
+     */
 
     private void saveCharacter(PCharacter character, int x, int y){
 
@@ -76,6 +92,14 @@ public class PlayIO {
         writePlayCharacterFile(json_character_content);
     }
 
+    /**
+     * Generate JSON for all characters in the map.
+     *
+     * @param character the character to be generated
+     * @param x x index of the character
+     * @param y y index of the character
+     * @return JSON of the character
+     */
     private JSONObject generateCharacterJSON(PCharacter character, int x, int y){
         JSONObject jsonCharacterObject = new JSONObject();
 
@@ -125,6 +149,11 @@ public class PlayIO {
         return content;
     }
 
+    /**
+     * Read the playCharacter file
+     *
+     * @return Content in the file
+     */
     private String readPlayCharacterFile() {
         String content = "";
         try {
@@ -155,6 +184,11 @@ public class PlayIO {
         }
     }
 
+    /**
+     * Write to the playCharacter file
+     *
+     * @param json_content Content to be written
+     */
     public void writePlayCharacterFile(JSONObject json_content) {
         try {
             PrintWriter writer = new PrintWriter("src/files/playCharacter.txt", "UTF-8");
