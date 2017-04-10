@@ -1,1 +1,1 @@
-{"player":[{"basicAttributes":[1,9,13,10,6,1],"stats":[[22,9],[17,3],[19,4],[14,2],[12,1],[13,1]],"isSaved":false,"backpack":[4,7,9,6],"name":"Mo","equipment":[7,9],"basicStats":[[22,6],[17,3],[19,4],[14,2],[12,1],[13,1]],"attributes":[20,260,13,32,11,1],"id":"1"},{"basicAttributes":[1,9,13,10,6,1],"stats":[[22,9],[17,3],[19,4],[14,2],[12,1],[13,1]],"isSaved":false,"backpack":[4,7,9,6,9],"name":"Mo","equipment":[7],"basicStats":[[22,6],[17,3],[19,4],[14,2],[12,1],[13,1]],"attributes":[20,260,13,32,11,1],"id":"1"}]}
+{"play":[]}

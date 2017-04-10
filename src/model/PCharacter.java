@@ -31,8 +31,6 @@ public class PCharacter extends PCellContent {
      * @param isHostile  if the character is the hostile, friend, or player
      */
     public PCharacter(String id, String isHostile) {
-        //Fish added on 2017.4.8 to unify the data structure with Character. To save PCharacter.
-        isSaved = false;
         type = "PLAYER";
         CharacterIO characterIO = new CharacterIO();
         Character character = characterIO.getCharacter(id);
@@ -97,12 +95,18 @@ public class PCharacter extends PCellContent {
         basicDamageBonus = basicAttributes[4];
         basicMultipleAttacks = basicAttributes[5];
 
-        if (isHostile.equals("1"))
+        if (isHostile.equals("1")) {
             this.category = 1;
-        else if (isHostile.equals("0"))
+            this.type = "ENEMY";
+        }
+        else if (isHostile.equals("0")) {
             this.category = 0;
-        else
+            this.type = "FRIEND";
+        }
+        else {
             this.category = 2;
+            this.type = "PLAYER";
+        }
     }
 
     /**

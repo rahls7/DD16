@@ -14,50 +14,98 @@ import java.util.ArrayList;
  */
 public class PlayIO {
 
-    public void savePlayer(PCharacter player){
+    public void savePlay(PMap pMap, int campaign_id, int current_mapindex) {
 
-        String id = player.getId();
         String content = readPlayFile();
         JSONObject json_content = new JSONObject(content);
-        JSONArray json_items = json_content.getJSONArray("player");
-        JSONObject json = generateJSON(id, player);
+        JSONArray json_items = json_content.getJSONArray("play");
+        JSONObject json = generateJSON(pMap, campaign_id, current_mapindex);
         json_items.put(json);
         writePlayFile(json_content);
     }
 
     /**
-     * Generate JSON for an item.
+     * Generate JSON for a player.
      *
-     * @param id        Id of the item.
-     * @param character Object of the item.
+     * @param pMap Current map.
+     * @param campaign_id Current campaign ID.
+     * @param current_mapindex Current map index.
+     *
      * @return JSON of the item.
      */
-    private JSONObject generateJSON(String id, PCharacter character) {
+    private JSONObject generateJSON(PMap pMap, int campaign_id, int current_mapindex) {
+
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", character.getId());
-        jsonObject.put("name", character.getName());
-        ArrayList<Integer> equipment = new ArrayList<Integer>();
-        for (PItem item : character.getEquipment()) {
-            equipment.add(item.getId());
+
+        JSONArray json_cells = new JSONArray();
+        PCell[][] cells = pMap.getCells();
+        for (int i = 0; i < pMap.getWidth(); i++){
+            for (int j = 0; j < pMap.getHeight(); j++){
+                JSONObject json_cell = new JSONObject();
+                json_cell.put("cell_x", i);
+                json_cell.put("cell_y", j);
+                String type = cells[i][j].getContent().getType();
+                json_cell.put("cell_content", type);
+                if(type.equals("FRIEND")||type.equals("ENEMY")||type.equals("PLAYER")){
+                    PCharacter c = (PCharacter) cells[i][j].getContent();
+                    saveCharacter(c, i, j);
+                }
+//                else if(type.equals("CHEST")){
+//                    PChest c = (PChest) cells[i][j].getContent();
+//                }
+                json_cells.put(json_cell);
+            }
         }
-        jsonObject.put("equipment", equipment);
-        ArrayList<Integer> backpack = new ArrayList<Integer>();
-        for (PItem item : character.getBackpack()) {
-            backpack.add(item.getId());
-        }
-        jsonObject.put("backpack", backpack);
-        jsonObject.put("basicStats", character.getBasicStats());
-        jsonObject.put("basicAttributes", character.getBasicAttributes());
-        jsonObject.put("stats", character.getStats());
-        jsonObject.put("attributes", character.getAttributes());
-        jsonObject.put("isSaved", character.isSaved());
+        jsonObject.put("cells", json_cells);
+
+        jsonObject.put("campaignId", campaign_id);
+        jsonObject.put("mapIndex", current_mapindex);
 
         System.out.println(jsonObject);
         return jsonObject;
     }
 
+
+    private void saveCharacter(PCharacter character, int x, int y){
+
+        String character_content = readPlayCharacterFile();
+        JSONObject json_character_content = new JSONObject(character_content);
+        JSONArray json_character_items = json_character_content.getJSONArray("character");
+        JSONObject json_character = generateCharacterJSON(character, x, y);
+        json_character_items.put(json_character);
+        writePlayCharacterFile(json_character_content);
+    }
+
+    private JSONObject generateCharacterJSON(PCharacter character, int x, int y){
+        JSONObject jsonCharacterObject = new JSONObject();
+
+        ArrayList<Integer> equipment = new ArrayList<Integer>();
+        for (PItem item : character.getEquipment()) {
+            equipment.add(item.getId());
+        }
+        jsonCharacterObject.put("equipment", equipment);
+
+        ArrayList<Integer> backpack = new ArrayList<Integer>();
+        for (PItem item : character.getBackpack()) {
+            backpack.add(item.getId());
+        }
+        jsonCharacterObject.put("backpack", backpack);
+
+        jsonCharacterObject.put("name", character.getName());
+        jsonCharacterObject.put("basicStats", character.getBasicStats());
+        jsonCharacterObject.put("basicAttributes", character.getBasicAttributes());
+        jsonCharacterObject.put("stats", character.getStats());
+        jsonCharacterObject.put("attributes", character.getAttributes());
+        jsonCharacterObject.put("isSaved", character.isSaved());
+
+        jsonCharacterObject.put("x", x);
+        jsonCharacterObject.put("y", y);
+
+        return jsonCharacterObject;
+    }
+
     /**
-     * Read the item file.
+     * Read the play file.
      *
      * @return Content in the file.
      */
@@ -77,8 +125,23 @@ public class PlayIO {
         return content;
     }
 
+    private String readPlayCharacterFile() {
+        String content = "";
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("src/files/playCharacter.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content += line;
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return content;
+    }
     /**
-     * Write to the item file.
+     * Write to the play file.
      *
      * @param json_content Content to be written.
      */
@@ -92,35 +155,51 @@ public class PlayIO {
         }
     }
 
+    public void writePlayCharacterFile(JSONObject json_content) {
+        try {
+            PrintWriter writer = new PrintWriter("src/files/playCharacter.txt", "UTF-8");
+            writer.println(json_content);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
-     * Get item list from the file.
+     * Get play list from the file.
      *
      * @return List of items.
      */
-    public JSONArray getItemList() {
+    public JSONArray getPlayList() {
         String content = readPlayFile();
         JSONObject json_content = new JSONObject(content);
-        JSONArray json_items = json_content.getJSONArray("player");
+        JSONArray json_items = json_content.getJSONArray("play");
 
         return json_items;
     }
 
+    public JSONArray getPlayCharacterList() {
+        String content = readPlayFile();
+        JSONObject json_content = new JSONObject(content);
+        JSONArray json_items = json_content.getJSONArray("character");
+
+        return json_items;
+    }
     /**
-     * Get an item from the file.
+     * Get a play from the file.
      *
-     * @param item_id Id of the item.
-     * @return Object of the item.
+     * @param player_id Id of the player.
+     * @return Object of the player.
      */
-    public Character getCharacter(String item_id) {
-        Character character = new Character(item_id);
-        JSONArray json_items = getItemList();
+    public Character getPlay(String player_id) {
+        Character player = new Character(player_id);
+        JSONArray json_items = getPlayList();
         String id;
         JSONObject json_item = new JSONObject();
         JSONArray data = new JSONArray();
         for (int i = 0; i < json_items.length(); i++) {
             json_item = json_items.getJSONObject(i);
             id = json_item.getString("id");
-            if (id.equals(item_id)) {
+            if (id.equals(player_id)) {
                 String name = json_item.getString("name");
 
                 ItemIO itemIO = new ItemIO();
@@ -129,7 +208,7 @@ public class PlayIO {
                 equipment = new int[data.length()];
                 for (int j = 0; j < data.length(); j++) {
                     equipment[j] = data.getInt(j);
-                    character.setEquipment(itemIO.getItem(equipment[j]));
+                    player.setEquipment(itemIO.getItem(equipment[j]));
                 }
 
                 int[] backpack = null;
@@ -137,7 +216,7 @@ public class PlayIO {
                 backpack = new int[data.length()];
                 for (int j = 0; j < data.length(); j++) {
                     backpack[j] = data.getInt(j);
-                    character.setBackpack(itemIO.getItem(backpack[j]));
+                    player.setBackpack(itemIO.getItem(backpack[j]));
                 }
 
                 int[][] stats = new int[7][2];
@@ -164,19 +243,15 @@ public class PlayIO {
                 for (int j = 0; j < 6; j++)
                     basicAttribute[j] = data.getInt(j);
 
-                character.setAttributes(attributes);
-                character.setBasicAttributes(basicAttribute);
-                character.setBasicStats(basicStats);
-                character.setStats(stats);
-                character.setIsSaved(true);
-                character.setName(name);
-                return character;
+                player.setAttributes(attributes);
+                player.setBasicAttributes(basicAttribute);
+                player.setBasicStats(basicStats);
+                player.setStats(stats);
+                player.setIsSaved(true);
+                player.setName(name);
+                return player;
             }
         }
         return null;
     }
-
-//    public void saveCampaign(PCampaign campaign){
-//
-//    }
 }

@@ -24,6 +24,8 @@ public class PlayController {
     private CampaignIO campaignio;
     private PCampaign campaign;
     private PCharacter player;
+    private PMap pMap;
+    private int campaign_id, current_mapindex;
     PCharacteristicPanel pCharacteristicPanel;
     PInventoryPanel pInventoryPanel;
     private ArrayList<PCharacter> characters;
@@ -334,6 +336,10 @@ public class PlayController {
     }
 
     public void savePlay(){
-        playIO.savePlayer(player);
+        pMap = campaign.getMap();
+        campaign_id = campaign.getCampaign_id();
+        current_mapindex = campaign.getCurrent_mapindex();
+
+        playIO.savePlay(pMap, campaign_id, current_mapindex);
     }
 }

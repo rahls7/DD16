@@ -51,6 +51,22 @@ public class PCampaign {
     }
 
     /**
+     * get current campaign id
+     * @return
+     */
+    public int getCampaign_id() {
+        return campaign_id;
+    }
+
+    /**
+     * get current mapindex
+     * @return
+     */
+    public int getCurrent_mapindex() {
+        return current_mapindex;
+    }
+
+    /**
      * get the current map.
      * @return current map.
      */
