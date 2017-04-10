@@ -27,6 +27,17 @@ public class PlayIO {
         JSONObject json_content = new JSONObject(content);
         JSONArray json_items = json_content.getJSONArray("play");
         JSONObject json = generateJSON(pMap, campaign_id, current_mapindex);
+
+        int id = 0;
+        for (int i = 0; i < json_items.length(); i++) {
+            int item_id = json_items.getJSONObject(i).getInt("id");
+            System.out.println(i + ": " + json_items.getJSONObject(i).getInt("id"));
+            if (id < item_id)
+                id = item_id;
+        }
+        id += 1;
+        json.put("id",id);
+
         json_items.put(json);
         writePlayFile(json_content);
     }
@@ -43,8 +54,11 @@ public class PlayIO {
     private JSONObject generateJSON(PMap pMap, int campaign_id, int current_mapindex) {
 
         JSONObject jsonObject = new JSONObject();
+        JSONObject jsonCharacterObject = new JSONObject();
 
         JSONArray json_cells = new JSONArray();
+        JSONArray json_characters = new JSONArray();
+
         PCell[][] cells = pMap.getCells();
         for (int i = 0; i < pMap.getWidth(); i++){
             for (int j = 0; j < pMap.getHeight(); j++){
@@ -54,7 +68,8 @@ public class PlayIO {
 
                 String type = cells[i][j].getContent().getType();
                 if(type.equals("FRIEND")||type.equals("ENEMY")||type.equals("PLAYER")){
-                    saveCharacter((PCharacter) cells[i][j].getContent(), i, j);
+                    JSONObject character = generateCharacterJSON((PCharacter) cells[i][j].getContent(), i, j);
+                    json_characters.put(character);
                 }
                 else if(type.equals("CHEST")){
                     PChest c = (PChest) cells[i][j].getContent();
@@ -66,6 +81,9 @@ public class PlayIO {
             }
         }
         jsonObject.put("cells", json_cells);
+        jsonCharacterObject.put("characters", json_characters);
+
+        saveCharacter(jsonCharacterObject);
 
         jsonObject.put("campaignId", campaign_id);
         jsonObject.put("mapIndex", current_mapindex);
@@ -78,17 +96,26 @@ public class PlayIO {
      * Save all the characters in the current map
      *
      * @param character the character to be saved
-     * @param x the x index of the character
-     * @param y the y index of the character
+     *
      */
 
-    private void saveCharacter(PCharacter character, int x, int y){
+    private void saveCharacter(JSONObject character){
 
         String character_content = readPlayCharacterFile();
         JSONObject json_character_content = new JSONObject(character_content);
         JSONArray json_character_items = json_character_content.getJSONArray("character");
-        JSONObject json_character = generateCharacterJSON(character, x, y);
-        json_character_items.put(json_character);
+
+        int id = 0;
+        for (int i = 0; i < json_character_items.length(); i++) {
+            int item_id = json_character_items.getJSONObject(i).getInt("id");
+            System.out.println(i + ": " + json_character_items.getJSONObject(i).getInt("id"));
+            if (id < item_id)
+                id = item_id;
+        }
+        id += 1;
+        character.put("id",id);
+
+        json_character_items.put(character);
         writePlayCharacterFile(json_character_content);
     }
 
