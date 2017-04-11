@@ -169,6 +169,7 @@ public class PlayIO {
         jsonCharacterObject.put("stats", character.getStats());
         jsonCharacterObject.put("attributes", character.getAttributes());
         jsonCharacterObject.put("isSaved", character.isSaved());
+        jsonCharacterObject.put("category", character.getCategory());
 
         jsonCharacterObject.put("x", x);
         jsonCharacterObject.put("y", y);
