@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Fish on 2017/4/8.
@@ -21,12 +22,12 @@ public class PlayIO {
      * @param campaign_id the id of the campaign
      * @param current_mapindex the index of the current map
      */
-    public void savePlay(PMap pMap, int campaign_id, int current_mapindex) {
+    public void savePlay(PMap pMap, int campaign_id, int current_mapindex, List<PCharacter> order) {
 
         String content = readPlayFile();
         JSONObject json_content = new JSONObject(content);
         JSONArray json_items = json_content.getJSONArray("play");
-        JSONObject json = generateJSON(pMap, campaign_id, current_mapindex);
+        JSONObject json = generateJSON(pMap, campaign_id, current_mapindex, order);
 
         int id = 0;
         for (int i = 0; i < json_items.length(); i++) {
@@ -51,7 +52,7 @@ public class PlayIO {
      *
      * @return JSON of the map.
      */
-    private JSONObject generateJSON(PMap pMap, int campaign_id, int current_mapindex) {
+    private JSONObject generateJSON(PMap pMap, int campaign_id, int current_mapindex, List<PCharacter> order) {
 
         JSONObject jsonObject = new JSONObject();
         JSONObject jsonCharacterObject = new JSONObject();
@@ -87,6 +88,26 @@ public class PlayIO {
 
         jsonObject.put("campaignId", campaign_id);
         jsonObject.put("mapIndex", current_mapindex);
+
+        JSONArray json_orders = new JSONArray();
+
+        for (int a = 0; a < order.size(); a++){
+           for ( int i = 0; i < pMap.getWidth(); i++){
+               for (int j = 0; j < pMap.getHeight(); j++) {
+                   String type = cells[i][j].getContent().getType();
+                   if(type.equals("FRIEND")||type.equals("ENEMY")||type.equals("PLAYER")) {
+                       PCharacter c = (PCharacter) cells[i][j].getContent();
+                       if (c == order.get(a)) {
+                           JSONObject json_order = new JSONObject();
+                           json_order.put("order_x", i);
+                           json_order.put("order_y", j);
+                           json_orders.put(json_order);
+                       }
+                   }
+               }
+           }
+        }
+        jsonObject.put("orders", json_orders);
 
         System.out.println(jsonObject);
         return jsonObject;

@@ -1,2 +1,0 @@
-{"items":[{"id":1,"attribute":"Damage Bonus, Freezing Burning Slaying","attribute_value":3,"type":"Ranged Weapon"},{"id":2,"attribute":"Attack Bonus, Slaying Frightening Pacifying","attribute_value":5,"type":"Melee Weapon"},{"id":3,"attribute":"Attack Bonus, Slaying Frightening","attribute_value":2,"type":"Ranged Weapon"},{"id":4,"attribute":"Strength","attribute_value":4,"type":"Belt"},{"id":5,"attribute":"Damage Bonus, Freezing Slaying Frightening","attribute_value":2,"type":"Melee Weapon"}]}
-

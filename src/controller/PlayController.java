@@ -525,7 +525,7 @@ public class PlayController {
         campaign_id = campaign.getCampaign_id();
         current_mapindex = campaign.getCurrent_mapindex();
 
-        playIO.savePlay(pMap, campaign_id, current_mapindex);
+        playIO.savePlay(pMap, campaign_id, current_mapindex, order);
     }
 
     public void execute_player(){
