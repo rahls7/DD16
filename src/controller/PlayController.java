@@ -66,6 +66,10 @@ public class PlayController {
         friends = new ArrayList<PCharacter>();
     }
 
+    /**
+     * Initialize a play controller for loading a game.
+     * @param play_id The id of the play file.
+     */
     public PlayController(int play_id){
         playIO = new PlayIO();
         campaignio = new CampaignIO();
@@ -123,14 +127,29 @@ public class PlayController {
         return campaign.readCurrentMap();
     }
 
+    /**
+     * Get the json of map in the play file.
+     * @param play_id The id of the play file.
+     * @return The json of the map.
+     */
     public JSONObject readPlayMap(int play_id){
         return playIO.readPlayMap(play_id);
     }
 
+    /**
+     * Get the PCharacter of the player from the play file.
+     * @param play_id The id of the play file.
+     * @return The PCharacter of the player.
+     */
     public PCharacter readPlayer(int play_id){
         return playIO.readPlayer(play_id);
     }
 
+    /**
+     * Get the campaign json from the play file.
+     * @param play_id The id of the play file.
+     * @return The json of the campaign.
+     */
     public JSONObject readPlayCampaign(int play_id){
         int play_campaign_id = playIO.readPlayCampaignId(play_id);
         return campaignio.readCampaign(play_campaign_id);

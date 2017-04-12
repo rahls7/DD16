@@ -68,11 +68,16 @@ public class PlayIO {
                 json_cell.put("cell_y", j);
 
                 String type = cells[i][j].getContent().getType();
-                if(type.equals("FRIEND")||type.equals("ENEMY")||type.equals("PLAYER")){
+                if (type.equals("PLAYER")){
                     JSONObject character = generateCharacterJSON((PCharacter) cells[i][j].getContent(), i, j);
                     json_characters.put(character);
-//                    PCharacter ch = (PCharacter) cells[i][j].getContent();
-//                    type = type + " " + ch.getId() + " " + ch.getCategory();
+                    type = "PLAYER";
+                }
+                else if(type.equals("FRIEND")||type.equals("ENEMY")){
+                    JSONObject character = generateCharacterJSON((PCharacter) cells[i][j].getContent(), i, j);
+                    json_characters.put(character);
+                    PCharacter ch = (PCharacter) cells[i][j].getContent();
+                    type = "CHARACTER" + " " + ch.getId() + " " + ch.getCategory();
                 }
                 else if(type.equals("CHEST")){
                     PChest c = (PChest) cells[i][j].getContent();
@@ -265,6 +270,11 @@ public class PlayIO {
         return json_items;
     }
 
+    /**
+     * Get character list of a play file.
+     *
+     * @return List of the characters.
+     */
     public JSONArray getPlayCharacterList() {
         String content = readPlayFile();
         JSONObject json_content = new JSONObject(content);
@@ -273,14 +283,19 @@ public class PlayIO {
         return json_items;
     }
 
-    public JSONObject readPlayMap(int map_id) {
+    /**
+     * Get the map from play file.
+     * @param play_id the id of the play file.
+     * @return JSONObject of the map.
+     */
+    public JSONObject readPlayMap(int play_id) {
         String content = readPlayFile();
         JSONObject json_content = new JSONObject(content);
         JSONArray json_maps = json_content.getJSONArray("play");
         JSONObject json_map = new JSONObject();
         for (int i = 0; i < json_maps.length(); i++) {
             int id = json_maps.getJSONObject(i).getInt("id");
-            if (id == map_id) {
+            if (id == play_id) {
                 json_map = json_maps.getJSONObject(i);
                 break;
             }
@@ -288,6 +303,11 @@ public class PlayIO {
         return json_map;
     }
 
+    /**
+     * Get the campaign from the play file.
+     * @param play_id the id of the play file.
+     * @return the id of the campaign.
+     */
     public int readPlayCampaignId (int play_id){
         String content = readPlayFile();
         JSONObject json_content = new JSONObject(content);
@@ -303,6 +323,11 @@ public class PlayIO {
         return playCampaignId;
     }
 
+    /**
+     * Get the player from the playCharacter file.
+     * @param play_id the id of the play file, which equals the id of the playCharacter file.
+     * @return the PCharacter of the player.
+     */
     public PCharacter readPlayer (int play_id){
         String content = readPlayCharacterFile();
         JSONObject json_content = new JSONObject(content);

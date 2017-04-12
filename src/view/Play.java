@@ -185,7 +185,7 @@ public class Play extends JPanel implements MouseListener {
      * @param infoToDisplay The information that is to be displayed during the battle.
      */
     public static void displayInfo(String infoToDisplay){
-        battleInfo_area.append(infoToDisplay+"\n");
+        battleInfo_area.append("\n"+infoToDisplay);
     }
 
     /**
