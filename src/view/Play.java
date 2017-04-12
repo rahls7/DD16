@@ -108,6 +108,78 @@ public class Play extends JPanel implements MouseListener {
     }
 
     /**
+     * Initiate the play panel through load game.
+     *
+     * @param play_id Id of the play file.
+     */
+    public Play(int play_id) {
+        super(new GridLayout(1, 0));
+
+        play_controller = new PlayController(play_id);
+
+        json_map = new JSONObject();
+        json_map = play_controller.readPlayMap(play_id);
+
+        width = json_map.getInt("width");
+        height = json_map.getInt("height");
+
+        JSONArray json_cells = json_map.getJSONArray("cells");
+
+        map_panel = new JPanel(new GridLayout(width, height));
+        map_panel.setBorder(BorderFactory.createTitledBorder(null, "Map", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
+
+        cells = new PCellPanel[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                cells[i][j] = new PCellPanel(i, j);
+                cells[i][j].addMouseListener(this);
+                String content = getJSONContent(json_cells, i, j);
+                cells[i][j].setContent(content);
+                map_panel.add(cells[i][j]);
+            }
+        }
+        inventory_panel = new PInventoryPanel();
+        information_panel = new PInformationPanel(play_controller);
+        characteristic_panel = new PCharacteristicPanel();
+        play_controller.setInventoryObserver(inventory_panel);
+        play_controller.setCharacterObserver(characteristic_panel);
+        inventory_panel.setPlayController(play_controller);
+        inventory_panel.setCells(cells);
+
+        battleInfo_panel = new JPanel();
+        battleInfo_panel.setLayout(null);
+        battleInfo_area = new JTextArea();
+        battleInfo_area.setEditable(false);
+        battleInfo_area.setText("Battle Information Display \n");
+        scrollPane = new JScrollPane(battleInfo_area);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBounds(20,20,450, 120);
+        save_play = new JButton("Save Game");
+        save_play.setBounds(500, 60, 100, 30);
+        save_play.addActionListener(new savePlay());
+        battleInfo_panel.add(scrollPane);
+        battleInfo_panel.add(save_play);
+
+
+        action_panel = new JPanel(new GridLayout(4, 0));
+        action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
+        action_panel.add(information_panel);
+        action_panel.add(battleInfo_panel);
+        action_panel.add(characteristic_panel);
+        action_panel.add(inventory_panel);
+
+        add(map_panel);
+        add(action_panel);
+
+        play_controller.setCellPanel(cells);
+
+
+        play_controller.beforePlayer();
+        moved=false;
+
+    }
+
+    /**
      * Display the real-time battle information.
      *
      * @param infoToDisplay The information that is to be displayed during the battle.

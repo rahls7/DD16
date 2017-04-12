@@ -71,6 +71,8 @@ public class PlayIO {
                 if(type.equals("FRIEND")||type.equals("ENEMY")||type.equals("PLAYER")){
                     JSONObject character = generateCharacterJSON((PCharacter) cells[i][j].getContent(), i, j);
                     json_characters.put(character);
+//                    PCharacter ch = (PCharacter) cells[i][j].getContent();
+//                    type = type + " " + ch.getId() + " " + ch.getCategory();
                 }
                 else if(type.equals("CHEST")){
                     PChest c = (PChest) cells[i][j].getContent();
@@ -88,6 +90,8 @@ public class PlayIO {
 
         jsonObject.put("campaignId", campaign_id);
         jsonObject.put("mapIndex", current_mapindex);
+        jsonObject.put("width", pMap.getWidth());
+        jsonObject.put("height", pMap.getHeight());
 
         JSONArray json_orders = new JSONArray();
 
@@ -170,6 +174,7 @@ public class PlayIO {
         jsonCharacterObject.put("attributes", character.getAttributes());
         jsonCharacterObject.put("isSaved", character.isSaved());
         jsonCharacterObject.put("category", character.getCategory());
+        jsonCharacterObject.put("original_id", character.getId());
 
         jsonCharacterObject.put("x", x);
         jsonCharacterObject.put("y", y);
@@ -266,6 +271,61 @@ public class PlayIO {
         JSONArray json_items = json_content.getJSONArray("character");
 
         return json_items;
+    }
+
+    public JSONObject readPlayMap(int map_id) {
+        String content = readPlayFile();
+        JSONObject json_content = new JSONObject(content);
+        JSONArray json_maps = json_content.getJSONArray("play");
+        JSONObject json_map = new JSONObject();
+        for (int i = 0; i < json_maps.length(); i++) {
+            int id = json_maps.getJSONObject(i).getInt("id");
+            if (id == map_id) {
+                json_map = json_maps.getJSONObject(i);
+                break;
+            }
+        }
+        return json_map;
+    }
+
+    public int readPlayCampaignId (int play_id){
+        String content = readPlayFile();
+        JSONObject json_content = new JSONObject(content);
+        JSONArray json_plays = json_content.getJSONArray("play");
+        int playCampaignId = 0;
+        for (int i = 0; i < json_plays.length(); i++) {
+            int id = json_plays.getJSONObject(i).getInt("id");
+            if (id == play_id) {
+                playCampaignId = json_plays.getJSONObject(i).getInt("campaignId");
+                break;
+            }
+        }
+        return playCampaignId;
+    }
+
+    public PCharacter readPlayer (int play_id){
+        String content = readPlayCharacterFile();
+        JSONObject json_content = new JSONObject(content);
+        JSONArray json_characters = json_content.getJSONArray("character");
+        JSONArray json_character_list = new JSONArray();
+        for (int i = 0; i < json_characters.length(); i++){
+            int id = json_characters.getJSONObject(i).getInt("id");
+            if (id == play_id){
+                json_character_list = json_characters.getJSONObject(i).getJSONArray("characters");
+                break;
+            }
+        }
+        int player_id = 0;
+        for (int i = 0; i < json_character_list.length(); i++){
+            if (json_character_list.getJSONObject(i).getInt("category") == 2){
+               player_id = json_character_list.getJSONObject(i).getInt("original_id");
+               break;
+            }
+        }
+        String player_id_str = String.valueOf(player_id);
+        PCharacter player = new PCharacter(player_id_str, "2");
+
+        return player;
     }
     /**
      * Get a play from the file.

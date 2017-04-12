@@ -2,11 +2,9 @@ package controller;
 
 
 import model.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
-import view.PCellPanel;
-import view.PCharacteristicPanel;
-import view.PInventoryPanel;
-import view.Play;
+import view.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -68,6 +66,20 @@ public class PlayController {
         friends = new ArrayList<PCharacter>();
     }
 
+    public PlayController(int play_id){
+        playIO = new PlayIO();
+        campaignio = new CampaignIO();
+
+        JSONObject json_campaign = readPlayCampaign(play_id);
+        campaign = new PCampaign(json_campaign);
+
+        player = readPlayer(play_id);
+        campaign.setPlayer(player);
+
+        characters = new ArrayList<PCharacter>();
+        enemys = new ArrayList<PCharacter>();
+        friends = new ArrayList<PCharacter>();
+    }
 
     public void setCellPanel(PCellPanel[][] pCellPanel) {
         cellPanels = pCellPanel;
@@ -111,6 +123,18 @@ public class PlayController {
         return campaign.readCurrentMap();
     }
 
+    public JSONObject readPlayMap(int play_id){
+        return playIO.readPlayMap(play_id);
+    }
+
+    public PCharacter readPlayer(int play_id){
+        return playIO.readPlayer(play_id);
+    }
+
+    public JSONObject readPlayCampaign(int play_id){
+        int play_campaign_id = playIO.readPlayCampaignId(play_id);
+        return campaignio.readCampaign(play_campaign_id);
+    }
     /**
      * Set observer to the character panel
      *
