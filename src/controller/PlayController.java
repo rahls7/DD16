@@ -83,9 +83,6 @@ public class PlayController {
         characters = new ArrayList<PCharacter>();
         enemys = new ArrayList<PCharacter>();
         friends = new ArrayList<PCharacter>();
-
-        order = new ArrayList<PCharacter>();
-        order = readOrder(play_id);
     }
 
     public void setCellPanel(PCellPanel[][] pCellPanel) {
@@ -187,6 +184,11 @@ public class PlayController {
 
         return order;
     }
+
+    public void generatePlayOrder(int play_id){
+        order = new ArrayList<PCharacter>();
+        order = readOrder(play_id);
+    }
     /**
      * Set observer to the character panel
      *
@@ -254,39 +256,38 @@ public class PlayController {
 
 
     private void generateOrder() {
-        if (order == null) {
-            order = new ArrayList<PCharacter>();
-            player_index = -1;
-            int[] index = new int[characters.size()];
-            int[] random = new int[characters.size()];
-            int temp1;
-            int temp2;
-            for (int i = 0; i < characters.size(); i++) {
-                index[i] = i;
-                int num = 1 + (int) (Math.random() * 20);
-                random[i] = num;
-            }
-            for (int i = 0; i < characters.size() - 1; i++) {
-                for (int j = 0; j < characters.size() - 1 - i; j++) {
-                    if (random[j + 1] > random[j]) {
-                        temp1 = random[j];
-                        random[j] = random[j + 1];
-                        random[j + 1] = temp1;
-                        temp2 = index[j];
-                        index[j] = index[j + 1];
-                        index[j + 1] = temp2;
-                    }
-                }
-            }
-            for (int i = 0; i < characters.size(); i++) {
-                order.add(characters.get(index[i]));
-            }
-            for (int i = 0; i < order.size(); i++) {
-                if (order.get(i).getCategory() == 2) {
-                    player_index = i;
+        order = new ArrayList<PCharacter>();
+        player_index = -1;
+        int[] index = new int[characters.size()];
+        int[] random = new int[characters.size()];
+        int temp1;
+        int temp2;
+        for (int i = 0; i < characters.size(); i++) {
+            index[i] = i;
+            int num = 1 + (int) (Math.random() * 20);
+            random[i] = num;
+        }
+        for (int i = 0; i < characters.size() - 1; i++) {
+            for (int j = 0; j < characters.size() - 1 - i; j++) {
+                if (random[j + 1] > random[j]) {
+                    temp1 = random[j];
+                    random[j] = random[j + 1];
+                    random[j + 1] = temp1;
+                    temp2 = index[j];
+                    index[j] = index[j + 1];
+                    index[j + 1] = temp2;
                 }
             }
         }
+        for (int i = 0; i < characters.size(); i++) {
+            order.add(characters.get(index[i]));
+        }
+        for (int i = 0; i < order.size(); i++) {
+            if (order.get(i).getCategory() == 2) {
+                player_index = i;
+            }
+        }
+
     }
 
 

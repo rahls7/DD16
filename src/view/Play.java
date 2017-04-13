@@ -176,7 +176,7 @@ public class Play extends JPanel implements MouseListener {
         add(action_panel);
 
         play_controller.setCellPanel(cells);
-
+        play_controller.generatePlayOrder(play_id);
 
         play_controller.beforePlayer();
         moved=false;
