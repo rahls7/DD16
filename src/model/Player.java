@@ -30,8 +30,7 @@ public class Player {
 
     /**
      * get character that is built
-     *
-     * @return
+     * @return Character
      */
     public Character getCharacter() {
         return characterBuilder.getCharacter();

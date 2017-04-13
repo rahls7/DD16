@@ -6,6 +6,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Campaign class for play mode
+ */
 public class PCampaign {
 
     private MapIO mapio;
@@ -51,6 +54,22 @@ public class PCampaign {
      */
     public int getCurrentMapId(int current_mapindex) {
         return maps.get(current_mapindex).getId();
+    }
+
+    /**
+     * get current campaign id
+     * @return
+     */
+    public int getCampaign_id() {
+        return campaign_id;
+    }
+
+    /**
+     * get current mapindex
+     * @return
+     */
+    public int getCurrent_mapindex() {
+        return current_mapindex;
     }
 
     /**
