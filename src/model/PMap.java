@@ -20,8 +20,8 @@ public class PMap {
     /**
      * Initialize a map model of play
      *
-     * @param json_map
-     * @param index
+     * @param json_map Json Map
+     * @param index Map index
      */
     public PMap(JSONObject json_map, int index) {
         this.map_id = json_map.getInt("id");
@@ -51,7 +51,7 @@ public class PMap {
     /**
      * Set the width of a map
      *
-     * @param width
+     * @param width width of the map
      */
     public void setWidth(int width) {
         this.width = width;
@@ -68,7 +68,7 @@ public class PMap {
     /**
      * Set the height of a map
      *
-     * @param height
+     * @param height height of the map
      */
     public void setHeight(int height) {
         this.height = height;
@@ -77,7 +77,7 @@ public class PMap {
     /**
      * Adapt the map to its level
      *
-     * @param level
+     * @param level map level
      */
     public void adaptMapToLevel(int level) {
         for (int i = 0; i < width; i++) {
@@ -113,7 +113,7 @@ public class PMap {
     /**
      * Adapt the item levels to the map
      *
-     * @param level
+     * @param level item level
      * @return new level
      */
     public int adaptItemAttributeLevel(int level) {
@@ -135,9 +135,9 @@ public class PMap {
     /**
      * Get the object of a cell
      *
-     * @param json_cells
-     * @param x
-     * @param y
+     * @param json_cells json cells
+     * @param x location x
+     * @param y location y
      * @return json content
      */
     private String getJSONContent(JSONArray json_cells, int x, int y) {
@@ -174,7 +174,7 @@ public class PMap {
     /**
      * Set the player
      *
-     * @param player
+     * @param player player character instance
      */
     public void setPlayer(PCharacter player) {
         for (int i = 0; i < width; i++) {
@@ -191,11 +191,11 @@ public class PMap {
     /**
      * Set the player of a specific cell
      *
-     * @param previous_x
-     * @param previous_y
-     * @param current_x
-     * @param current_y
-     * @param player
+     * @param previous_x Previous x location on cell
+     * @param previous_y Previous y location
+     * @param current_x Currenet x Location
+     * @param current_y Current y location
+     * @param player Character player instance
      */
     public void setPlayer(int previous_x, int previous_y, int current_x, int current_y, PCharacter player) {
         cells[previous_x][previous_y].removePlayer();
@@ -210,9 +210,9 @@ public class PMap {
     /**
      * Get the chest item of a specific cell
      *
-     * @param x
-     * @param y
-     * @return Pitem
+     * @param x Location x
+     * @param y Location y
+     * @return Pitem Item instance
      */
     public PItem getChestItem(int x, int y) {
 
@@ -241,8 +241,8 @@ public class PMap {
     /**
      * Get the friend of a specific cell
      *
-     * @param x
-     * @param y
+     * @param x Location x
+     * @param y Location y
      * @return PCharacter
      */
     public PCharacter getFriend(int x, int y) {
@@ -261,8 +261,8 @@ public class PMap {
     /**
      * Get the enemy of a specific cell
      *
-     * @param x
-     * @param y
+     * @param x Location x
+     * @param y Location y
      * @return PCharacter
      */
     public PCharacter getEnemy(int x, int y) {

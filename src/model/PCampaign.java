@@ -58,7 +58,7 @@ public class PCampaign {
 
     /**
      * get current campaign id
-     * @return
+     * @return campaign id
      */
     public int getCampaign_id() {
         return campaign_id;
@@ -66,7 +66,7 @@ public class PCampaign {
 
     /**
      * get current mapindex
-     * @return
+     * @return map index
      */
     public int getCurrent_mapindex() {
         return current_mapindex;

@@ -10,7 +10,7 @@ import java.util.List;
 public class PBurning extends PWeaponDecorator {
     /**
      * Initialize burning
-     * @param weapon
+     * @param weapon weapon
      */
     public PBurning(PWeapon weapon) {
         super(weapon);

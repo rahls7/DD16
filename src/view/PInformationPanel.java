@@ -48,6 +48,7 @@ public class PInformationPanel extends JPanel {
      *
      * @param cell The selected cell.
      * @param isAdjacent True if the player is near the cell, otherwise false.
+     * @param isInRange boolean for determining range
      */
     public void showInformation(PCellPanel cell, boolean isAdjacent, boolean isInRange) {
         this.cell = cell;

@@ -46,8 +46,8 @@ public class PlayController {
     /**
      * Initialize a play controller
      *
-     * @param character_id
-     * @param campaign_id
+     * @param character_id character id
+     * @param campaign_id camapign id
      */
     public PlayController(String character_id, int campaign_id) {
         campaignio = new CampaignIO();
@@ -109,7 +109,7 @@ public class PlayController {
     /**
      * Get the campaign json based on the campaign id
      *
-     * @param campaign_id
+     * @param campaign_id campaign id
      * @return JSON Object of a campaign
      */
     private JSONObject readCampaign(int campaign_id) {
@@ -190,7 +190,7 @@ public class PlayController {
     /**
      * Set observer to the character panel
      *
-     * @param pCharacteristicPanel
+     * @param pCharacteristicPanel character characteristics
      */
     public void setCharacterObserver(PCharacteristicPanel pCharacteristicPanel) {
         this.pCharacteristicPanel = pCharacteristicPanel;
@@ -200,7 +200,7 @@ public class PlayController {
     /**
      * Set observer to the inventory panel
      *
-     * @param pInventoryPanel
+     * @param pInventoryPanel Inventory panel
      */
     public void setInventoryObserver(PInventoryPanel pInventoryPanel) {
         this.pInventoryPanel = pInventoryPanel;
@@ -245,9 +245,8 @@ public class PlayController {
 
     /**
      * Generate the action order of the player and all the NPCs
+     * @return String for order of the play
      */
-
-
     public String generateOrder() {
         order = new ArrayList<PCharacter>();
         player_index = -1;
@@ -384,10 +383,10 @@ public class PlayController {
     /**
      * Set player
      *
-     * @param previous_x
-     * @param previous_y
-     * @param current_x
-     * @param current_y
+     * @param previous_x x location previous
+     * @param previous_y y location previous
+     * @param current_x current x locatiom
+     * @param current_y current y location
      */
     public void setPlayer(int previous_x, int previous_y, int current_x, int current_y) {
         campaign.setPlayer(previous_x, previous_y, current_x, current_y, player);

@@ -13,14 +13,8 @@ public class PCell {
 
     /**
      * Initialize a cell Object
-<<<<<<< Updated upstream
-     *
-     * @param i       x coordinate of the cell
-     * @param j       y coordinate of the cell
-=======
      * @param i x coordinate of the cell
      * @param j y coordinate of the cell
->>>>>>> Stashed changes
      * @param content content of the cell
      */
     public PCell(int i, int j, String content) {
@@ -42,11 +36,7 @@ public class PCell {
 
     /**
      * Get the type
-<<<<<<< Updated upstream
-     *
-=======
->>>>>>> Stashed changes
-     * @return type
+     * @return type cell type
      */
     public String getType() {
         return type;
@@ -55,7 +45,7 @@ public class PCell {
     /**
      * Set the type
      *
-     * @param type
+     * @param type type of the cell
      */
     public void setType(String type) {
         this.type = type;
@@ -64,7 +54,7 @@ public class PCell {
     /**
      * Set the player
      *
-     * @param player
+     * @param player Player character instance
      */
     public void setPlayer(PCharacter player) {
         if (type.equals("") || type.equals("ENTRY")) {
@@ -95,10 +85,6 @@ public class PCell {
 
     /**
      * Get the content of a cell
-<<<<<<< Updated upstream
-     *
-=======
->>>>>>> Stashed changes
      * @return content of a cell
      */
     public PCellContent getContent() {

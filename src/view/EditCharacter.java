@@ -28,7 +28,7 @@ public class EditCharacter extends JPanel {
     /**
      * Constructor of editCharacter to create an object of editCharacter
      *
-     * @param id
+     * @param id id of the character
      */
     public EditCharacter(String id) {
 

@@ -21,6 +21,8 @@ public class PlayIO {
      * @param pMap the map to be saved
      * @param campaign_id the id of the campaign
      * @param current_mapindex the index of the current map
+     * @param order Order of play
+     * @param battle_info information for battle turns
      */
     public void savePlay(PMap pMap, int campaign_id, int current_mapindex, List<PCharacter> order, String battle_info) {
 
@@ -49,7 +51,8 @@ public class PlayIO {
      * @param pMap Current map.
      * @param campaign_id Current campaign ID.
      * @param current_mapindex Current map index.
-     *
+     * @param order Order of play
+     * @param battle_info Informationf for display related to battle
      * @return JSON of the map.
      */
     private JSONObject generateJSON(PMap pMap, int campaign_id, int current_mapindex, List<PCharacter> order, String battle_info) {

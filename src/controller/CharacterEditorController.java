@@ -26,6 +26,8 @@ public class CharacterEditorController {
      * Constructor of character controller, create a controller, called by the character view
      *
      * @param id ID of the character
+     * @param type type of the character
+     *
      */
     public CharacterEditorController(String id, String type) {
         player = new Player();
@@ -96,7 +98,7 @@ public class CharacterEditorController {
     /**
      * get the character's name from character model
      *
-     * @return
+     * @return String of name
      */
     public String getName() {
         return characterModel.getName();
@@ -133,7 +135,7 @@ public class CharacterEditorController {
     /**
      * delete the model's item
      *
-     * @param equipment
+     * @param equipment equipment object
      */
     public void deleteEquipment(int equipment) {
         characterModel.deleteEquipment(characterModel.getEquipment().get(equipment));
@@ -143,7 +145,7 @@ public class CharacterEditorController {
     /**
      * put one item on the model's backpack
      *
-     * @param equipmentBackpack
+     * @param equipmentBackpack backpack equipment
      */
     public void setEquipmentBackpack(int equipmentBackpack) {
         if (characterModel.getBackpack().size() < 10) {
@@ -155,7 +157,7 @@ public class CharacterEditorController {
     /**
      * get all items in model's backpack
      *
-     * @return
+     * @return Array list of backpack items
      */
     public ArrayList<String> getBackpack() {
         return itemToString(characterModel.getBackpack());
@@ -174,7 +176,7 @@ public class CharacterEditorController {
     /**
      * delete item from backpack
      *
-     * @param backpack
+     * @param backpack backpack item number
      */
     public void removeBackpack(int backpack) {
         characterModel.removeBackpack(characterModel.getBackpack().get(backpack));
@@ -183,7 +185,7 @@ public class CharacterEditorController {
     /**
      * get the items from database
      *
-     * @return
+     * @return Arraylist of item
      */
     public ArrayList<String> getItem() {
 
@@ -202,7 +204,7 @@ public class CharacterEditorController {
     /**
      * set character model's stats
      *
-     * @param stats
+     * @param stats Stats attributes
      */
     public void setStats(int[][] stats) {
         characterModel.setStats(stats);
@@ -220,15 +222,15 @@ public class CharacterEditorController {
     /**
      * set character model's attributes
      *
-     * @param attributes
+     * @param attributes attributes of the character
      */
     public void setAttributes(int[] attributes) {
         characterModel.setAttributes(attributes);
     }
 
     /**
-     * @param items
-     * @return
+     * @param items item list
+     * @return items arraylist of items (string)
      */
     public ArrayList<String> itemToString(ArrayList<Item> items) {
         ArrayList<String> strings = new ArrayList<String>();
