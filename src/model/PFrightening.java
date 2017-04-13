@@ -10,7 +10,7 @@ import java.util.List;
 public class PFrightening extends PWeaponDecorator {
     /**
      * Initialize a frightening
-     * @param weapon
+     * @param weapon weapon instance
      */
     public PFrightening(PWeapon weapon) {
         super(weapon);

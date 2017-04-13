@@ -88,8 +88,8 @@ public class PInventoryPanel extends JPanel implements Observer {
     /**
      * transform the items to be strings
      *
-     * @param items
-     * @return
+     * @param items list of items
+     * @return list of strings
      */
     public ArrayList<String> itemToString(ArrayList<model.PItem> items) {
         ArrayList<String> strings = new ArrayList<String>();
@@ -114,7 +114,7 @@ public class PInventoryPanel extends JPanel implements Observer {
     /**
      * set the play controller
      *
-     * @param playController
+     * @param playController instance of playcontroller class
      */
     public void setPlayController(PlayController playController) {
         this.playController = playController;

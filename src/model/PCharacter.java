@@ -311,7 +311,7 @@ public class PCharacter extends PCellContent {
     /**
      * Setters and Getter Functons for Attributes.
      *
-     * @return
+     * @return Id string
      */
 
     public String getId() {

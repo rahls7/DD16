@@ -11,7 +11,7 @@ public class PSlaying extends PWeaponDecorator {
 
     /**
      * Initialize a slaying
-     * @param weapon
+     * @param weapon Weapon instance
      */
     public PSlaying(PWeapon weapon) {
         super(weapon);

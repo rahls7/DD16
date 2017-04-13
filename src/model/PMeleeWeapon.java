@@ -15,7 +15,7 @@ public class PMeleeWeapon extends PWeapon {
 
     /**
      * Initialize a Melee Weapon
-     * @param item
+     * @param item Item instance
      */
     public PMeleeWeapon(PItem item) {
         type = item.getType();

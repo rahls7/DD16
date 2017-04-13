@@ -18,7 +18,7 @@ public class Campaign {
     /**
      * Initialize a campaign model
      *
-     * @param is_saved
+     * @param is_saved boolean state of saved
      */
     public Campaign(boolean is_saved) {
         isSaved = is_saved;
@@ -28,8 +28,8 @@ public class Campaign {
     /**
      * Initialize a campaign model if it is already existed
      *
-     * @param campaign
-     * @param is_saved
+     * @param campaign campaign json
+     * @param is_saved boolean state of the  saved
      */
     public Campaign(JSONObject campaign, boolean is_saved) {
         isSaved = is_saved;
@@ -44,7 +44,7 @@ public class Campaign {
     /**
      * Set an ID to a campaign
      *
-     * @param id
+     * @param id id of the campaign
      */
     public void setID(int id) {
         this.save_id = id;
@@ -53,7 +53,7 @@ public class Campaign {
     /**
      * Add a map to a campaign
      *
-     * @param map_id
+     * @param map_id map id
      */
     public void addMap(String map_id) {
         this.map_list.add(map_id);
@@ -71,8 +71,8 @@ public class Campaign {
     /**
      * Remove a map from a campaign
      *
-     * @param map_id
-     * @param index
+     * @param map_id map id
+     * @param index index of the map
      */
     public void removeMap(String map_id, int index) {
         if (map_list.get(index).equals(map_id)) {
@@ -83,8 +83,8 @@ public class Campaign {
     /**
      * Replace the map with a selected one
      *
-     * @param selected
-     * @param index
+     * @param selected selected map
+     * @param index index of the map
      */
     public void replaceMap(String selected, int index) {
         map_list.set(index, selected);

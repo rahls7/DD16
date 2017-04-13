@@ -61,7 +61,7 @@ public class Campaign extends JPanel {
     /**
      * Get the existing campaign list
      *
-     * @return
+     * @return returns options for Campaign
      */
     public JComboBox<Integer> getCampaignList() {
         JComboBox<Integer> campaigns = new JComboBox<Integer>();
