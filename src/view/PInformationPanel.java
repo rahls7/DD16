@@ -64,7 +64,7 @@ public class PInformationPanel extends JPanel {
                 add(button_loot);
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("0")) {
-                if(play_controller.getFriendHitPoint(cell.x, cell.y) > 0){
+                if(play_controller.getFriendHitPoint(cell.x, cell.y) != -9999 && play_controller.getFriendHitPoint(cell.x, cell.y) > 0){
                     button_exchange = new JButton("Exchange Item");
                     button_exchange.addActionListener(new exchangeItem(cell.x, cell.y));
                     ArrayList<PItem> it = play_controller.getPlayerItem();
@@ -248,7 +248,7 @@ public class PInformationPanel extends JPanel {
 
         public void actionPerformed(ActionEvent event) {
             play_controller.attackFriend(x,y);
-
+            attacked = true;
             showInformation(cell, true, true);
             revalidate();
             repaint();

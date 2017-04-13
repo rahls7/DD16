@@ -643,8 +643,8 @@ public class PlayController {
         int enemy_exist = 0;
         int x = -1;
         int y = -1;
-        for (PCharacter pCharacter : enemys) {
-            if (pCharacter.getHitPoint() > 0) {
+        for (PCharacter pCharacter : order) {
+            if (pCharacter.getCategory() == 1 && pCharacter.getHitPoint()>0) {
                 cell = map.getCells();
                 for (int i = 0; i < map.getWidth(); i++)
                     for (int j = 0; j < map.getHeight(); j++) {
@@ -812,7 +812,9 @@ public class PlayController {
 
     public int getFriendHitPoint(int x, int y) {
         PCharacter friend = campaign.getFriend(x, y);
-        return friend.getHitPoint();
+        if(friend != null)
+            return friend.getHitPoint();
+        return -9999;
     }
 
     public void attackFriend(int x, int y) {
