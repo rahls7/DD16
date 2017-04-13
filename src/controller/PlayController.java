@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import view.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
@@ -336,6 +337,12 @@ public class PlayController {
                 if (order.get(i).getHitPoint() > 0)
                   execute(order, i);
             }
+        }
+        if(player.getHitPoint() <= 0) {
+            JOptionPane.showMessageDialog(Main.mainFrame, "You died. Game over!");
+            Main.mainFrame.setVisible(false);
+            Main.mainFrame.dispose();
+            Main.mainFrame = new Main();
         }
     }
 

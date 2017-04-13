@@ -64,7 +64,7 @@ public class PInformationPanel extends JPanel {
                 add(button_loot);
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("0")) {
-                if(play_controller.getFriendHitPoint(cell.x, cell.y) != 0){
+                if(play_controller.getFriendHitPoint(cell.x, cell.y) > 0){
                     button_exchange = new JButton("Exchange Item");
                     button_exchange.addActionListener(new exchangeItem(cell.x, cell.y));
                     ArrayList<PItem> it = play_controller.getPlayerItem();
@@ -109,18 +109,20 @@ public class PInformationPanel extends JPanel {
             if(info[0].equals("CHEST")) {
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("0")) {
-                if(play_controller.getFriendHitPoint(cell.x, cell.y) != 0){
+                if(play_controller.getFriendHitPoint(cell.x, cell.y) > 0 && attacked == false){
                     button_attack = new JButton("Attack");
                     button_attack.addActionListener(new attackFriend(cell.x,cell.y));
                     add(button_attack);
                 }
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("1")) {
-                if(play_controller.getEnemyHitPoint(cell.x, cell.y) == 0) {}
+                if(play_controller.getEnemyHitPoint(cell.x, cell.y) <= 0) {}
                 else {
-                    button_attack = new JButton("Attack");
-                    button_attack.addActionListener(new attackEnemy(cell.x,cell.y));
-                    add(button_attack);
+                    if(attacked == false) {
+                        button_attack = new JButton("Attack");
+                        button_attack.addActionListener(new attackEnemy(cell.x, cell.y));
+                        add(button_attack);
+                    }
                 }
             }
         }
