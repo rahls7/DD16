@@ -1,14 +1,12 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import model.Map;
 
 /**
  * Read maps from the file and write maps to the file. Maps are stored in JSON format.

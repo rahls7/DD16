@@ -12,6 +12,7 @@ public class PItem {
 
     /**
      * Initialize a item model of play
+     *
      * @param item_id
      * @param type
      * @param attribute
@@ -26,6 +27,7 @@ public class PItem {
 
     /**
      * Get the id
+     *
      * @return
      */
     public int getId() {
@@ -34,6 +36,7 @@ public class PItem {
 
     /**
      * Set the id
+     *
      * @param id
      */
     public void setId(int id) {
@@ -42,6 +45,7 @@ public class PItem {
 
     /**
      * Get the value of attribute
+     *
      * @return
      */
     public int getAttributeValue() {
@@ -50,6 +54,7 @@ public class PItem {
 
     /**
      * Set the value of attribute
+     *
      * @param attribute_value
      */
     public void setAttributeValue(int attribute_value) {
@@ -58,6 +63,7 @@ public class PItem {
 
     /**
      * Get the type
+     *
      * @return
      */
     public String getType() {
@@ -66,6 +72,7 @@ public class PItem {
 
     /**
      * Set the type
+     *
      * @param type
      */
     public void setType(String type) {
@@ -74,6 +81,7 @@ public class PItem {
 
     /**
      * Get the attriute
+     *
      * @return
      */
     public String getAttribute() {
@@ -82,6 +90,7 @@ public class PItem {
 
     /**
      * Set the attribute
+     *
      * @param attribute
      */
     public void setAttribute(String attribute) {

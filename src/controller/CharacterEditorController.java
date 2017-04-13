@@ -1,14 +1,11 @@
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 import model.*;
 import model.Character;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Silas on 2017/2/10.
@@ -69,7 +66,7 @@ public class CharacterEditorController {
         characterModel.recalculateStats();
     }
 
-    public void setpCharacter(PCharacter pCharacter){
+    public void setpCharacter(PCharacter pCharacter) {
         this.pCharacter = pCharacter;
     }
 
@@ -97,6 +94,15 @@ public class CharacterEditorController {
     }
 
     /**
+     * get the character's name from character model
+     *
+     * @return
+     */
+    public String getName() {
+        return characterModel.getName();
+    }
+
+    /**
      * set the character model's name
      *
      * @param name Name of the character
@@ -106,12 +112,12 @@ public class CharacterEditorController {
     }
 
     /**
-     * get the character's name from character model
+     * get the model character's equipment
      *
-     * @return
+     * @return euipment, model character's equipment
      */
-    public String getName() {
-        return characterModel.getName();
+    public ArrayList<String> getEquipment() {
+        return itemToString(characterModel.getEquipment());
     }
 
     /**
@@ -125,15 +131,6 @@ public class CharacterEditorController {
     }
 
     /**
-     * get the model character's equipment
-     *
-     * @return euipment, model character's equipment
-     */
-    public ArrayList<String> getEquipment() {
-        return itemToString(characterModel.getEquipment());
-    }
-
-    /**
      * delete the model's item
      *
      * @param equipment
@@ -141,16 +138,6 @@ public class CharacterEditorController {
     public void deleteEquipment(int equipment) {
         characterModel.deleteEquipment(characterModel.getEquipment().get(equipment));
         characterModel.recalculateStats();
-    }
-
-    /**
-     * set the model's backpack
-     *
-     * @param backpack backpack of the character model
-     */
-    public void setBackpack(int backpack) {
-        if (characterModel.getBackpack().size() < 10)
-            characterModel.setBackpack(items.get(backpack));
     }
 
     /**
@@ -175,6 +162,16 @@ public class CharacterEditorController {
     }
 
     /**
+     * set the model's backpack
+     *
+     * @param backpack backpack of the character model
+     */
+    public void setBackpack(int backpack) {
+        if (characterModel.getBackpack().size() < 10)
+            characterModel.setBackpack(items.get(backpack));
+    }
+
+    /**
      * delete item from backpack
      *
      * @param backpack
@@ -194,15 +191,6 @@ public class CharacterEditorController {
     }
 
     /**
-     * set character model's stats
-     *
-     * @param stats
-     */
-    public void setStats(int[][] stats) {
-        characterModel.setStats(stats);
-    }
-
-    /**
      * get character model's stats
      *
      * @return stats, its model's stats
@@ -212,12 +200,12 @@ public class CharacterEditorController {
     }
 
     /**
-     * set character model's attributes
+     * set character model's stats
      *
-     * @param attributes
+     * @param stats
      */
-    public void setAttributes(int[] attributes) {
-        characterModel.setAttributes(attributes);
+    public void setStats(int[][] stats) {
+        characterModel.setStats(stats);
     }
 
     /**
@@ -227,6 +215,15 @@ public class CharacterEditorController {
      */
     public int[] getAttributes() {
         return characterModel.getAttributes();
+    }
+
+    /**
+     * set character model's attributes
+     *
+     * @param attributes
+     */
+    public void setAttributes(int[] attributes) {
+        characterModel.setAttributes(attributes);
     }
 
     /**

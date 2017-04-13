@@ -13,6 +13,10 @@ public class PChest extends PCellContent {
 
     /**
      * Initialize a chest model of play
+<<<<<<< Updated upstream
+     *
+=======
+>>>>>>> Stashed changes
      * @param id
      */
     public PChest(String id) {
@@ -24,6 +28,7 @@ public class PChest extends PCellContent {
 
     /**
      * Get the item of a chest
+     *
      * @return
      */
     public PItem getItem() {

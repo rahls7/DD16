@@ -91,6 +91,15 @@ public class CreateCampaign extends JPanel {
     }
 
     /**
+     * Update the map panel list after modifying it
+     */
+    public void updateMapPanelIndex() {
+        for (int i = 0; i < map_panel.size(); i++) {
+            map_panel.get(i).setIndex(i);
+        }
+    }
+
+    /**
      * Add a map to a campaign
      */
     class addMap implements ActionListener, MouseListener {
@@ -168,15 +177,6 @@ public class CreateCampaign extends JPanel {
                 previous_map_panel = null;
             }
 
-        }
-    }
-
-    /**
-     * Update the map panel list after modifying it
-     */
-    public void updateMapPanelIndex() {
-        for (int i = 0; i < map_panel.size(); i++) {
-            map_panel.get(i).setIndex(i);
         }
     }
 

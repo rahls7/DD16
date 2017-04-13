@@ -1,7 +1,7 @@
 package controller;
 
-import model.CampaignIO;
 import model.Campaign;
+import model.CampaignIO;
 import model.MapIO;
 import org.json.JSONArray;
 import org.json.JSONObject;

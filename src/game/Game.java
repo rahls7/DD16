@@ -1,9 +1,9 @@
 package game;
 
-import view.*;
 import view.Menu;
+import view.Screen;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -23,22 +23,12 @@ public class Game extends Canvas implements Runnable {
     private JFrame frame;
 
     private Screen screen;
-
-
-    private enum STATE {
-        MENU,
-        GAME
-    }
-
-    ;
-
     private view.Menu Menu = new Menu();
 
+    ;
     private STATE State = STATE.MENU;
-
     private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData(); // Converting image object into array of pixels.
-
     private boolean running = false;
 
     public Game() {
@@ -47,6 +37,20 @@ public class Game extends Canvas implements Runnable {
 
         screen = new Screen(width, height);
         frame = new JFrame();
+    }
+
+    public static void main(String[] args) {
+        Game game = new Game();
+        game.frame.setResizable(false); // No resizeable functionality to avoid Graphics error
+        game.frame.setTitle("Dragon and Dungeons");
+        game.frame.add(game);
+        game.frame.pack(); // Same as window
+        game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.frame.setLocationRelativeTo(null);
+        game.frame.setVisible(true);
+
+
+        game.start();
     }
 
     public void run() {
@@ -103,21 +107,6 @@ public class Game extends Canvas implements Runnable {
 
     }
 
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.frame.setResizable(false); // No resizeable functionality to avoid Graphics error
-        game.frame.setTitle("Dragon and Dungeons");
-        game.frame.add(game);
-        game.frame.pack(); // Same as window
-        game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        game.frame.setLocationRelativeTo(null);
-        game.frame.setVisible(true);
-
-
-        game.start();
-    }
-
-
     public synchronized void start() {
         running = true;
         thread = new Thread(this, "Display");
@@ -131,6 +120,11 @@ public class Game extends Canvas implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private enum STATE {
+        MENU,
+        GAME
     }
 
 }

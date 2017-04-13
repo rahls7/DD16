@@ -190,4 +190,16 @@ public class CharacterIO {
         }
         return null;
     }
+
+    /**
+     * Created by mo on 2017-04-06.
+     */
+    static interface Strategy {
+
+        void move();
+
+        void attack();
+
+        void loot();
+    }
 }

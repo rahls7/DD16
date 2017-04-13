@@ -14,7 +14,10 @@ public abstract class PCellContent extends Observable {
 
     /**
      * Return the type of the content.
+     *
      * @return The type of the content.
      */
-    public String getType() { return type; }
+    public String getType() {
+        return type;
+    }
 }
