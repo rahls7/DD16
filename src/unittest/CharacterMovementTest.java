@@ -22,7 +22,7 @@ public class CharacterMovementTest {
      * Initialize the test.
      */
     public void before() {
-        play_controller = new PlayController("999", 6);
+        play_controller = new PlayController("555", 14);
     }
 
     /**
@@ -34,7 +34,7 @@ public class CharacterMovementTest {
         PCharacter player = play_controller.getPlayer();
         PMap map = play_controller.getCampaign().getMaps().get(0);
         PCell[][] cells = map.getCells();
-        play_controller.setPlayer(1, 2, 0, 1);
+        play_controller.setPlayer(6, 2, 0, 1);
         int x = -1;
         int y = -1;
 

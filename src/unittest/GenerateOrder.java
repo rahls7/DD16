@@ -18,7 +18,7 @@ public class GenerateOrder {
      * Initialize a play controller
      */
     public void before(){
-        pc=new PlayController("123",11);
+        pc=new PlayController("555",14);
         pc.generateOrder();
     }
 
