@@ -33,6 +33,7 @@ public class Play extends JPanel implements MouseListener {
     private JSONObject json_map;
     private int width, height;
     public static boolean moved;
+    private String battle_info;
 
     /**
      * Initiate the play panel.
@@ -78,7 +79,7 @@ public class Play extends JPanel implements MouseListener {
         battleInfo_panel.setLayout(null);
         battleInfo_area = new JTextArea();
         battleInfo_area.setEditable(false);
-        battleInfo_area.setText("Battle Information Display \n");
+        battleInfo_area.setText("Battle Information Display");
         scrollPane = new JScrollPane(battleInfo_area);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBounds(20,20,450, 120);
@@ -120,6 +121,8 @@ public class Play extends JPanel implements MouseListener {
         json_map = new JSONObject();
         json_map = play_controller.readPlayMap(play_id);
 
+        battle_info = json_map.getString("battleInfo");
+
         width = json_map.getInt("width");
         height = json_map.getInt("height");
 
@@ -150,10 +153,11 @@ public class Play extends JPanel implements MouseListener {
         battleInfo_panel.setLayout(null);
         battleInfo_area = new JTextArea();
         battleInfo_area.setEditable(false);
-        battleInfo_area.setText("Battle Information Display \n");
+        battleInfo_area.setText(battle_info);//Load former information
         scrollPane = new JScrollPane(battleInfo_area);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setBounds(20,20,450, 120);
+
         save_play = new JButton("Save Game");
         save_play.setBounds(500, 60, 100, 30);
         save_play.addActionListener(new savePlay());
@@ -186,6 +190,15 @@ public class Play extends JPanel implements MouseListener {
      */
     public static void displayInfo(String infoToDisplay){
         battleInfo_area.append("\n"+infoToDisplay);
+    }
+
+    /**
+     * Get current info in the display panel to save it.
+     * @return The String of current battle info.
+     */
+    public static String getBattleInfo (){
+        String battleInfo = battleInfo_area.getText();
+        return battleInfo;
     }
 
     /**
@@ -481,6 +494,10 @@ public class Play extends JPanel implements MouseListener {
         // TODO Auto-generated method stub
 
     }
+
+    /**
+     * The action when saving the game.
+     */
     class savePlay implements ActionListener {
         @SuppressWarnings("deprecation")
         @Override

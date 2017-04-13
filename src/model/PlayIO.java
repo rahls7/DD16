@@ -22,12 +22,12 @@ public class PlayIO {
      * @param campaign_id the id of the campaign
      * @param current_mapindex the index of the current map
      */
-    public void savePlay(PMap pMap, int campaign_id, int current_mapindex, List<PCharacter> order) {
+    public void savePlay(PMap pMap, int campaign_id, int current_mapindex, List<PCharacter> order, String battle_info) {
 
         String content = readPlayFile();
         JSONObject json_content = new JSONObject(content);
         JSONArray json_items = json_content.getJSONArray("play");
-        JSONObject json = generateJSON(pMap, campaign_id, current_mapindex, order);
+        JSONObject json = generateJSON(pMap, campaign_id, current_mapindex, order, battle_info);
 
         int id = 0;
         for (int i = 0; i < json_items.length(); i++) {
@@ -52,7 +52,7 @@ public class PlayIO {
      *
      * @return JSON of the map.
      */
-    private JSONObject generateJSON(PMap pMap, int campaign_id, int current_mapindex, List<PCharacter> order) {
+    private JSONObject generateJSON(PMap pMap, int campaign_id, int current_mapindex, List<PCharacter> order, String battle_info) {
 
         JSONObject jsonObject = new JSONObject();
         JSONObject jsonCharacterObject = new JSONObject();
@@ -97,6 +97,7 @@ public class PlayIO {
         jsonObject.put("mapIndex", current_mapindex);
         jsonObject.put("width", pMap.getWidth());
         jsonObject.put("height", pMap.getHeight());
+        jsonObject.put("battleInfo", battle_info);
 
         JSONArray json_orders = new JSONArray();
 
@@ -304,6 +305,24 @@ public class PlayIO {
     }
 
     /**
+     * Get the order from play file.
+     * @param play_id The id of the play file.
+     * @return The json format order of the characters.
+     */
+    public JSONArray readOrder(int play_id){
+        String content = readPlayFile();
+        JSONObject json_content = new JSONObject(content);
+        JSONArray json_plays = json_content.getJSONArray("play");
+        JSONArray json_orders = new JSONArray();
+        for (int i = 0; i <json_plays.length(); i++){
+            if (json_plays.getJSONObject(i).getInt("id") == play_id){
+                json_orders = json_plays.getJSONObject(i).getJSONArray("orders");
+            }
+        }
+        return json_orders;
+    }
+
+    /**
      * Get the campaign from the play file.
      * @param play_id the id of the play file.
      * @return the id of the campaign.
@@ -351,6 +370,26 @@ public class PlayIO {
         PCharacter player = new PCharacter(player_id_str, "2");
 
         return player;
+    }
+
+    /**
+     * Get the list of characters from the play file.
+     * @param play_id The id of the play file.
+     * @return The json list of the characters.
+     */
+    public JSONArray readCharacterList (int play_id){
+        String content = readPlayCharacterFile();
+        JSONObject json_content = new JSONObject(content);
+        JSONArray json_characters = json_content.getJSONArray("character");
+        JSONArray json_character_list = new JSONArray();
+        for (int i = 0; i < json_characters.length(); i++){
+            int id = json_characters.getJSONObject(i).getInt("id");
+            if (id == play_id){
+                json_character_list = json_characters.getJSONObject(i).getJSONArray("characters");
+                break;
+            }
+        }
+        return json_character_list;
     }
     /**
      * Get a play from the file.

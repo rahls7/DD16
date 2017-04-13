@@ -83,6 +83,9 @@ public class PlayController {
         characters = new ArrayList<PCharacter>();
         enemys = new ArrayList<PCharacter>();
         friends = new ArrayList<PCharacter>();
+
+        order = new ArrayList<PCharacter>();
+        order = readOrder(play_id);
     }
 
     public void setCellPanel(PCellPanel[][] pCellPanel) {
@@ -154,6 +157,36 @@ public class PlayController {
         int play_campaign_id = playIO.readPlayCampaignId(play_id);
         return campaignio.readCampaign(play_campaign_id);
     }
+
+    /**
+     * Get the order list from the play file.
+     * @param play_id The id of the play file.
+     * @return The order list of the characters.
+     */
+    public ArrayList<PCharacter> readOrder (int play_id){
+        ArrayList<PCharacter> order = new ArrayList<PCharacter>();
+        JSONArray play_order = playIO.readOrder(play_id);
+        JSONArray character_list = playIO.readCharacterList(play_id);
+        for (int i = 0; i < play_order.length(); i++){
+            int order_x = play_order.getJSONObject(i).getInt("order_x");
+            int order_y = play_order.getJSONObject(i).getInt("order_y");
+            for (int j = 0; j < character_list.length(); j++){
+                JSONObject character = character_list.getJSONObject(j);
+                int character_x = character.getInt("x");
+                int character_y = character.getInt("y");
+                if (order_x == character_x && order_y == character_y){
+                    int id = character.getInt("original_id");
+                    String id_str = String.valueOf(id);
+                    int isHostile = character.getInt("category");
+                    String isHostile_str = String.valueOf(isHostile);
+                    PCharacter pCharacter = new PCharacter(id_str, isHostile_str);
+                    order.add(pCharacter);
+                }
+            }
+        }
+
+        return order;
+    }
     /**
      * Set observer to the character panel
      *
@@ -221,35 +254,37 @@ public class PlayController {
 
 
     private void generateOrder() {
-        order = new ArrayList<PCharacter>();
-        player_index = -1;
-        int[] index = new int[characters.size()];
-        int[] random = new int[characters.size()];
-        int temp1;
-        int temp2;
-        for (int i = 0; i < characters.size(); i++) {
-            index[i] = i;
-            int num = 1 + (int) (Math.random() * 20);
-            random[i] = num;
-        }
-        for (int i = 0; i < characters.size() - 1; i++) {
-            for (int j = 0; j < characters.size() - 1 - i; j++) {
-                if (random[j + 1] > random[j]) {
-                    temp1 = random[j];
-                    random[j] = random[j + 1];
-                    random[j + 1] = temp1;
-                    temp2 = index[j];
-                    index[j] = index[j + 1];
-                    index[j + 1] = temp2;
+        if (order == null) {
+            order = new ArrayList<PCharacter>();
+            player_index = -1;
+            int[] index = new int[characters.size()];
+            int[] random = new int[characters.size()];
+            int temp1;
+            int temp2;
+            for (int i = 0; i < characters.size(); i++) {
+                index[i] = i;
+                int num = 1 + (int) (Math.random() * 20);
+                random[i] = num;
+            }
+            for (int i = 0; i < characters.size() - 1; i++) {
+                for (int j = 0; j < characters.size() - 1 - i; j++) {
+                    if (random[j + 1] > random[j]) {
+                        temp1 = random[j];
+                        random[j] = random[j + 1];
+                        random[j + 1] = temp1;
+                        temp2 = index[j];
+                        index[j] = index[j + 1];
+                        index[j + 1] = temp2;
+                    }
                 }
             }
-        }
-        for (int i = 0; i < characters.size(); i++) {
-            order.add(characters.get(index[i]));
-        }
-        for (int i = 0; i < order.size(); i++) {
-            if (order.get(i).getCategory() == 2) {
-                player_index = i;
+            for (int i = 0; i < characters.size(); i++) {
+                order.add(characters.get(index[i]));
+            }
+            for (int i = 0; i < order.size(); i++) {
+                if (order.get(i).getCategory() == 2) {
+                    player_index = i;
+                }
             }
         }
     }
@@ -567,8 +602,9 @@ public class PlayController {
         pMap = campaign.getMap();
         campaign_id = campaign.getCampaign_id();
         current_mapindex = campaign.getCurrent_mapindex();
+        String battle_info = Play.getBattleInfo();
 
-        playIO.savePlay(pMap, campaign_id, current_mapindex, order);
+        playIO.savePlay(pMap, campaign_id, current_mapindex, order, battle_info);
     }
 
     public void execute_player(){
