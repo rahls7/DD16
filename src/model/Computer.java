@@ -145,19 +145,19 @@ public class Computer implements Strategy{
             for (int j=0; j<map.getHeight(); j++)
                 if ((cells[i][j].getType().equals("CHARACTER") || cells[i][j].getType().equals("PLAYER")) && (!(i==x && j==y))){
                     PCharacter pCharacters = (PCharacter)cells[i][j].getContent();
-                    if(weapon_type != null && weapon_type.equals("Ranged Weapon")) {
-                        for(int k = 0; k < ranged_x.length; k++) {
-                            if(ranged_x[k] == i && ranged_y[k] == j)
-                                attackEnemy(pCharacter, pCharacters, pCampaign);
+                    if (pCharacters.getCategory()==1) {
+                        if (weapon_type != null && weapon_type.equals("Ranged Weapon")) {
+                            for (int k = 0; k < ranged_x.length; k++) {
+                                if (ranged_x[k] == i && ranged_y[k] == j)
+                                    attackEnemy(pCharacter, pCharacters, pCampaign);
+                            }
+                        } else {
+                            for (int k = 0; k < melee_x.length; k++) {
+                                if (melee_x[k] == i && melee_y[k] == j)
+                                    attackEnemy(pCharacter, pCharacters, pCampaign);
+                            }
                         }
                     }
-                    else {
-                        for(int k = 0; k < melee_x.length; k++) {
-                            if(melee_x[k] == i && melee_y[k] == j)
-                                attackEnemy(pCharacter, pCharacters, pCampaign);
-                        }
-                    }
-
                 }
 
     }

@@ -15,7 +15,7 @@ public class PRangedWeapon extends PWeapon {
 
     /**
      * Initialize a Ranged Weapon
-     * @param item
+     * @param item Item instance
      */
     public PRangedWeapon(PItem item) {
         type = item.getType();

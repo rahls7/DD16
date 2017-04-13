@@ -29,6 +29,7 @@ public class CreateCharacter extends JPanel {
      * Constructor of createCharacter to create an object of CreateCharacter View
      *
      * @param id, ID of the character
+     * @param type type of character
      */
     public CreateCharacter(String id, String type) {
 

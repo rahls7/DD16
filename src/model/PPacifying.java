@@ -10,7 +10,7 @@ import java.util.List;
 public class PPacifying extends PWeaponDecorator {
     /**
      * Initialize a pacifying
-     * @param weapon
+     * @param weapon weapon instance
      */
     public PPacifying(PWeapon weapon) {
         super(weapon);

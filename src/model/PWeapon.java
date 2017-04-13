@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class PWeapon {
     /**
      * The abstract function of getting enchantments
-     * @return List<String> weapons
+     * @return List weapons
      */
     public abstract List<String> getEnchantments();
 

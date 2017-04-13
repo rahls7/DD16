@@ -24,7 +24,7 @@ public class Character {
     /**
      * constructor to construct an object of character
      *
-     * @param id
+     * @param id character id
      */
     public Character(String id) {
         this.id = id;
@@ -40,6 +40,7 @@ public class Character {
 
     /**
      * initiate the attributes and stats of a character
+     * @param type  characted type
      */
     public void initiateStats(String type) {
         int dice = 0;
@@ -203,7 +204,7 @@ public class Character {
     /**
      * get the state of character that if he is saved
      *
-     * @return
+     * @return isSaved boolean state of saved
      */
     public boolean getIsSaved() {
         return this.isSaved;
@@ -213,7 +214,7 @@ public class Character {
     /**
      * set the character is saved
      *
-     * @param flag
+     * @param flag Boolean flag
      */
     public void setIsSaved(boolean flag) {
         this.isSaved = flag;
@@ -222,7 +223,7 @@ public class Character {
     /**
      * get the id of character
      *
-     * @return
+     * @return String id
      */
     public String getId() {
         return this.id;
@@ -240,7 +241,7 @@ public class Character {
     /**
      * modify character's name
      *
-     * @param name
+     * @param name name of the character
      */
     public void setName(String name) {
         this.name = name;
@@ -266,7 +267,7 @@ public class Character {
     /**
      * character put on euipment
      *
-     * @param equipment
+     * @param equipment equipment object type Item
      */
     public void setEquipment(Item equipment) {
         String type = new String();
@@ -284,7 +285,7 @@ public class Character {
     /**
      * take off the quipment
      *
-     * @param equipment
+     * @param equipment equipment object
      */
     public void deleteEquipment(Item equipment) {
         this.equipment.remove(equipment);

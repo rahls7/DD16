@@ -25,6 +25,9 @@ public class Item {
 
     /**
      * Initiate an object of Item.
+     * @param type Item type
+     * @param attribute attribute type
+     * @param attribute_value integer value of attribute
      */
     public Item(String type, String attribute, int attribute_value) {
         this.type = type;

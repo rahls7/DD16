@@ -11,7 +11,7 @@ public abstract class PWeaponDecorator extends PWeapon {
 
     /**
      * Initialize a weapon decorator
-     * @param weapon
+     * @param weapon Weapon instance
      */
     public PWeaponDecorator(PWeapon weapon) {
         this.weapon = weapon;
@@ -19,7 +19,7 @@ public abstract class PWeaponDecorator extends PWeapon {
 
     /**
      * Get enchantments
-     * @return list<String> enchantments
+     * @return list of enchantments
      */
     public List<String> getEnchantments(){
         return weapon.getEnchantments();

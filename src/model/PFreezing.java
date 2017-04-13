@@ -10,7 +10,7 @@ import java.util.List;
 public class PFreezing extends PWeaponDecorator {
     /**
      * Initialize a Freezing
-     * @param weapon
+     * @param weapon characters weapon
      */
     public PFreezing(PWeapon weapon) {
         super(weapon);

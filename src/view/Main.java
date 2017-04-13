@@ -63,7 +63,7 @@ public class Main extends JFrame {
     /**
      * Creates the menu for the JMenuBar. Over rides the Action Listener methods of JButton.
      *
-     * @param name
+     * @param name name for the Jmenu
      * @return menu Menu with options to create Map, Character, Campaign.
      */
 

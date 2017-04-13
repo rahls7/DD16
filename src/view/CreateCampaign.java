@@ -57,7 +57,7 @@ public class CreateCampaign extends JPanel {
     /**
      * Get items from the file.
      *
-     * @return
+     * @return displays options for map in combobox
      */
     private JComboBox<Integer> getMapList() {
 
@@ -104,7 +104,7 @@ public class CreateCampaign extends JPanel {
      */
     class addMap implements ActionListener, MouseListener {
         /**
-         * @param arg0
+         * @param arg0 Action listener
          */
         public void actionPerformed(ActionEvent arg0) {
             String selected_map_id = Integer.toString((int) maps.getSelectedItem());

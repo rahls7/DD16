@@ -15,7 +15,7 @@ public class StrategyTest {
     PCharacter pCharacter;
     @Before
     public void before(){
-        pCharacter = new PCharacter("009", "2");
+        pCharacter = new PCharacter("555", "2");
     }
 
     /**
@@ -58,6 +58,18 @@ public class StrategyTest {
         assertEquals(freezing, pCharacter.getStrategy());
     }
 
+    @Test
+    public void testName(){
+        String name = pCharacter.getName();
+        assertEquals(name, pCharacter.getName());
+    }
+
+    @Test
+    public void testHP(){
+        int hp = pCharacter.getHitPoint();
+        assertEquals(hp, pCharacter.getHitPoint());
+    }
+
     /**
      * Test frightening
      */
@@ -67,5 +79,18 @@ public class StrategyTest {
         pCharacter.setStrategy(frightening);
         assertEquals(frightening, pCharacter.getStrategy());
     }
+
+    @Test
+    public void testID(){
+        String id = "555";
+        assertEquals(id, pCharacter.getId());
+    }
+
+    @Test
+    public void testCategory(){
+        int category = 2;
+        assertEquals(category, pCharacter.getCategory());
+    }
+
 
 }

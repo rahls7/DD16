@@ -48,6 +48,7 @@ public class PInformationPanel extends JPanel {
      *
      * @param cell The selected cell.
      * @param isAdjacent True if the player is near the cell, otherwise false.
+     * @param isInRange boolean for determining range
      */
     public void showInformation(PCellPanel cell, boolean isAdjacent, boolean isInRange) {
         this.cell = cell;
@@ -63,7 +64,7 @@ public class PInformationPanel extends JPanel {
                 add(button_loot);
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("0")) {
-                if(play_controller.getFriendHitPoint(cell.x, cell.y) != 0){
+                if(play_controller.getFriendHitPoint(cell.x, cell.y) != -9999 && play_controller.getFriendHitPoint(cell.x, cell.y) > 0){
                     button_exchange = new JButton("Exchange Item");
                     button_exchange.addActionListener(new exchangeItem(cell.x, cell.y));
                     ArrayList<PItem> it = play_controller.getPlayerItem();
@@ -108,18 +109,20 @@ public class PInformationPanel extends JPanel {
             if(info[0].equals("CHEST")) {
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("0")) {
-                if(play_controller.getFriendHitPoint(cell.x, cell.y) != 0){
+                if(play_controller.getFriendHitPoint(cell.x, cell.y) > 0 && attacked == false){
                     button_attack = new JButton("Attack");
                     button_attack.addActionListener(new attackFriend(cell.x,cell.y));
                     add(button_attack);
                 }
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("1")) {
-                if(play_controller.getEnemyHitPoint(cell.x, cell.y) == 0) {}
+                if(play_controller.getEnemyHitPoint(cell.x, cell.y) <= 0) {}
                 else {
-                    button_attack = new JButton("Attack");
-                    button_attack.addActionListener(new attackEnemy(cell.x,cell.y));
-                    add(button_attack);
+                    if(attacked == false) {
+                        button_attack = new JButton("Attack");
+                        button_attack.addActionListener(new attackEnemy(cell.x, cell.y));
+                        add(button_attack);
+                    }
                 }
             }
         }
@@ -245,7 +248,7 @@ public class PInformationPanel extends JPanel {
 
         public void actionPerformed(ActionEvent event) {
             play_controller.attackFriend(x,y);
-
+            attacked = true;
             showInformation(cell, true, true);
             revalidate();
             repaint();

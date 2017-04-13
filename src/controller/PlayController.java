@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import view.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
@@ -46,8 +47,8 @@ public class PlayController {
     /**
      * Initialize a play controller
      *
-     * @param character_id
-     * @param campaign_id
+     * @param character_id character id
+     * @param campaign_id camapign id
      */
     public PlayController(String character_id, int campaign_id) {
         campaignio = new CampaignIO();
@@ -109,7 +110,7 @@ public class PlayController {
     /**
      * Get the campaign json based on the campaign id
      *
-     * @param campaign_id
+     * @param campaign_id campaign id
      * @return JSON Object of a campaign
      */
     private JSONObject readCampaign(int campaign_id) {
@@ -189,7 +190,7 @@ public class PlayController {
     /**
      * Set observer to the character panel
      *
-     * @param pCharacteristicPanel
+     * @param pCharacteristicPanel character characteristics
      */
     public void setCharacterObserver(PCharacteristicPanel pCharacteristicPanel) {
         this.pCharacteristicPanel = pCharacteristicPanel;
@@ -199,7 +200,7 @@ public class PlayController {
     /**
      * Set observer to the inventory panel
      *
-     * @param pInventoryPanel
+     * @param pInventoryPanel Inventory panel
      */
     public void setInventoryObserver(PInventoryPanel pInventoryPanel) {
         this.pInventoryPanel = pInventoryPanel;
@@ -243,9 +244,8 @@ public class PlayController {
 
     /**
      * Generate the action order of the player and all the NPCs
+     * @return String for order of the play
      */
-
-
     public String generateOrder() {
         order = new ArrayList<PCharacter>();
         player_index = -1;
@@ -336,6 +336,12 @@ public class PlayController {
                   execute(order, i);
             }
         }
+        if(player.getHitPoint() <= 0) {
+            JOptionPane.showMessageDialog(Main.mainFrame, "You died. Game over!");
+            Main.mainFrame.setVisible(false);
+            Main.mainFrame.dispose();
+            Main.mainFrame = new Main();
+        }
     }
 
 
@@ -382,10 +388,10 @@ public class PlayController {
     /**
      * Set player
      *
-     * @param previous_x
-     * @param previous_y
-     * @param current_x
-     * @param current_y
+     * @param previous_x x location previous
+     * @param previous_y y location previous
+     * @param current_x current x locatiom
+     * @param current_y current y location
      */
     public void setPlayer(int previous_x, int previous_y, int current_x, int current_y) {
         campaign.setPlayer(previous_x, previous_y, current_x, current_y, player);
@@ -635,8 +641,8 @@ public class PlayController {
         int enemy_exist = 0;
         int x = -1;
         int y = -1;
-        for (PCharacter pCharacter : enemys) {
-            if (pCharacter.getHitPoint() > 0) {
+        for (PCharacter pCharacter : order) {
+            if (pCharacter.getCategory() == 1 && pCharacter.getHitPoint()>0) {
                 cell = map.getCells();
                 for (int i = 0; i < map.getWidth(); i++)
                     for (int j = 0; j < map.getHeight(); j++) {
@@ -804,7 +810,9 @@ public class PlayController {
 
     public int getFriendHitPoint(int x, int y) {
         PCharacter friend = campaign.getFriend(x, y);
-        return friend.getHitPoint();
+        if(friend != null)
+            return friend.getHitPoint();
+        return -9999;
     }
 
     public void attackFriend(int x, int y) {
