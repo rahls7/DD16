@@ -180,14 +180,13 @@ public class PlayController {
                 }
             }
         }
-
         return order;
     }
 
-    public void generatePlayOrder(int play_id){
-        order = new ArrayList<PCharacter>();
-        order = readOrder(play_id);
+    public void setPlayOrder(int play_id) {
+        this.order = readOrder(play_id);
     }
+
     /**
      * Set observer to the character panel
      *
@@ -227,7 +226,6 @@ public class PlayController {
         Play.displayInfo(displayDice);
         player.addObserver(pCharacteristicPanel);
         player.addObserver(pInventoryPanel);
-
     }
 
 
