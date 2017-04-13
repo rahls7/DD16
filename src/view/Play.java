@@ -66,13 +66,6 @@ public class Play extends JPanel implements MouseListener {
                 map_panel.add(cells[i][j]);
             }
         }
-        inventory_panel = new PInventoryPanel();
-        information_panel = new PInformationPanel(play_controller);
-        characteristic_panel = new PCharacteristicPanel();
-        play_controller.setInventoryObserver(inventory_panel);
-        play_controller.setCharacterObserver(characteristic_panel);
-        inventory_panel.setPlayController(play_controller);
-        inventory_panel.setCells(cells);
 
         battleInfo_panel = new JPanel();
         battleInfo_panel.setLayout(null);
@@ -87,6 +80,16 @@ public class Play extends JPanel implements MouseListener {
         save_play.addActionListener(new savePlay());
         battleInfo_panel.add(scrollPane);
         battleInfo_panel.add(save_play);
+
+
+        inventory_panel = new PInventoryPanel();
+        information_panel = new PInformationPanel(play_controller);
+        characteristic_panel = new PCharacteristicPanel();
+        play_controller.setInventoryObserver(inventory_panel);
+        play_controller.setCharacterObserver(characteristic_panel);
+        inventory_panel.setPlayController(play_controller);
+        inventory_panel.setCells(cells);
+
 
 
         action_panel = new JPanel(new GridLayout(4, 0));

@@ -42,8 +42,7 @@ public class PMap {
 
     /**
      * Get the width of the map
-     *
-     * @return
+     * @return width
      */
     public int getWidth() {
         return this.width;
@@ -60,8 +59,7 @@ public class PMap {
 
     /**
      * Get the height of a map
-     *
-     * @return
+     * @return height
      */
     public int getHeight() {
         return this.height;
@@ -116,7 +114,7 @@ public class PMap {
      * Adapt the item levels to the map
      *
      * @param level
-     * @return
+     * @return new level
      */
     public int adaptItemAttributeLevel(int level) {
         int new_value = 1;
@@ -140,7 +138,7 @@ public class PMap {
      * @param json_cells
      * @param x
      * @param y
-     * @return
+     * @return json content
      */
     private String getJSONContent(JSONArray json_cells, int x, int y) {
         for (int i = 0; i < json_cells.length(); i++) {
@@ -155,8 +153,7 @@ public class PMap {
 
     /**
      * Get the cells of a map
-     *
-     * @return
+     * @return all the cells
      */
     public PCell[][] getCells() {
         return cells;
@@ -168,8 +165,7 @@ public class PMap {
 
     /**
      * Get the map id
-     *
-     * @return
+     * @return map id
      */
     public int getId() {
         return map_id;
@@ -216,7 +212,7 @@ public class PMap {
      *
      * @param x
      * @param y
-     * @return
+     * @return Pitem
      */
     public PItem getChestItem(int x, int y) {
 
@@ -247,7 +243,7 @@ public class PMap {
      *
      * @param x
      * @param y
-     * @return
+     * @return PCharacter
      */
     public PCharacter getFriend(int x, int y) {
 
@@ -267,7 +263,7 @@ public class PMap {
      *
      * @param x
      * @param y
-     * @return
+     * @return PCharacter
      */
     public PCharacter getEnemy(int x, int y) {
         if (cells[x][y].getType().equals("CHARACTER")) {
@@ -305,8 +301,7 @@ public class PMap {
 
     /**
      * Check whether all the enemies are killed
-     *
-     * @return
+     * @return boolean
      */
     public boolean isFulFilled() {
         for (int i = 0; i < width; i++) {

@@ -27,8 +27,7 @@ public class PItem {
 
     /**
      * Get the id
-     *
-     * @return
+     * @return item id
      */
     public int getId() {
         return id;
@@ -45,8 +44,7 @@ public class PItem {
 
     /**
      * Get the value of attribute
-     *
-     * @return
+     * @return Attribute value
      */
     public int getAttributeValue() {
         return attribute_value;
@@ -63,8 +61,7 @@ public class PItem {
 
     /**
      * Get the type
-     *
-     * @return
+     * @return type returns the type of Item
      */
     public String getType() {
         return type;
@@ -81,8 +78,7 @@ public class PItem {
 
     /**
      * Get the attriute
-     *
-     * @return
+     * @return attribute
      */
     public String getAttribute() {
         return attribute;

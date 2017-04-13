@@ -75,8 +75,8 @@ public class PlayController {
 
     /**
      * Get the campaign model of player
-     *
-     * @return
+     * @return PCampaign
+
      */
     public PCampaign getCampaign() {
         return this.campaign;
@@ -84,8 +84,7 @@ public class PlayController {
 
     /**
      * Get the player
-     *
-     * @return
+     * @return PCharacter
      */
     public PCharacter getPlayer() {
         return this.player;
@@ -95,7 +94,7 @@ public class PlayController {
      * Get the campaign json based on the campaign id
      *
      * @param campaign_id
-     * @return
+     * @return JSON Object of a campaign
      */
     private JSONObject readCampaign(int campaign_id) {
         return campaignio.readCampaign(campaign_id);
@@ -103,8 +102,7 @@ public class PlayController {
 
     /**
      * Get the json of current map
-     *
-     * @return
+     * @return JSON Object of a Map
      */
     public JSONObject readCurrentMap() {
         campaign.adaptMapToLevel(player.getLevel());
@@ -146,20 +144,11 @@ public class PlayController {
                     characters.add(pCharacter);
                 }
             }
-        generateOrder();
+        String displayDice = generateOrder();
+        Play.displayInfo(displayDice);
         player.addObserver(pCharacteristicPanel);
         player.addObserver(pInventoryPanel);
 
-        for (int i = 0; i < map.getWidth(); i++)
-            for (int j = 0; j < map.getHeight(); j++) {
-                if (cell[i][j].getType().equals("CHARACTER")) {
-                    PCharacter pCharacter = (PCharacter) cell[i][j].getContent();
-                    if (pCharacter.getCategory() == 0)
-                        friends.add(pCharacter);
-                    else
-                        enemys.add(pCharacter);
-                }
-            }
     }
 
 
@@ -176,8 +165,12 @@ public class PlayController {
         }
     }
 
+    /**
+     * Generate the action order of the player and all the NPCs
+     */
 
-    private void generateOrder() {
+
+    public String generateOrder() {
         order = new ArrayList<PCharacter>();
         player_index = -1;
         int[] index = new int[characters.size()];
@@ -209,8 +202,26 @@ public class PlayController {
                 player_index = i;
             }
         }
+        String display="The order is: \n";
+        for(int i=0;i<characters.size();i++){
+            if(order.get(i).getCategory()==0){
+                display=display+"Friend, "+random[i]+"\n";
+            }else if(order.get(i).getCategory()==1){
+                display=display+"Enemy, "+random[i]+"\n";
+            }else if(order.get(i).getCategory()==2){
+                display=display+"Player, "+random[i]+"\n";
+            }
+        }
+        return display;
+
     }
 
+    public ArrayList<PCharacter> getCharacters(){
+        return this.characters;
+    }
+    public List<PCharacter> getOrder(){
+        return this.order;
+    }
 
     public void setPlayer() {
         campaign.setPlayer(player);
@@ -508,8 +519,8 @@ public class PlayController {
 
     /**
      * This function checks if every map requirement is fulfilled.
-     *
-     * @return
+     * @return boolean
+
      */
     public boolean isFulfilled() {
         return campaign.isFulfilled();
@@ -633,28 +644,6 @@ public class PlayController {
                     y_player = j;
                 }
             }
-
-//        Computer computer = new Computer();
-//        player.setStrategy(computer);
-//        int x1 = -1;
-//        int y1 = -1;
-//        PCharacter enemy = enemys.get(0);
-//        for (int i = 0; i < map.getWidth(); i++)
-//            for (int j = 0; j < map.getHeight(); j++) {
-//                if (cell[i][j].getType().equals("CHARACTER")) {
-//                    PCharacter character = (PCharacter) cell[i][j].getContent();
-//                    if (character.getId() == enemy.getId()) {
-//                        x1 = i;
-//                        y1 = j;
-//                    }
-//                }
-//            }
-//        cellPanels[x_player][y_player].removeContent();
-//        int[] coordi = new int[2];
-//        coordi = player.executeStrategy(x_player, y_player, x1, y1, 1, campaign);
-//        cellPanels[coordi[0]][coordi[1]].setContent("PLAYER");
-//        x_player = coordi[0];
-//        y_player = coordi[1];
 
 
         for (PCharacter pCharacter : friends) {
