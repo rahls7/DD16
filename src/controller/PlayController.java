@@ -274,8 +274,8 @@ public class PlayController {
     /**
      * Notify observers
      *
-     * @param x
-     * @param y
+     * @param x x coordinate
+     * @param y y coordinate
      */
     public void inventoryView(int x, int y) {
         PCharacter pCharacter = (PCharacter) cell[x][y].getContent();
@@ -528,6 +528,7 @@ public class PlayController {
         playIO.savePlay(pMap, campaign_id, current_mapindex);
     }
 
+
     public void execute_player(){
         int x_player = -1;
         int y_player = -1;
@@ -569,7 +570,13 @@ public class PlayController {
         cellPanels[coordinate[0]][coordinate[1]].setContent("PLAYER");
     }
 
-    public void execute(List<PCharacter> order, int i) {
+
+    /**
+     * execute PCharacter
+     * @param order order of character
+     * @param i index of that character
+     */
+    public void execute(List<PCharacter> order, int i){
         int x_player = -1;
         int y_player = -1;
         PMap map = campaign.getMap();
@@ -610,7 +617,9 @@ public class PlayController {
         inventoryView(x_player, y_player);
     }
 
-
+    /**
+     *
+     */
     public void turn() {
         // get the coordinate of player
         int x_player = -1;
