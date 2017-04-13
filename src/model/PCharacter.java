@@ -578,6 +578,10 @@ public class PCharacter extends PCellContent {
         this.strategy = strategy;
     }
 
+    public Strategy getStrategy(){
+        return this.strategy;
+    }
+
     public int[] executeStrategy(int x, int y, int x_player, int y_player, int weapon_bonus, PCampaign pCampaign) {
         return strategy.execute(x, y, x_player, y_player, weapon_bonus, pCampaign, this);
     }
