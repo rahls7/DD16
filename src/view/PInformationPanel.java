@@ -1,6 +1,7 @@
 package view;
 
 import controller.PlayController;
+import model.Computer;
 import model.PCharacter;
 import model.PItem;
 
@@ -26,7 +27,7 @@ public class PInformationPanel extends JPanel {
     private JButton button_loot;
     private JComboBox lootEnemyItemBox;
     private PCellPanel cell;
-    private JButton end_turn;
+    private JButton end_turn, computer;
     private boolean attacked;
 
     /**
@@ -60,7 +61,6 @@ public class PInformationPanel extends JPanel {
                 button_loot = new JButton("Loot Chest");
                 button_loot.addActionListener(new lootChest(cell.x, cell.y));
                 add(button_loot);
-                Play.displayInfo("the chest is looted.");
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("0")) {
                 if(play_controller.getFriendHitPoint(cell.x, cell.y) != 0){
@@ -80,7 +80,7 @@ public class PInformationPanel extends JPanel {
                 }
             }
             else if(info[0].equals("CHARACTER") && info[2].equals("1")) {
-                if(play_controller.getEnemyHitPoint(cell.x, cell.y)==0) {
+                if(play_controller.getEnemyHitPoint(cell.x, cell.y)<=0) {
                     loot_enemy = new JButton("Loot Enemy");
                     loot_enemy.addActionListener(new lootEnemy(cell.x,cell.y));
                     ArrayList<PItem> enemyItem = play_controller.getEnemyItem(cell.x, cell.y);
@@ -130,6 +130,10 @@ public class PInformationPanel extends JPanel {
                 end_turn=new JButton("End Turn");
                 end_turn.addActionListener(new endTurn());
                 add(end_turn);
+
+                computer = new JButton("Computer");
+                computer.addActionListener(new Computer());
+                add(computer);
             }
         }
         revalidate();
@@ -146,6 +150,11 @@ public class PInformationPanel extends JPanel {
         }
     }
 
+    class Computer implements ActionListener{
+        public void actionPerformed(ActionEvent arg0){
+            play_controller.execute_player();
+        }
+    }
     /**
      * Action listener for looting chest.
      */
@@ -200,11 +209,10 @@ public class PInformationPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
             play_controller.attackEnemy(x,y);
             attacked=true;
-            JOptionPane.showMessageDialog(button_attack,"Enemy Dead");
             showInformation(cell, true, true);
             revalidate();
             repaint();
-        //Friend attack
+            //Friend attack
         }
     }
 
@@ -237,6 +245,7 @@ public class PInformationPanel extends JPanel {
 
         public void actionPerformed(ActionEvent event) {
             play_controller.attackFriend(x,y);
+
             showInformation(cell, true, true);
             revalidate();
             repaint();

@@ -40,4 +40,8 @@ public class PRangedWeapon extends PWeapon {
      * @return type
      */
     public String getType() { return type; }
+
+    public int getAttributeValue() {
+        return attribute_value;
+    }
 }

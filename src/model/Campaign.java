@@ -1,10 +1,9 @@
 package model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import org.json.JSONArray;
 
 /**
  * Record information of a campaign.Change properties of a campaign.
@@ -12,9 +11,9 @@ import org.json.JSONArray;
  * @author Ruijia Yang
  */
 public class Campaign {
-    ArrayList<String> map_list;
     public boolean isSaved = false;
     public int save_id = 0;
+    ArrayList<String> map_list;
 
     /**
      * Initialize a campaign model

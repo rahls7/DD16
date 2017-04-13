@@ -32,4 +32,8 @@ public class PFrightening extends PWeaponDecorator {
      * @return type
      */
     public String getType() { return super.getType();}
+
+    public int getAttributeValue() {
+        return super.getAttributeValue();
+    }
 }

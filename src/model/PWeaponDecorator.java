@@ -30,4 +30,8 @@ public abstract class PWeaponDecorator extends PWeapon {
      * @return String type
      */
     public String getType() { return weapon.getType();}
+
+    public int getAttributeValue() {
+        return weapon.getAttributeValue();
+    }
 }

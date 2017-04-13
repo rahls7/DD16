@@ -18,4 +18,5 @@ public abstract class PWeapon {
      * @return String weapon type
      */
     public abstract String getType();
+    public abstract int getAttributeValue();
 }

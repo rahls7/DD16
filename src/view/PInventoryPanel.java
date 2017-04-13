@@ -2,8 +2,8 @@ package view;
 
 import controller.CharacterEditorController;
 import controller.PlayController;
-import model.*;
-import model.Item;
+import model.PCharacter;
+import model.PItem;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,14 +17,16 @@ import java.util.Observer;
  */
 public class PInventoryPanel extends JPanel implements Observer {
 
-    private PCharacter pCharacter;
-    private PlayController playController;
-    private CharacterEditorController characterEditorController;
     JButton showButton;
     JButton takeoffButton, putonButton;
     int flag = 0;
     JComboBox equipmentComboBox, backpackJComboBox;
     JLabel equipmentLabel, backpackLabel;
+
+    private PCharacter pCharacter;
+    private PlayController playController;
+    private CharacterEditorController characterEditorController;
+
     private PCellPanel[][] cells;
 
     /**
@@ -66,17 +68,15 @@ public class PInventoryPanel extends JPanel implements Observer {
         characterEditorController.setpCharacter(pCharacter);
         equipmentComboBox.setModel(new DefaultComboBoxModel(itemToString(pCharacter.getEquipment()).toArray()));
         backpackJComboBox.setModel(new DefaultComboBoxModel(itemToString(pCharacter.getBackpack()).toArray()));
-        if (flag==0) {
+        if (flag == 0) {
             add(showButton);
-        }else
-        {
+        } else {
             add(showButton);
             add(equipmentLabel);
             add(equipmentComboBox);
             add(backpackLabel);
             add(backpackJComboBox);
-            if (pCharacter.getCategory()==2)
-            {
+            if (pCharacter.getCategory() == 2) {
                 add(takeoffButton);
                 add(putonButton);
             }
@@ -87,6 +87,7 @@ public class PInventoryPanel extends JPanel implements Observer {
 
     /**
      * transform the items to be strings
+     *
      * @param items
      * @return
      */
@@ -112,9 +113,10 @@ public class PInventoryPanel extends JPanel implements Observer {
 
     /**
      * set the play controller
+     *
      * @param playController
      */
-    public void setPlayController(PlayController playController){
+    public void setPlayController(PlayController playController) {
         this.playController = playController;
     }
 
@@ -171,8 +173,7 @@ public class PInventoryPanel extends JPanel implements Observer {
                     add(equipmentComboBox);
                     add(backpackLabel);
                     add(backpackJComboBox);
-                    if (pCharacter.getCategory()==2)
-                    {
+                    if (pCharacter.getCategory() == 2) {
                         add(takeoffButton);
                         add(putonButton);
                     }
@@ -186,7 +187,7 @@ public class PInventoryPanel extends JPanel implements Observer {
                     validate();
                     repaint();
                 }
-            } else if (event.getSource() == takeoffButton){
+            } else if (event.getSource() == takeoffButton) {
                 int i = equipmentComboBox.getSelectedIndex();
                 ArrayList<PItem> equipment = playController.getPlayer().getEquipment();
                 PItem pItem = equipment.get(i);
