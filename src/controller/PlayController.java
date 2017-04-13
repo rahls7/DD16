@@ -490,12 +490,12 @@ public class PlayController {
                 attackRoll = rgen.nextInt(20) + 1;
                 attackBon = player.getAttackBonus();
                 finalAttack = attackRoll + attackBon;
-                Play.displayInfo("Your attack roll is " + attackRoll + " Your final Attack points including attackBonus " + attackBon + " is " + finalAttack);
+                Play.displayInfo("Player's attack roll is " + attackRoll + " Your final Attack points including attackBonus " + attackBon + " is " + finalAttack);
                 Play.displayInfo("Enemy armour class is " + enemy.getArmorClass());
                 if (finalAttack >= enemy.getArmorClass()) {
                     damageRoll = rgen.nextInt(8) + 1;
                     damagePen = damageRoll + player.getDamageBonus();
-                    Play.displayInfo("Your damage roll is " + damageRoll + " Your final damage points including damageBonus " + player.getDamageBonus() + " is " + damagePen);
+                    Play.displayInfo("Player's damage roll is " + damageRoll + " Your final damage points including damageBonus " + player.getDamageBonus() + " is " + damagePen);
                     int j = enemy.getHitPoint() - damagePen; // damage bonus
                     Play.displayInfo("Hit points after deduction are " + j);
                     enemy.setHitPoint(j);
@@ -503,7 +503,7 @@ public class PlayController {
                         for (String i : player.getWeapon().getEnchantments()) {
                             if (i.equals("Slaying")) {
                                 enemy.setHitPoint(0);
-                                Play.displayInfo("Enemy Slayed");
+                                Play.displayInfo("Enemy Slayed. Hit Point equals 0");
                             } else if (i.equals("Freezing")) {
                                 int enchBonus = player.getWeapon().getAttributeValue();
                                 enemy.setFreezeTurns(enchBonus);
@@ -822,12 +822,12 @@ public class PlayController {
                 attackRoll = rgen.nextInt(20) + 1;
                 attackBon = player.getAttackBonus();
                 finalAttack = attackRoll + attackBon;
-                Play.displayInfo("Your attack roll is " + attackRoll + " Your final Attack points including attackBonus " + attackBon + " is " + finalAttack);
+                Play.displayInfo("Player's attack roll is " + attackRoll + " Your final Attack points including attackBonus " + attackBon + " is " + finalAttack);
                 Play.displayInfo("Enemy armour class is " + friend.getArmorClass());
                 if (finalAttack >= friend.getArmorClass()) {
                     damageRoll = rgen.nextInt(8) + 1;
                     damagePen = damageRoll + player.getDamageBonus();
-                    Play.displayInfo("Your damage roll is " + damageRoll + " Your final damage points including damageBonus " + player.getDamageBonus() + " is " + damagePen);
+                    Play.displayInfo("Player's damage roll is " + damageRoll + " Your final damage points including damageBonus " + player.getDamageBonus() + " is " + damagePen);
                     int j = friend.getHitPoint() - damagePen; // damage bonus
                     Play.displayInfo("Hit points after deduction are " + j);
                     friend.setHitPoint(j);
@@ -838,7 +838,7 @@ public class PlayController {
                     for (String i : player.getWeapon().getEnchantments()) {
                         if (i.equals("Slaying")) {
                             friend.setHitPoint(0);
-                            Play.displayInfo("Friend Slayed");
+                            Play.displayInfo("Friend Slayed. Hit point equals 0");
                         } else if (i.equals("Freezing")) {
                             int enchBonus = player.getWeapon().getAttributeValue();
                             friend.setFreezeTurns(enchBonus);
