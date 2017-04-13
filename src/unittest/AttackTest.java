@@ -1,16 +1,16 @@
 package unittest;
 
 import controller.PlayController;
-import model.Campaign;
 import model.PCampaign;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+
 /**
  * Created by rahls7 on 18/03/17.
  */
-public class AttackEnemyTest {
+public class AttackTest {
     PlayController play_controller;
     PCampaign campaign;
 
@@ -19,7 +19,7 @@ public class AttackEnemyTest {
      * Initialize the test.
      */
     public void before() {
-        play_controller = new PlayController("999", 6);
+        play_controller = new PlayController("555", 14);
         campaign = play_controller.getCampaign();
     }
 
@@ -27,8 +27,8 @@ public class AttackEnemyTest {
     /**
      * Test the function of attacking a enemy.
      */
-    public void testAttackEnemy() {
-        campaign.getEnemy(4,4).setHitPoint(0);
-        assertEquals(0, campaign.getEnemy(4,4).getHitPoint());
+    public void testAttack() {
+        play_controller.getPlayer().setHitPoint(0);
+        assertEquals(0, play_controller.getPlayer().getHitPoint());
     }
 }

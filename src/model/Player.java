@@ -11,7 +11,8 @@ public class Player {
 
     /**
      * set character builder
-     * @param newCharacterBuilder
+     *
+     * @param newCharacterBuilder Character instance
      */
     public void setCharacterBuilder(CharacterBuilder newCharacterBuilder) {
         characterBuilder = newCharacterBuilder;
@@ -19,7 +20,8 @@ public class Player {
 
     /**
      * build the character
-     * @param id
+     *
+     * @param id character id
      */
     public void constructCharacter(String id) {
         characterBuilder.createCharacter(id);
@@ -28,7 +30,7 @@ public class Player {
 
     /**
      * get character that is built
-     * @return
+     * @return Character Character instance
      */
     public Character getCharacter() {
         return characterBuilder.getCharacter();

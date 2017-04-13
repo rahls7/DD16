@@ -9,6 +9,7 @@ public abstract class CharacterBuilder {
 
     /**
      * get the object of character from character builder
+     *
      * @return character
      */
     public Character getCharacter() {
@@ -17,7 +18,8 @@ public abstract class CharacterBuilder {
 
     /**
      * create character by this function
-     * @param id
+     *
+     * @param id character id
      */
     public void createCharacter(String id) {
         character = new Character(id);

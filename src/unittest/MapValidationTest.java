@@ -1,12 +1,9 @@
 package unittest;
 
-import org.junit.After;
+import model.Map;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert.*;
-import model.Map;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**

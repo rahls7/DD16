@@ -3,7 +3,6 @@ package view;
 
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,22 +14,15 @@ import java.awt.event.ActionListener;
  */
 
 public class Main extends JFrame {
+    public static Main mainFrame;
     private About about_panel;
     private Map map_panel;
     private Item item_panel;
     private Character character_panel;
     private Campaign campaign_panel;
     private Start start_panel;
-    public static Main mainFrame;
+    private Load load_panel;
 
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                mainFrame = new Main();
-            }
-        });
-    }
 
     /**
      * Constructor for Main class. Creates an instance of Main, should be called whenever there is a need to display the
@@ -44,6 +36,14 @@ public class Main extends JFrame {
         setJMenuBar(createMenuBar("Main Menu"));
         pack();
         setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                mainFrame = new Main();
+            }
+        });
     }
 
     /**
@@ -63,7 +63,7 @@ public class Main extends JFrame {
     /**
      * Creates the menu for the JMenuBar. Over rides the Action Listener methods of JButton.
      *
-     * @param name
+     * @param name name for the Jmenu
      * @return menu Menu with options to create Map, Character, Campaign.
      */
 
@@ -71,6 +71,9 @@ public class Main extends JFrame {
         JMenu menu = new JMenu(name);
 
         JMenuItem item_play = new JMenuItem("Play");
+
+
+        JMenuItem item_load = new JMenuItem("Load Game");
 
 
         JMenuItem item_map = new JMenuItem("Map Editor");
@@ -92,6 +95,7 @@ public class Main extends JFrame {
 
 
         menu.add(item_play);
+        menu.add(item_load);
         menu.add(item_map);
         menu.add(item_compaign);
         menu.add(item_character);
@@ -122,13 +126,16 @@ public class Main extends JFrame {
                     campaign_panel = new Campaign();
                     menuAction(campaign_panel);
                 } else if (cmd.equals("Play")) {
-
                     start_panel = new Start();
                     menuAction(start_panel);
+                } else if (cmd.equals("Load Game")){
+                    load_panel = new Load();
+                    menuAction(load_panel);
                 }
             }
         };
         item_play.addActionListener(actionListener);
+        item_load.addActionListener(actionListener);
         item_map.addActionListener(actionListener);
         item_item.addActionListener(actionListener);
         item_about.addActionListener(actionListener);

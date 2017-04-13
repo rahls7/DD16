@@ -1,7 +1,6 @@
 package unittest;
 
 import model.Campaign;
-import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 

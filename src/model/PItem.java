@@ -12,10 +12,11 @@ public class PItem {
 
     /**
      * Initialize a item model of play
-     * @param item_id
-     * @param type
-     * @param attribute
-     * @param attribute_value
+     *
+     * @param item_id item id
+     * @param type item id
+     * @param attribute item attribute
+     * @param attribute_value item attribute value
      */
     public PItem(int item_id, String type, String attribute, int attribute_value) {
         this.id = item_id;
@@ -26,7 +27,7 @@ public class PItem {
 
     /**
      * Get the id
-     * @return
+     * @return item id
      */
     public int getId() {
         return id;
@@ -34,7 +35,8 @@ public class PItem {
 
     /**
      * Set the id
-     * @param id
+     *
+     * @param id item id
      */
     public void setId(int id) {
         this.id = id;
@@ -42,7 +44,7 @@ public class PItem {
 
     /**
      * Get the value of attribute
-     * @return
+     * @return Attribute value
      */
     public int getAttributeValue() {
         return attribute_value;
@@ -50,7 +52,8 @@ public class PItem {
 
     /**
      * Set the value of attribute
-     * @param attribute_value
+     *
+     * @param attribute_value attribute value
      */
     public void setAttributeValue(int attribute_value) {
         this.attribute_value = attribute_value;
@@ -58,7 +61,7 @@ public class PItem {
 
     /**
      * Get the type
-     * @return
+     * @return type returns the type of Item
      */
     public String getType() {
         return type;
@@ -66,7 +69,8 @@ public class PItem {
 
     /**
      * Set the type
-     * @param type
+     *
+     * @param type item type
      */
     public void setType(String type) {
         this.type = type;
@@ -74,7 +78,7 @@ public class PItem {
 
     /**
      * Get the attriute
-     * @return
+     * @return attribute
      */
     public String getAttribute() {
         return attribute;
@@ -82,7 +86,8 @@ public class PItem {
 
     /**
      * Set the attribute
-     * @param attribute
+     *
+     * @param attribute attribute type
      */
     public void setAttribute(String attribute) {
         this.attribute = attribute;

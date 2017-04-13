@@ -1,13 +1,14 @@
 package view;
 
 import controller.PlayController;
-import model.PCharacter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -25,14 +26,20 @@ public class Play extends JPanel implements MouseListener {
     private PCellPanel[][] cells;
     private PCellPanel current_cell, previous_cell;
     private PlayController play_controller;
+    private JPanel battleInfo_panel;
+    private static JTextArea battleInfo_area;
+    private JScrollPane scrollPane;
+    private JButton save_play;
     private JSONObject json_map;
     private int width, height;
+    public static boolean moved;
+    private String battle_info;
 
     /**
      * Initiate the play panel.
      *
      * @param character_id Id of the player.
-     * @param campaign_id Id of the campaign.
+     * @param campaign_id  Id of the campaign.
      */
     public Play(String character_id, int campaign_id) {
         super(new GridLayout(1, 0));
@@ -60,22 +67,139 @@ public class Play extends JPanel implements MouseListener {
                 map_panel.add(cells[i][j]);
             }
         }
+
+        battleInfo_panel = new JPanel();
+        battleInfo_panel.setLayout(null);
+        battleInfo_area = new JTextArea();
+        battleInfo_area.setEditable(false);
+        battleInfo_area.setText("Battle Information Display");
+        scrollPane = new JScrollPane(battleInfo_area);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBounds(20,20,450, 120);
+        save_play = new JButton("Save Game");
+        save_play.setBounds(500, 60, 100, 30);
+        save_play.addActionListener(new savePlay());
+        battleInfo_panel.add(scrollPane);
+        battleInfo_panel.add(save_play);
+
+
         inventory_panel = new PInventoryPanel();
         information_panel = new PInformationPanel(play_controller);
         characteristic_panel = new PCharacteristicPanel();
         play_controller.setInventoryObserver(inventory_panel);
         play_controller.setCharacterObserver(characteristic_panel);
         inventory_panel.setPlayController(play_controller);
+        inventory_panel.setCells(cells);
 
-        action_panel = new JPanel(new GridLayout(3, 0));
+
+
+        action_panel = new JPanel(new GridLayout(4, 0));
         action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
         action_panel.add(information_panel);
+        action_panel.add(battleInfo_panel);
         action_panel.add(characteristic_panel);
         action_panel.add(inventory_panel);
 
         add(map_panel);
         add(action_panel);
 
+        play_controller.setCellPanel(cells);
+
+
+        play_controller.beforePlayer();
+        moved=false;
+
+    }
+
+    /**
+     * Initiate the play panel through load game.
+     *
+     * @param play_id Id of the play file.
+     */
+    public Play(int play_id) {
+        super(new GridLayout(1, 0));
+
+        play_controller = new PlayController(play_id);
+
+        json_map = new JSONObject();
+        json_map = play_controller.readPlayMap(play_id);
+
+        battle_info = json_map.getString("battleInfo");
+
+        width = json_map.getInt("width");
+        height = json_map.getInt("height");
+
+        JSONArray json_cells = json_map.getJSONArray("cells");
+
+        map_panel = new JPanel(new GridLayout(width, height));
+        map_panel.setBorder(BorderFactory.createTitledBorder(null, "Map", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
+
+        cells = new PCellPanel[width][height];
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                cells[i][j] = new PCellPanel(i, j);
+                cells[i][j].addMouseListener(this);
+                String content = getJSONContent(json_cells, i, j);
+                cells[i][j].setContent(content);
+                map_panel.add(cells[i][j]);
+            }
+        }
+        battleInfo_panel = new JPanel();
+        battleInfo_panel.setLayout(null);
+        battleInfo_area = new JTextArea();
+        battleInfo_area.setEditable(false);
+        scrollPane = new JScrollPane(battleInfo_area);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBounds(20,20,450, 120);
+        inventory_panel = new PInventoryPanel();
+        information_panel = new PInformationPanel(play_controller);
+        characteristic_panel = new PCharacteristicPanel();
+        play_controller.setInventoryObserver(inventory_panel);
+        play_controller.setCharacterObserver(characteristic_panel);
+        inventory_panel.setPlayController(play_controller);
+        inventory_panel.setCells(cells);
+
+        save_play = new JButton("Save Game");
+        save_play.setBounds(500, 60, 100, 30);
+        save_play.addActionListener(new savePlay());
+        battleInfo_panel.add(scrollPane);
+        battleInfo_panel.add(save_play);
+
+
+        action_panel = new JPanel(new GridLayout(4, 0));
+        action_panel.setBorder(BorderFactory.createTitledBorder(null, "Actions", TitledBorder.TOP, TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.BLACK));
+        action_panel.add(information_panel);
+        action_panel.add(battleInfo_panel);
+        action_panel.add(characteristic_panel);
+        action_panel.add(inventory_panel);
+
+        add(map_panel);
+        add(action_panel);
+
+        play_controller.setCellPanel(cells);
+        play_controller.beforePlayer();
+        play_controller.setPlayOrder(play_id);
+        battleInfo_area.setText(battle_info);//Load former information
+        moved=false;
+
+    }
+
+    /**
+     * Display the real-time battle information.
+     *
+     * @param infoToDisplay The information that is to be displayed during the battle.
+     */
+    public static void displayInfo(String infoToDisplay){
+        battleInfo_area.append("\n"+infoToDisplay);
+    }
+
+    /**
+     * Get current info in the display panel to save it.
+     * @return The String of current battle info.
+     */
+    public static String getBattleInfo (){
+        String battleInfo = battleInfo_area.getText();
+        return battleInfo;
     }
 
     /**
@@ -109,21 +233,35 @@ public class Play extends JPanel implements MouseListener {
         if (previous_cell == null) {
             current_cell.select();
             previous_cell = current_cell;
-            information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y));
+            information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y),false);
+            if(current_cell.content.equals("PLAYER")) {
+                showAttackRange(current_cell.x, current_cell.y);
+            }
         } else {
             if (current_cell.x == previous_cell.x && current_cell.y == previous_cell.y) {
                 current_cell.deselect();
+                removeAttackRange();
                 previous_cell = null;
             } else {
                 inventory_panel.clean();
                 previous_cell.deselect();
+                removeAttackRange();
                 current_cell.select();
 
-                if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("")) {
+                if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("") && !moved && isMoveRange(previous_cell, current_cell)) {
                     previous_cell.removeContent();
+                    showAttackRange(current_cell.x, current_cell.y);
                     current_cell.setContent("PLAYER");
                     play_controller.setPlayer(previous_cell.x, previous_cell.y, current_cell.x, current_cell.y);
-                } else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT")) {
+                    current_cell.select();
+                    moved = true;
+                }
+                else if (!previous_cell.content.equals("PLAYER") && current_cell.content.equals("PLAYER")) {
+                    showAttackRange(current_cell.x, current_cell.y);
+                }
+
+                else if (previous_cell.content.equals("PLAYER") && current_cell.content.equals("EXIT") && !moved && isMoveRange(previous_cell, current_cell)) {
+                    System.out.println("!!!!!" + play_controller.isFulfilled());
                     if (play_controller.isFulfilled()) {
                         if (play_controller.exit()) {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Level Up! Go to Next Map!");
@@ -150,11 +288,17 @@ public class Play extends JPanel implements MouseListener {
                             }
                             previous_cell = null;
                             current_cell = null;
+                            play_controller.setPlayer();
                             play_controller.readCharacter();
                             inventory_panel.clean();
                             characteristic_panel.clean();
+
+                            inventory_panel.setCells(cells);
                             map_panel.revalidate();
                             map_panel.repaint();
+                            play_controller.setCellPanel(cells);
+                           play_controller.beforePlayer();
+                            moved = false;
                         } else {
                             JOptionPane.showMessageDialog(Main.mainFrame, "Complete!");
                             Main.mainFrame.setVisible(false);
@@ -165,7 +309,7 @@ public class Play extends JPanel implements MouseListener {
                 }
                 if (current_cell != null) {
                     previous_cell = current_cell;
-                    information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y));
+                    information_panel.showInformation(previous_cell, isAdjacent(previous_cell.x, previous_cell.y), isInRange(previous_cell.x, previous_cell.y));
                 }
             }
         }
@@ -196,6 +340,53 @@ public class Play extends JPanel implements MouseListener {
         }
     }
 
+    private void removeAttackRange() {
+        for(int i = 0; i < width; i++)
+            for(int j = 0; j < height; j++) {
+                if(cells[i][j].isAttackRang == true) {
+                    cells[i][j].removeAttackRange();
+                }
+            }
+    }
+
+    private void showAttackRange(int x, int y) {
+        int[] ranged_x = {x-2, x, x, x+2, x-1, x, x, x+1, x-1, x+1, x-1, x+1};
+        int[] ranged_y = {y, y-2, y+2, y, y, y-1, y+1, y, y-1, y+1, y+1, y-1};
+
+        int[] melee_x = {x-1, x, x, x+1};
+        int[] melee_y = {y, y-1, y+1, y};
+
+        String weapon_type = play_controller.getWeaponType();
+
+        if(weapon_type != null && weapon_type.equals("Ranged Weapon")) {
+            for(int i = 0; i < ranged_x.length; i++){
+                int cell_x = ranged_x[i];
+                int cell_y = ranged_y[i];
+
+                if(cell_x >= 0 && cell_y >= 0 && cell_x < cells.length && cell_y < cells[0].length){
+                    cells[cell_x][cell_y].setAttackRange();
+                }
+            }
+        }
+        else {
+            for(int i = 0; i < melee_x.length; i++){
+                int cell_x = melee_x[i];
+                int cell_y = melee_y[i];
+
+                if(cell_x >= 0 && cell_y >= 0 && cell_x < cells.length && cell_y < cells[0].length){
+                    cells[cell_x][cell_y].setAttackRange();
+                }
+            }
+        }
+    }
+
+    public boolean isMoveRange(PCellPanel previous_cell, PCellPanel current_cell){
+        if(Math.abs(previous_cell.x-current_cell.x)+Math.abs(previous_cell.y-current_cell.y)<=3){
+            return true;
+        }else{
+            return false;
+        }
+    }
     /**
      * Check if the player is near the selected cell.
      *
@@ -223,6 +414,41 @@ public class Play extends JPanel implements MouseListener {
             return true;
         else if (player_x == x && player_y == y + 1)
             return true;
+        return false;
+    }
+
+    private boolean isInRange(int check_x, int check_y) {
+        int x = -1;
+        int y = -1;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (cells[i][j].content.equals("PLAYER")) {
+                    x = i;
+                    y = j;
+                    break;
+                }
+            }
+        }
+        int[] ranged_x = {x-2, x, x, x+2, x-1, x, x, x+1, x-1, x+1, x-1, x+1};
+        int[] ranged_y = {y, y-2, y+2, y, y, y-1, y+1, y, y-1, y+1, y+1, y-1};
+
+        int[] melee_x = {x-1, x, x, x+1};
+        int[] melee_y = {y, y-1, y+1, y};
+
+        String weapon_type = play_controller.getWeaponType();
+
+        if(weapon_type != null && weapon_type.equals("Ranged Weapon")) {
+            for(int i = 0; i < ranged_x.length; i++) {
+                if(ranged_x[i] == check_x && ranged_y[i] == check_y)
+                    return true;
+            }
+        }
+        else {
+            for(int i = 0; i < melee_x.length; i++) {
+                if(melee_x[i] == check_x && melee_y[i] == check_y)
+                    return true;
+            }
+        }
         return false;
     }
 
@@ -270,4 +496,15 @@ public class Play extends JPanel implements MouseListener {
 
     }
 
+    /**
+     * The action when saving the game.
+     */
+    class savePlay implements ActionListener {
+        @SuppressWarnings("deprecation")
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+                play_controller.savePlay();
+                JOptionPane.showMessageDialog(Main.mainFrame, "Success");
+        }
+    }
 }

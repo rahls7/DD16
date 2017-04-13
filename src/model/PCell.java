@@ -35,22 +35,26 @@ public class PCell {
     }
 
     /**
-     * Set the type
-     * @param type
-     */
-    public void setType(String type) { this.type = type; }
-
-    /**
      * Get the type
-     * @return type
+     * @return type cell type
      */
     public String getType() {
         return type;
     }
 
     /**
+     * Set the type
+     *
+     * @param type type of the cell
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
      * Set the player
-     * @param player
+     *
+     * @param player Player character instance
      */
     public void setPlayer(PCharacter player) {
         if (type.equals("") || type.equals("ENTRY")) {
@@ -59,11 +63,22 @@ public class PCell {
         }
     }
 
-
     /**
      * Remove a player
      */
     public void removePlayer() {
+        content = new PConstant("");
+        type = "";
+    }
+
+    public void setCharacter(PCharacter pCharacter) {
+        if (type.equals("")) {
+            content = pCharacter;
+            type = "CHARACTER";
+        }
+    }
+
+    public void removeCharacter() {
         content = new PConstant("");
         type = "";
     }

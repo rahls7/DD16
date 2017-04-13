@@ -28,7 +28,7 @@ public class EditCampaign extends JPanel implements MouseListener {
     /**
      * Initialize a edit campaign panel
      *
-     * @param campaign_id
+     * @param campaign_id id of the campaign
      */
     public EditCampaign(int campaign_id) {
         super(new GridLayout(1, 0));
@@ -203,7 +203,7 @@ public class EditCampaign extends JPanel implements MouseListener {
     /**
      * Update the map panel list
      *
-     * @param list
+     * @param list list of map
      */
     public void updateMapList(ArrayList<MapPanel> list) {
         campaign_panel.removeAll();
@@ -222,7 +222,7 @@ public class EditCampaign extends JPanel implements MouseListener {
     /**
      * Get all the existing maps
      *
-     * @return
+     * @return maps list
      */
     private JComboBox<Integer> getMapList() {
 
@@ -239,7 +239,7 @@ public class EditCampaign extends JPanel implements MouseListener {
     /**
      * Draw the maps of a campaign when loading
      *
-     * @param json_campaign
+     * @param json_campaign // Add Description for all the warnings.
      */
     public void drawMapList(JSONObject json_campaign) {
         map_panel = new ArrayList<MapPanel>();

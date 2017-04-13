@@ -1,12 +1,12 @@
 package unittest;
 
 import controller.PlayController;
-import model.Campaign;
 import model.PCampaign;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+
 /**
  * Test for looting enemy.
  *
@@ -22,7 +22,7 @@ public class LootEnemyTest {
      * Initialize the test.
      */
     public void before() {
-        play_controller = new PlayController("999", 6);
+        play_controller = new PlayController("555", 14);
         campaign = play_controller.getCampaign();
     }
 
@@ -31,8 +31,8 @@ public class LootEnemyTest {
      * Test the function of looting a enemy.
      */
     public void testLootEnemy() {
-        int enemyBackpackSize = campaign.getEnemy(4,4).getBackpack().size();
-        campaign.getEnemy(4,4).getBackpack().remove(0);
-        assertEquals(enemyBackpackSize-1 , campaign.getEnemy(4,4).getBackpack().size());
+        int enemyBackpackSize = play_controller.getPlayer().getBackpack().size();
+        play_controller.getPlayer().getBackpack().remove(0);
+        assertEquals(enemyBackpackSize - 1, play_controller.getPlayer().getBackpack().size());
     }
 }

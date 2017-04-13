@@ -24,7 +24,8 @@ public class Menu extends JPanel {
     private About aboutPanel;
     private Item itemPanel;
     private Start startPanel;
-    private JButton buttonPlay, buttonMap, buttonCharacter, buttonCampaign, buttonAbout, buttonExit, buttonItem;
+    private Load loadPanel;
+    private JButton buttonPlay, buttonLoad, buttonMap, buttonCharacter, buttonCampaign, buttonAbout, buttonExit, buttonItem;
 
 
     /**
@@ -80,6 +81,15 @@ public class Menu extends JPanel {
         buttonPlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
         buttonPlay.setFont(new Font("Times New Roman", Font.BOLD, 40));
         add(buttonPlay);
+
+        buttonLoad = new JButton("L o a d  G a m e");
+        buttonLoad.setForeground(Color.RED);
+        buttonLoad.setOpaque(false);
+        buttonLoad.setContentAreaFilled(false);
+        buttonLoad.setBorderPainted(false);
+        buttonLoad.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        buttonLoad.setFont(new Font("Times New Roman", Font.BOLD, 40));
+        add(buttonLoad);
 
         buttonMap = new JButton("M a p  E d i t o r");
         buttonMap.setForeground(Color.RED);
@@ -159,9 +169,13 @@ public class Menu extends JPanel {
                 } else if (cmd.equals("I t e m  E d i t o r")) {
                     itemPanel = new Item();
                     menuAction(itemPanel);
-                } else if (cmd.equals("P l a y")){
+                } else if (cmd.equals("P l a y")) {
                     startPanel = new Start();
                     menuAction(startPanel);
+                } else if (cmd.equals("L o a d  G a m e")){
+                    loadPanel = new Load();
+                    menuAction(loadPanel);
+
                 }
             }
         };
@@ -173,6 +187,7 @@ public class Menu extends JPanel {
         buttonAbout.addActionListener(actionListener);
         buttonCampaign.addActionListener(actionListener);
         buttonItem.addActionListener(actionListener);
+        buttonLoad.addActionListener(actionListener);
     }
 
 

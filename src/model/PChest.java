@@ -13,7 +13,7 @@ public class PChest extends PCellContent {
 
     /**
      * Initialize a chest model of play
-     * @param id
+     * @param id represents item id
      */
     public PChest(String id) {
         item_id = Integer.parseInt(id);
@@ -24,7 +24,7 @@ public class PChest extends PCellContent {
 
     /**
      * Get the item of a chest
-     * @return
+     * @return PItem represents item in the chest
      */
     public PItem getItem() {
         return item;
@@ -35,5 +35,13 @@ public class PChest extends PCellContent {
      */
     public void removeItem() {
         item = null;
+    }
+
+    /**
+     * Get the item_id
+     * @return the ID of the item
+     */
+    public int getItem_id() {
+        return item_id;
     }
 }

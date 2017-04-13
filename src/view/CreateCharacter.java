@@ -3,21 +3,16 @@ package view;
 import controller.CharacterEditorController;
 
 import javax.swing.*;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.EventListener;
-import java.util.Random;
 
 /**
  * Created by Silas on 2017/2/10.
  */
 public class CreateCharacter extends JPanel {
 
-    private CharacterEditorController characterController;
     public JButton createButton, confirmButton, takeoffButton, putonButton, deleteButton, pickButton;
     public JTextField nameTextField;
     public JTextField[] attributeTextField = new JTextField[6];
@@ -28,11 +23,13 @@ public class CreateCharacter extends JPanel {
     int[][] stats = new int[6][2];
     ArrayList<String> items, backpack, equipment;
     JComboBox equipmentComboBox, backpackJComboBox, itemJComboBox;
+    private CharacterEditorController characterController;
 
     /**
      * Constructor of createCharacter to create an object of CreateCharacter View
      *
      * @param id, ID of the character
+     * @param type type of character
      */
     public CreateCharacter(String id, String type) {
 

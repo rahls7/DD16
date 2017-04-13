@@ -2,11 +2,13 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import view.MapPanel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Campaign class for play mode
+ */
 public class PCampaign {
 
     private MapIO mapio;
@@ -16,6 +18,7 @@ public class PCampaign {
 
     /**
      * Initialize a campaign model of play
+     *
      * @param json_campaign Data of the campaign.
      */
     public PCampaign(JSONObject json_campaign) {
@@ -35,14 +38,17 @@ public class PCampaign {
 
     /**
      * Get the list of map models
+     *
      * @return the list of map models
      */
-    public List<PMap> getMapsList(){
+    public List<PMap> getMapsList() {
         return this.maps;
     }
 
     /**
      * get current map id
+     *
+
      * @param current_mapindex current map index.
      * @return current map id
      */
@@ -51,7 +57,25 @@ public class PCampaign {
     }
 
     /**
+     * get current campaign id
+     * @return campaign id
+     */
+    public int getCampaign_id() {
+        return campaign_id;
+    }
+
+    /**
+     * get current mapindex
+     * @return map index
+     */
+    public int getCurrent_mapindex() {
+        return current_mapindex;
+    }
+
+    /**
      * get the current map.
+     *
+
      * @return current map.
      */
     public PMap getMap() {
@@ -60,6 +84,7 @@ public class PCampaign {
 
     /**
      * read current map.
+     *
      * @return JSON of the current map.
      */
     public JSONObject readCurrentMap() {
@@ -70,15 +95,17 @@ public class PCampaign {
 
     /**
      * Adapt the map to its level
+     *
      * @param level level of the player.
      */
-    public void adaptMapToLevel(int level){
+    public void adaptMapToLevel(int level) {
         PMap map = maps.get(current_mapindex);
         map.adaptMapToLevel(level);
     }
 
     /**
      * Set the current player
+     *
      * @param player the player.
      */
     public void setPlayer(PCharacter player) {
@@ -90,16 +117,29 @@ public class PCampaign {
      *
      * @param previous_x x coordinate of the previous cell
      * @param previous_y y coordinate of the previous cell
-     * @param current_x x coordinate of the current cell
-     * @param current_y y coordinate of the current cell
-     * @param player the player
+     * @param current_x  x coordinate of the current cell
+     * @param current_y  y coordinate of the current cell
+     * @param player     the player
+
      */
     public void setPlayer(int previous_x, int previous_y, int current_x, int current_y, PCharacter player) {
         maps.get(current_mapindex).setPlayer(previous_x, previous_y, current_x, current_y, player);
     }
 
+    public void setCharacter(int previous_x, int previous_y, int current_x, int current_y, PCharacter pCharacter) {
+        maps.get(current_mapindex).setCharacter(previous_x, previous_y, current_x, current_y, pCharacter);
+    }
+
+    public PCell getCell(int x, int y) {
+        return maps.get(current_mapindex).getcell(x, y);
+    }
+
+    public int[] getExit(){
+        return maps.get(current_mapindex).getExit();
+    }
     /**
      * Get the chest item of a specific cell
+     *
      * @param x x coordinate
      * @param y y coordinate
      * @return Item in the chest
@@ -112,28 +152,38 @@ public class PCampaign {
         return maps.get(current_mapindex).giveFriendItem(x,y, item);
     }*/
 
+    public PCharacter getPlayer(int x, int y){
+        return maps.get(current_mapindex).getPlayer(x, y);
+    }
     /**
      * Get the friend play of a specific cell
+     *
      * @param x x coordinate
      * @param y y coordinate
      * @return PCharacter
      */
     public PCharacter getFriend(int x, int y) {
-        return maps.get(current_mapindex).getFriend(x,y);
+        return maps.get(current_mapindex).getFriend(x, y);
     }
 
     /**
      * Get the enemy of a specific cell
+     *
      * @param x x coordinate
      * @param y y coordinate
      * @return PCharacter
      */
     public PCharacter getEnemy(int x, int y) {
-        return maps.get(current_mapindex).getEnemy(x,y);
+        return maps.get(current_mapindex).getEnemy(x, y);
+    }
+
+    public PCharacter getCharacter(int x, int y){
+        return maps.get(current_mapindex).getCharacter(x, y);
     }
 
     /**
      * Check whether the current map is full filled or not
+     *
      * @return boolean
      */
     public boolean isFulfilled() {
@@ -142,12 +192,13 @@ public class PCampaign {
 
     /**
      * Check whether the campaign is finished or not
+     *
      * @return boolean
      */
     public boolean exit() {
         current_mapindex++;
         System.out.println("index" + current_mapindex);
-        if(current_mapindex < maps.size())
+        if (current_mapindex < maps.size())
             return true;
         else
             return false;
@@ -155,8 +206,10 @@ public class PCampaign {
 
     /**
      * Get maps of this campaign
+     *
      * @return maps
      */
+
     public List<PMap> getMaps() { return maps; }
 
 }

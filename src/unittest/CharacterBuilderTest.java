@@ -5,10 +5,6 @@ import model.Character;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -22,7 +18,7 @@ public class CharacterBuilderTest {
     Player player;
 
     @Before
-    public void before(){
+    public void before() {
         player = new Player();
     }
 
@@ -30,7 +26,7 @@ public class CharacterBuilderTest {
      * test the bully character builder
      */
     @Test
-    public void testBully(){
+    public void testBully() {
         BullyCharacterBuilder bullyCharacterBuilder = new BullyCharacterBuilder();
         player.setCharacterBuilder(bullyCharacterBuilder);
         player.constructCharacter("123");
@@ -43,20 +39,20 @@ public class CharacterBuilderTest {
      * test nimble character builder
      */
     @Test
-    public void testNimble(){
+    public void testNimble() {
         NimbleCharacterBuilder nimbleCharacterBuilder = new NimbleCharacterBuilder();
         player.setCharacterBuilder(nimbleCharacterBuilder);
         player.constructCharacter("234");
         character = player.getCharacter();
         int[][] stats = character.getStats();
-        assertTrue(stats[1][0] >=stats[2][0] && stats[2][0] >=stats[0][0]);
+        assertTrue(stats[1][0] >= stats[2][0] && stats[2][0] >= stats[0][0]);
     }
 
     /**
      * test tank character builder
      */
     @Test
-    public void testTank(){
+    public void testTank() {
         TankCharacterBuilder tankCharacterBuilder = new TankCharacterBuilder();
         player.setCharacterBuilder(tankCharacterBuilder);
         player.constructCharacter("345");

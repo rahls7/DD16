@@ -1,14 +1,11 @@
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 import model.*;
 import model.Character;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Silas on 2017/2/10.
@@ -29,6 +26,8 @@ public class CharacterEditorController {
      * Constructor of character controller, create a controller, called by the character view
      *
      * @param id ID of the character
+     * @param type type of the character
+     *
      */
     public CharacterEditorController(String id, String type) {
         player = new Player();
@@ -69,7 +68,7 @@ public class CharacterEditorController {
         characterModel.recalculateStats();
     }
 
-    public void setpCharacter(PCharacter pCharacter){
+    public void setpCharacter(PCharacter pCharacter) {
         this.pCharacter = pCharacter;
     }
 
@@ -97,6 +96,15 @@ public class CharacterEditorController {
     }
 
     /**
+     * get the character's name from character model
+     *
+     * @return String of name
+     */
+    public String getName() {
+        return characterModel.getName();
+    }
+
+    /**
      * set the character model's name
      *
      * @param name Name of the character
@@ -106,12 +114,12 @@ public class CharacterEditorController {
     }
 
     /**
-     * get the character's name from character model
+     * get the model character's equipment
      *
-     * @return
+     * @return euipment, model character's equipment
      */
-    public String getName() {
-        return characterModel.getName();
+    public ArrayList<String> getEquipment() {
+        return itemToString(characterModel.getEquipment());
     }
 
     /**
@@ -125,22 +133,34 @@ public class CharacterEditorController {
     }
 
     /**
-     * get the model character's equipment
-     *
-     * @return euipment, model character's equipment
-     */
-    public ArrayList<String> getEquipment() {
-        return itemToString(characterModel.getEquipment());
-    }
-
-    /**
      * delete the model's item
      *
-     * @param equipment
+     * @param equipment equipment object
      */
     public void deleteEquipment(int equipment) {
         characterModel.deleteEquipment(characterModel.getEquipment().get(equipment));
         characterModel.recalculateStats();
+    }
+
+    /**
+     * put one item on the model's backpack
+     *
+     * @param equipmentBackpack backpack equipment
+     */
+    public void setEquipmentBackpack(int equipmentBackpack) {
+        if (characterModel.getBackpack().size() < 10) {
+            characterModel.setBackpack(characterModel.getEquipment().get(equipmentBackpack));
+            deleteEquipment(equipmentBackpack);
+        }
+    }
+
+    /**
+     * get all items in model's backpack
+     *
+     * @return Array list of backpack items
+     */
+    public ArrayList<String> getBackpack() {
+        return itemToString(characterModel.getBackpack());
     }
 
     /**
@@ -154,30 +174,9 @@ public class CharacterEditorController {
     }
 
     /**
-     * put one item on the model's backpack
-     *
-     * @param equipmentBackpack
-     */
-    public void setEquipmentBackpack(int equipmentBackpack) {
-        if (characterModel.getBackpack().size() < 10) {
-            characterModel.setBackpack(characterModel.getEquipment().get(equipmentBackpack));
-            deleteEquipment(equipmentBackpack);
-        }
-    }
-
-    /**
-     * get all items in model's backpack
-     *
-     * @return
-     */
-    public ArrayList<String> getBackpack() {
-        return itemToString(characterModel.getBackpack());
-    }
-
-    /**
      * delete item from backpack
      *
-     * @param backpack
+     * @param backpack backpack item number
      */
     public void removeBackpack(int backpack) {
         characterModel.removeBackpack(characterModel.getBackpack().get(backpack));
@@ -186,20 +185,11 @@ public class CharacterEditorController {
     /**
      * get the items from database
      *
-     * @return
+     * @return Arraylist of item
      */
     public ArrayList<String> getItem() {
 
         return itemToString(items);
-    }
-
-    /**
-     * set character model's stats
-     *
-     * @param stats
-     */
-    public void setStats(int[][] stats) {
-        characterModel.setStats(stats);
     }
 
     /**
@@ -212,12 +202,12 @@ public class CharacterEditorController {
     }
 
     /**
-     * set character model's attributes
+     * set character model's stats
      *
-     * @param attributes
+     * @param stats Stats attributes
      */
-    public void setAttributes(int[] attributes) {
-        characterModel.setAttributes(attributes);
+    public void setStats(int[][] stats) {
+        characterModel.setStats(stats);
     }
 
     /**
@@ -230,8 +220,17 @@ public class CharacterEditorController {
     }
 
     /**
-     * @param items
-     * @return
+     * set character model's attributes
+     *
+     * @param attributes attributes of the character
+     */
+    public void setAttributes(int[] attributes) {
+        characterModel.setAttributes(attributes);
+    }
+
+    /**
+     * @param items item list
+     * @return items arraylist of items (string)
      */
     public ArrayList<String> itemToString(ArrayList<Item> items) {
         ArrayList<String> strings = new ArrayList<String>();

@@ -1,7 +1,6 @@
 package unittest;
 
 import controller.PlayController;
-import model.Campaign;
 import model.PCampaign;
 import model.PItem;
 import org.junit.Before;
@@ -11,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for exchanging items.
+ *
  * @author Rahul
  */
 public class ExchangeItemTest {
@@ -23,7 +23,7 @@ public class ExchangeItemTest {
      * Initialize the test.
      */
     public void before() {
-        play_controller = new PlayController("999", 6);
+        play_controller = new PlayController("555", 14);
         campaign = play_controller.getCampaign();
     }
 
@@ -33,9 +33,9 @@ public class ExchangeItemTest {
      */
     public void testLootEnemy() {
         play_controller.getPlayer().getBackpack().remove(0);
-        PItem item = play_controller.getPlayer().getBackpack().get(1);
+        PItem item = play_controller.getPlayer().getBackpack().get(0);
         play_controller.getPlayer().getBackpack().add(item);
         int backpackSize = play_controller.getPlayer().getBackpack().size();
-        assertEquals(backpackSize , play_controller.getPlayer().getBackpack().size());
+        assertEquals(backpackSize, play_controller.getPlayer().getBackpack().size());
     }
 }

@@ -9,10 +9,12 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * @author Ruijia Yang
- *
- * Test the funciton of adapting to level
+ *         <p>
+ *         Test the funciton of adapting to level
  */
 public class AdaptToLevelTest {
+    boolean findNPC = false;
+    boolean findChest = false;
     private PCampaign campaign;
     private PCharacter npc;
     private PlayController pc;
@@ -20,27 +22,26 @@ public class AdaptToLevelTest {
     private PChest chest;
     private PMap map;
     private PCell[][] cells;
-    boolean findNPC=false;
-    boolean findChest=false;
 
     @Before
     /**
      * Initialize a play controller
      */
-    public void before(){
-        pc=new PlayController("999",6);
-        campaign=pc.getCampaign();
+    public void before() {
+        pc = new PlayController("555", 14);
+        campaign = pc.getCampaign();
         campaign.adaptMapToLevel(pc.getPlayer().getLevel());
-        map=campaign.getMapsList().get(0);
-        cells=map.getCells();
-        player=pc.getPlayer();
+        map = campaign.getMapsList().get(0);
+        cells = map.getCells();
+        player = pc.getPlayer();
     }
+
     @Test
     /**
      * Test the function of adapting to level
      */
-    public void test(){
-        for(int i=0;i<map.getWidth();i++) {
+    public void test() {
+        for (int i = 0; i < map.getWidth(); i++) {
             for (int j = 0; j < map.getHeight(); j++) {
                 if (findNPC && findChest) {
                     break;
@@ -57,8 +58,8 @@ public class AdaptToLevelTest {
                 break;
             }
         }
-        assertEquals(player.getLevel(),npc.getLevel());
-        assertEquals(chest.getItem().getAttributeValue(),map.adaptItemAttributeLevel(player.getLevel()));
+        assertEquals(player.getLevel(), npc.getLevel());
+        assertEquals(chest.getItem().getAttributeValue(), map.adaptItemAttributeLevel(player.getLevel()));
     }
 
 }

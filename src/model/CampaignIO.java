@@ -15,7 +15,7 @@ public class CampaignIO {
     /**
      * Save a campaign to the file
      *
-     * @param campaign
+     * @param campaign campaign instance
      */
     public void saveCompaign(Campaign campaign) {
         String content = readCampaignFile();
@@ -53,7 +53,7 @@ public class CampaignIO {
     /**
      * Write the generated json to a file
      *
-     * @param content
+     * @param content json of content
      */
     public void writeCampaignFile(JSONObject content) {
         try {
@@ -68,9 +68,9 @@ public class CampaignIO {
     /**
      * Generate a json object for a campaign
      *
-     * @param id
-     * @param campaign
-     * @return
+     * @param id campaign id
+     * @param campaign campaign json
+     * @return json of campaign
      */
     public JSONObject generateJSON(int id, Campaign campaign) {
         JSONObject json_campaign = new JSONObject();
@@ -113,7 +113,7 @@ public class CampaignIO {
     /**
      * Get all the existing campaigns
      *
-     * @return
+     * @return Json for all existing campaigns
      */
     public JSONArray getCampaignList() {
         String content = readCampaignFile();
@@ -126,8 +126,8 @@ public class CampaignIO {
     /**
      * Read a campaign by id
      *
-     * @param campaign_id
-     * @return
+     * @param campaign_id campaign id
+     * @return campaign json
      */
     public JSONObject readCampaign(int campaign_id) {
         String content = readCampaignFile();

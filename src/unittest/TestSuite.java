@@ -13,8 +13,9 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 
 @RunWith(Suite.class)
-@SuiteClasses({AdaptToLevelTest.class, AttackEnemyTest.class, CampaignTest.class, CharacterBuilderTest.class, CharacterContentClass.class, CharacterMovementTest.class,
-        ExchangeItemTest.class, ItemContentTest.class, LootChestTest.class, LootEnemyTest.class, MapLoadingTest.class, MapValidationTest.class, MapContentTest.class, })
+@SuiteClasses({AdaptToLevelTest.class, AttackTest.class, CampaignTest.class, CharacterBuilderTest.class, CharacterContentClass.class, CharacterMovementTest.class,
+
+        ExchangeItemTest.class, ItemContentTest.class, LootChestTest.class, LootEnemyTest.class, MapLoadingTest.class, MapValidationTest.class, MapContentTest.class, StrategyTest.class, WeaponDecoratorTest.class, GenerateOrder.class})
 public class TestSuite {
 
 }

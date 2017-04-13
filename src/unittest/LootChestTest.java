@@ -1,7 +1,6 @@
 package unittest;
 
 import controller.PlayController;
-import model.Campaign;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +19,7 @@ public class LootChestTest {
      * Initialize the test.
      */
     public void before() {
-        play_controller = new PlayController("999", 6);
+        play_controller = new PlayController("555", 14);
     }
 
     @Test
@@ -29,7 +28,7 @@ public class LootChestTest {
      */
     public void testLootChest() {
         int backpackSize = play_controller.getPlayer().getBackpack().size();
-        play_controller.lootChest(3, 2);
+        play_controller.lootChest(5, 5);
         assertEquals(backpackSize + 1, play_controller.getPlayer().getBackpack().size());
     }
 }
