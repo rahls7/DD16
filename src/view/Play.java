@@ -144,6 +144,13 @@ public class Play extends JPanel implements MouseListener {
                 map_panel.add(cells[i][j]);
             }
         }
+        battleInfo_panel = new JPanel();
+        battleInfo_panel.setLayout(null);
+        battleInfo_area = new JTextArea();
+        battleInfo_area.setEditable(false);
+        scrollPane = new JScrollPane(battleInfo_area);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setBounds(20,20,450, 120);
         inventory_panel = new PInventoryPanel();
         information_panel = new PInformationPanel(play_controller);
         characteristic_panel = new PCharacteristicPanel();
@@ -151,15 +158,6 @@ public class Play extends JPanel implements MouseListener {
         play_controller.setCharacterObserver(characteristic_panel);
         inventory_panel.setPlayController(play_controller);
         inventory_panel.setCells(cells);
-
-        battleInfo_panel = new JPanel();
-        battleInfo_panel.setLayout(null);
-        battleInfo_area = new JTextArea();
-        battleInfo_area.setEditable(false);
-        battleInfo_area.setText(battle_info);//Load former information
-        scrollPane = new JScrollPane(battleInfo_area);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBounds(20,20,450, 120);
 
         save_play = new JButton("Save Game");
         save_play.setBounds(500, 60, 100, 30);
@@ -179,9 +177,9 @@ public class Play extends JPanel implements MouseListener {
         add(action_panel);
 
         play_controller.setCellPanel(cells);
-        play_controller.generatePlayOrder(play_id);
-
         play_controller.beforePlayer();
+        play_controller.setPlayOrder(play_id);
+        battleInfo_area.setText(battle_info);//Load former information
         moved=false;
 
     }
