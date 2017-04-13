@@ -170,7 +170,7 @@ public class PlayController {
      */
 
 
-    private String generateOrder() {
+    public String generateOrder() {
         order = new ArrayList<PCharacter>();
         player_index = -1;
         int[] index = new int[characters.size()];
