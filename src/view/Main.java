@@ -21,6 +21,7 @@ public class Main extends JFrame {
     private Character character_panel;
     private Campaign campaign_panel;
     private Start start_panel;
+    private Load load_panel;
 
 
     /**
@@ -72,6 +73,9 @@ public class Main extends JFrame {
         JMenuItem item_play = new JMenuItem("Play");
 
 
+        JMenuItem item_load = new JMenuItem("Load Game");
+
+
         JMenuItem item_map = new JMenuItem("Map Editor");
 
 
@@ -91,6 +95,7 @@ public class Main extends JFrame {
 
 
         menu.add(item_play);
+        menu.add(item_load);
         menu.add(item_map);
         menu.add(item_compaign);
         menu.add(item_character);
@@ -121,13 +126,16 @@ public class Main extends JFrame {
                     campaign_panel = new Campaign();
                     menuAction(campaign_panel);
                 } else if (cmd.equals("Play")) {
-
                     start_panel = new Start();
                     menuAction(start_panel);
+                } else if (cmd.equals("Load Game")){
+                    load_panel = new Load();
+                    menuAction(load_panel);
                 }
             }
         };
         item_play.addActionListener(actionListener);
+        item_load.addActionListener(actionListener);
         item_map.addActionListener(actionListener);
         item_item.addActionListener(actionListener);
         item_about.addActionListener(actionListener);

@@ -2,11 +2,9 @@ package controller;
 
 
 import model.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
-import view.PCellPanel;
-import view.PCharacteristicPanel;
-import view.PInventoryPanel;
-import view.Play;
+import view.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -68,6 +66,24 @@ public class PlayController {
         friends = new ArrayList<PCharacter>();
     }
 
+    /**
+     * Initialize a play controller for loading a game.
+     * @param play_id The id of the play file.
+     */
+    public PlayController(int play_id){
+        playIO = new PlayIO();
+        campaignio = new CampaignIO();
+
+        JSONObject json_campaign = readPlayCampaign(play_id);
+        campaign = new PCampaign(json_campaign);
+
+        player = readPlayer(play_id);
+        campaign.setPlayer(player);
+
+        characters = new ArrayList<PCharacter>();
+        enemys = new ArrayList<PCharacter>();
+        friends = new ArrayList<PCharacter>();
+    }
 
     public void setCellPanel(PCellPanel[][] pCellPanel) {
         cellPanels = pCellPanel;
@@ -109,6 +125,68 @@ public class PlayController {
         return campaign.readCurrentMap();
     }
 
+    /**
+     * Get the json of map in the play file.
+     * @param play_id The id of the play file.
+     * @return The json of the map.
+     */
+    public JSONObject readPlayMap(int play_id){
+        return playIO.readPlayMap(play_id);
+    }
+
+    /**
+     * Get the PCharacter of the player from the play file.
+     * @param play_id The id of the play file.
+     * @return The PCharacter of the player.
+     */
+    public PCharacter readPlayer(int play_id){
+        return playIO.readPlayer(play_id);
+    }
+
+    /**
+     * Get the campaign json from the play file.
+     * @param play_id The id of the play file.
+     * @return The json of the campaign.
+     */
+    public JSONObject readPlayCampaign(int play_id){
+        int play_campaign_id = playIO.readPlayCampaignId(play_id);
+        return campaignio.readCampaign(play_campaign_id);
+    }
+
+    /**
+     * Get the order list from the play file.
+     * @param play_id The id of the play file.
+     * @return The order list of the characters.
+     */
+    public ArrayList<PCharacter> readOrder (int play_id){
+        ArrayList<PCharacter> order = new ArrayList<PCharacter>();
+        JSONArray play_order = playIO.readOrder(play_id);
+        JSONArray character_list = playIO.readCharacterList(play_id);
+        for (int i = 0; i < play_order.length(); i++){
+            int order_x = play_order.getJSONObject(i).getInt("order_x");
+            int order_y = play_order.getJSONObject(i).getInt("order_y");
+            for (int j = 0; j < character_list.length(); j++){
+                JSONObject character = character_list.getJSONObject(j);
+                int character_x = character.getInt("x");
+                int character_y = character.getInt("y");
+                if (order_x == character_x && order_y == character_y){
+                    int id = character.getInt("original_id");
+                    String id_str = String.valueOf(id);
+                    int isHostile = character.getInt("category");
+                    String isHostile_str = String.valueOf(isHostile);
+                    PCharacter pCharacter = new PCharacter(id_str, isHostile_str);
+                    order.add(pCharacter);
+                }
+            }
+        }
+
+        return order;
+    }
+
+    public void generatePlayOrder(int play_id){
+        order = new ArrayList<PCharacter>();
+        order = readOrder(play_id);
+    }
     /**
      * Set observer to the character panel
      *
@@ -202,6 +280,7 @@ public class PlayController {
                 player_index = i;
             }
         }
+
         String display="The order is: \n";
         for(int i=0;i<characters.size();i++){
             if(order.get(i).getCategory()==0){
@@ -535,8 +614,9 @@ public class PlayController {
         pMap = campaign.getMap();
         campaign_id = campaign.getCampaign_id();
         current_mapindex = campaign.getCurrent_mapindex();
+        String battle_info = Play.getBattleInfo();
 
-        playIO.savePlay(pMap, campaign_id, current_mapindex);
+        playIO.savePlay(pMap, campaign_id, current_mapindex, order, battle_info);
     }
 
 
