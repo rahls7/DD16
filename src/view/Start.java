@@ -47,12 +47,6 @@ public class Start extends JPanel {
         character.setBorder(BorderFactory.createTitledBorder("Character:"));
         start_panel.add(character);
 
-        Checkbox checkbox = new Checkbox();
-        start_panel.add(checkbox);
-
-        JLabel label = new JLabel("Computer");
-        start_panel.add(label);
-
         JButton start_game = new JButton("Start Game");
         start_game.addActionListener(new ActionListener() {
             @Override
