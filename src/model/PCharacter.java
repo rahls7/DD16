@@ -590,6 +590,10 @@ public class PCharacter extends PCellContent {
         this.strategy = strategy;
     }
 
+    public Strategy getStrategy(){
+        return this.strategy;
+    }
+
     public int[] executeStrategy(int x, int y, int x_player, int y_player, int weapon_bonus, PCampaign pCampaign) {
 
         if (category==1 && frighteningTurns==0 && freezeTurns==0)

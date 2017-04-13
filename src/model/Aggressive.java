@@ -8,6 +8,18 @@ import java.util.Random;
  * Created by mo on 2017-04-06.
  */
 public class Aggressive implements Strategy {
+
+    /**
+     * execute the strategy
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param x_player x coordinate of player
+     * @param y_player y coordinate of player
+     * @param weaponBonus weapon bonus
+     * @param pCampaign Campaign that readed
+     * @param pCharacter Character that execute the strategy
+     * @return int[] coordinate
+     */
     public int[] execute(int x, int y, int x_player, int y_player, int weaponBonus, PCampaign pCampaign, PCharacter pCharacter){
         int[] coordinate = new int[2];
         coordinate[0] = x;
@@ -25,6 +37,15 @@ public class Aggressive implements Strategy {
         return coordinate;
     }
 
+    /**
+     * move to destination
+     * @param previous_x x coordinate
+     * @param previous_y y coordinate
+     * @param x_player x coordinate of player
+     * @param y_player y coordinate of player
+     * @param pCampaign Campain that readed
+     * @return int[] coordinate
+     */
     public int[] move(int previous_x, int previous_y, int x_player, int y_player, PCampaign pCampaign) {
 
         int current_x = -1;
@@ -88,6 +109,13 @@ public class Aggressive implements Strategy {
         return coordinate;
     }
 
+    /**
+     * attack the target
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param pCampaign Campaign that readed
+     * @param pCharacter Character that executes the strategy
+     */
     public void attack(int x, int y, PCampaign pCampaign, PCharacter pCharacter) {
         int[] ranged_x = {x-2, x, x, x+2, x-1, x, x, x+1, x-1, x+1, x-1, x+1};
         int[] ranged_y = {y, y-2, y+2, y, y, y-1, y+1, y, y-1, y+1, y+1, y-1};
@@ -120,6 +148,12 @@ public class Aggressive implements Strategy {
 
     }
 
+    /**
+     * attack enemy
+     * @param attacker character who attacks
+     * @param attacked character who get attacked
+     * @param campaign Campaign that readed
+     */
     private void attackEnemy(PCharacter attacker, PCharacter attacked, PCampaign campaign){
         Random rgen = new Random();
         if(attacked.getCategory()==0){
@@ -145,6 +179,13 @@ public class Aggressive implements Strategy {
         }
     }
 
+    /**
+     * loot the chest
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param pCampaign Cammpaign that readed
+     * @param pCharacter Character that executes the strategy
+     */
     public void loot(int x, int y, PCampaign pCampaign, PCharacter pCharacter) {
         if (x+1 < pCampaign.getMap().getWidth())
             if (pCampaign.getCell(x+1, y).getType().equals("CHEST")){
